@@ -1,0 +1,20 @@
+@startuml
+
+object Bookmark
+object Tag
+object Genre
+object Status
+object MediaType
+object User
+object Tab
+
+User "1" o-- "m" Tab
+
+Tab "1" o-- "m" Bookmark
+
+Bookmark "1" o-- "m" Tag
+Bookmark "1" o-- "m" Genre
+Bookmark "1" o-- "1" MediaType
+Bookmark "1" o-- "1" Status
+
+@enduml
