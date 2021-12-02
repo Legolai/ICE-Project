@@ -1,0 +1,66 @@
+@startuml
+
+class Endpoint {
+
+}
+
+Interface UserController {
+    + boolean login()
+    ' logout nedenunder er måske ikke så nødvendigt da det håndteres i frontend
+    + void logout()
+}
+Interface BookmarkController {
+    + ArrayList<Bookmark> getAllBookmarks()
+}
+
+class Controller {
+    - DBConnector connector
+    ' activeUsers er måske heller ikke så nødvendig
+    - Hashset<User> activeUsers
+}
+
+class DBConnector {
+
+}
+
+class User {
+    - int id
+    - String accountName
+    - String password
+    - String email
+    - Hashset<Bookmark> bookmarks
+}
+
+class Bookmark {
+    - int id
+    - String name
+    - String note
+    - int rating
+    - String URL
+    - Hashset<String> Tag
+    - Hashset<String> Genre
+    - String Progress
+    - String MediaType
+
+
+}
+
+
+Endpoint o-- UserController
+Endpoint o-- BookmarkController
+
+UserController <|.. Controller
+BookmarkController <|.. Controller
+
+Controller -- DBConnector
+
+
+Controller -- Bookmark
+Controller -- User
+
+User o-- Bookmark
+
+
+
+
+@enduml

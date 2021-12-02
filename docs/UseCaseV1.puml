@@ -1,22 +1,48 @@
 @startuml
 'https://plantuml.com/use-case-diagram
+left to right direction
 
-:Main Admin: as Admin
-(Use the application) as (Use)
 
-User -> (Start)
-User --> (Use)
+rectangle AccountSystem {
+    usecase "Registrate Account" as AS1
+    usecase "Delete Account" as AS2
+    usecase "Login" as AS3
+    usecase "Logout" as AS4
+}
 
-Admin ---> (Use)
+NewUser --> AS1
+User --> AS2
+User --> AS3
+User --> AS4
 
-note right of Admin : This is an example.
 
-note right of (Use)
-A note can also
-be on several lines
-end note
+rectangle UserActions {
+    usecase "Search Bookmark" as UA1
+    usecase "Create Bookmark" as UA2
+    usecase "Delete Bookmark" as UA3
+    usecase "Edit Bookmark" as UA4
+    usecase "Create list(?)" as UA5
+}
 
-note "This note is connected\nto several objects." as N2
-(Start) .. N2
-N2 .. (Use)
+User --> UA1
+User --> UA2
+User --> UA3
+User --> UA4
+User --> UA5
+
+
+card Backend
+
+AS1 -- Backend
+AS2 -- Backend
+AS3 -- Backend
+AS4 -- Backend
+
+UA1 -- Backend
+UA2 -- Backend
+UA3 -- Backend
+UA4 -- Backend
+UA5 -- Backend
+
+
 @enduml
