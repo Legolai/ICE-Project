@@ -23,3 +23,13 @@ side og muligvis linenummer der brugs til at angive hvor langt man er kommet i d
 # Use-Case
 
 # Klassediagram
+
+
+# Setup docker tomcat api
+
+``` bash
+$ docker build -t apiserver .
+$ docker run --rm -it -p 8888:8080 apiserver
+```
+
+

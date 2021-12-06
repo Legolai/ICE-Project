@@ -1,0 +1,30 @@
+version: '3.3'
+services:
+  db:
+    container_name: database_SQL
+    platform: linux/x86_64
+    image: mysql:latest
+    volumes:
+      - ./database/mysql-dump:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: testdb1
+      MYSQL_USER: testuser
+      MYSQL_PASSWORD: root
+    ports:
+      - '3307:3306'
+  web:
+    container_name: webserver_tomcat
+    depends_on:
+      - db
+    image: tomcat:10.0.13-jdk17-corretto
+    volumes:
+      - ./webapps/app:/usr/local/tomcat/webapps/webapp
+      - ./conf/web.xml:/usr/local/tomcat/conf/web.xml
+    ports:
+      - '8888:8080'
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: testdb1
+      MYSQL_USER: testuser
+      MYSQL_PASSWORD: root
