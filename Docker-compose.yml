@@ -19,7 +19,7 @@ services:
       - db
     image: tomcat:10.0.13-jdk17-corretto
     volumes:
-      - ./webapps/app:/usr/local/tomcat/webapps/webapp
+      - ./webapps/api:/usr/local/tomcat/webapps/api
       - ./conf/web.xml:/usr/local/tomcat/conf/web.xml
     ports:
       - '8888:8080'
