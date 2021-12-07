@@ -26,8 +26,10 @@ body {
 .form input[type="text"],
 .form input[type="password"] {
 	padding: 15px 10px;
-	margin: 15px 0;
+	margin-bottom: 15px;
 	font-size: 1.125em;
+	border: none;
+	border-bottom: 2px solid cornflowerblue;
 }
 
 .form label {
