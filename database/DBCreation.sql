@@ -27,10 +27,12 @@ CREATE TABLE User
 CREATE TABLE Bookmark
 (
     bookmark_id TINYINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    user_id TINYINT NOT NULL,
     bookmark_name VARCHAR(255) NOT NULL,
     url VARCHAR(255) NOT NULL,
     status ENUM("Watching", "Completed", "On Hold", "Dropped", "Plan to Watch"),
-    rating TINYINT NOT NULL
+    rating TINYINT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES User (user_id)
 );
 
 CREATE TABLE Media
@@ -75,7 +77,7 @@ CREATE TABLE Bookmark_Tag
 INSERT INTO User (email, username, password) VALUES ("Michael@email", "michael", "m123");
 INSERT INTO User (email, username, password) VALUES ("Nicholai@email", "nicholai", "n123");
 
-INSERT INTO Bookmark (bookmark_name, url, status, rating) VALUES ("Avatar", "", "Completed", 12);
+INSERT INTO Bookmark (user_id, bookmark_name, url, status, rating) VALUES (2, "Avatar", "", "Completed", 12);
 INSERT INTO Media (media_name) VALUES ("Movie");
 INSERT INTO Genre (genre_name) VALUES ("Sci-Fi");
 INSERT INTO Tag (tag_name) VALUES ("Sick CGI");
