@@ -9,7 +9,7 @@ public class Bookmark {
     private String description;
     private String url;
     private String media;
-    private String progress;
+    private String status;
     private List<String> genres;
     private List<String> tags;
     private int rating;
@@ -20,7 +20,7 @@ public class Bookmark {
         description = "";
         url = "";
         media = "";
-        progress = "";
+        status = "";
         genres = new ArrayList<>();
         tags = new ArrayList<>();
         rating = 0;
@@ -33,7 +33,7 @@ public class Bookmark {
         description = splitted[1];
         url = splitted[2];
         media = splitted[3];
-        progress = splitted[4];
+        status = splitted[4];
         genres = Arrays.asList(splitted[5].split(","));
         tags = Arrays.asList(splitted[6].split(","));
         rating = Integer.parseInt(splitted[7]);
@@ -46,7 +46,7 @@ public class Bookmark {
         res += description+";";
         res += url+";";
         res += media+";";
-        res += progress+";";
+        res += status+";";
         res += listToString(genres)+";";
         res += listToString(tags)+";";
         res += rating;
