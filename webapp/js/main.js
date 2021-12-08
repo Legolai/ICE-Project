@@ -15,9 +15,18 @@ const doPost = (endpoint, data) => {
         type: "POST",
         data: JSON.stringify(data)  ,
         success: (result, status, xhr) => {
-            window.location.replace("index.html");
+            //window.location.replace("index.html?token="+result.access_token);
+            console.log(result)
+        },
+        error: () => {
+            $(".form .input").addClass('warning-input animate__shakeX animate__animated')
+            $(".form label").addClass('warning-label')
+
+            setInterval(() => {
+                $(".form .input").removeClass('warning-input animate__shakeX animate__animated')
+                $(".form label").removeClass('warning-label')
+            },2000)
         }
     })
 }
-
 

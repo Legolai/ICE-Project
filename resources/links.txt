@@ -32,3 +32,6 @@
 
     Previous/Next button
  - https://www.w3schools.com/howto/howto_css_next_prev.asp
+
+    Animate
+- https://github.com/animate-css/animate.css

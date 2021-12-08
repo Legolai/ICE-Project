@@ -2,15 +2,16 @@ package controllers;
 
 import database.DBConnecter;
 import entities.Bookmark;
+import entities.User;
 
 import java.util.ArrayList;
 
 public class Controller implements UserController, BookmarkController{
 
-    private DBConnecter conn;
+    private final DBConnecter dbConnecter;
 
     public Controller(){
-        this.conn = new DBConnecter();
+        this.dbConnecter = new DBConnecter();
     }
 
     @Override
@@ -34,8 +35,9 @@ public class Controller implements UserController, BookmarkController{
     }
 
     @Override
-    public String login(String username, String password) {
-        return null;
+    public User login(String username, String password) {
+        System.out.println("test");
+        return dbConnecter.authenticate(username, password);
     }
 
     @Override

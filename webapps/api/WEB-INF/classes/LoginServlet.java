@@ -1,3 +1,7 @@
+import controllers.BookmarkController;
+import controllers.Controller;
+import controllers.UserController;
+import entities.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -11,6 +15,8 @@ import java.io.PrintWriter;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
+    private UserController userController;
+    private BookmarkController bookmarkController;
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -24,21 +30,26 @@ public class LoginServlet extends HttpServlet {
         } catch (Exception e) { /*report an error*/ }
 
         JSONObject jsonObject = new JSONObject(jb.toString());
-
         String username = jsonObject.getString("username");
         String password = jsonObject.getString("password");
+
+        System.out.println(username);
+        System.out.println(password);
 
         response.addHeader("Access-Control-Allow-Origin", "*");
         response.setContentType("application/json");
         response.setCharacterEncoding("utf-8");
         PrintWriter out = response.getWriter();
 
-        if (username.equalsIgnoreCase("admin") && password.equals("Admin")) {
+        userController = new Controller();
+        System.out.println(userController.login(username, password));
+        if ( userController.login(username, password) != null  ) {
             response.setStatus(201);
-            out.println("{\"access_token\":\"21313esadf\"}");
+            User user = userController.login(username, password);
+            out.println(JSONObject.valueToString(user));
         } else {
             response.setStatus(401);
-            out.println("{\"access_token\":\"Denied\"}");
+            out.println("{\"access\":\"Denied\"}");
         }
         out.close();  // Always close the output writer
     }

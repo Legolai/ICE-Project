@@ -1,22 +1,30 @@
 package database;
 
 import entities.Bookmark;
+import entities.User;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class DBConnecter {
 
     private Connection conn;
+    private static final String DB_URL = "jdbc:mysql://localhost:3307/Favorite_Website_DB?characterEncoding=utf8";
+    private static final String DB_USER = "root";
+    private static final String DB_PASSWORD = "root";
 
     public DBConnecter() {
+        System.out.println("db connecter");
         this.conn = null;
+        System.out.println("db connected");
+
     }
 
     private void connect() throws SQLException {
-        this.conn = DriverManager.getConnection("http://localhost:3307", "user", "user");
+        System.out.println("trying to load driver1");
+        System.out.println(" driver test");
+        this.conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+        System.out.println(" driver loadded");
     }
 
     public ArrayList<Bookmark> getBookmarks(String user) {
@@ -29,6 +37,35 @@ public class DBConnecter {
             e.printStackTrace();
         }
         return bookmarks;
+    }
+
+    public User authenticate(String username, String password) {
+        Statement stmt = null;
+
+        try {
+            System.out.println("trying to connect");
+            connect();
+            System.out.println("Connected!");
+            String query = "SELECT * FROM Favorite_Website_DB.User WHERE username = ? AND password = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+
+            ResultSet resultSet = preparedStatement.executeQuery(query);
+
+            if (resultSet.getRow() > 0 ) {
+                User user = new User();
+                user.setUser_id(resultSet.getInt("user_id"));
+                user.setName(resultSet.getString("username"));
+                user.setUsername(resultSet.getString("username"));
+                user.setPassword(resultSet.getString("password"));
+                user.setEmail(resultSet.getString("email"));
+                return user;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
     }
 
     private void close() throws SQLException {

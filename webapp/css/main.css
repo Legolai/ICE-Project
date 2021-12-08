@@ -1,5 +1,6 @@
 * {
 	box-sizing: border-box;
+	outline: transparent;
 }
 
 :root {
@@ -75,8 +76,15 @@ nav ul li a:hover {
 	width: clamp(200px, 60%, 600px);
 }
 
-.form input[type="text"],
-.form input[type="password"] {
+.form input, .form label {
+	-webkit-transition: border-bottom .4s, color .4s;
+	-moz-transition: border-bottom .4s, color .4s;
+	-ms-transition: border-bottom .4s, color .4s;
+	-o-transition: border-bottom .4s, color .4s;
+	transition: border-bottom .4s, color .4s;
+}
+
+.form input{
 	padding: 15px 10px;
 	margin-bottom: 15px;
 	font-size: 1.125em;
@@ -101,4 +109,15 @@ nav ul li a:hover {
 
 .btn-submit:hover {
 	opacity: 0.6;
+}
+.input:focus {
+	border-bottom: 2px solid cornflowerblue;
+}
+
+.warning-label{
+	color: #e55b5b;
+}
+
+.form .warning-input{
+	border-bottom: 2px solid #e55b5b;
 }

@@ -1,7 +1,9 @@
 package controllers;
 
+import entities.User;
+
 public interface UserController {
-    String login(String username, String password);
+    User login(String username, String password);
     boolean updateUser(String accessToken, String ...info);
     void logout();
 }
