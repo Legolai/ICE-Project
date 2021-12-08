@@ -3,10 +3,22 @@ const baseURL = "http://localhost:8888/api";
 $("#login").submit((event) => {
 	event.preventDefault();
 
-	const data = $("#login :input").serializeArray().map((item) => {return [item.name, item.value];});
-	console.log(event.target);
-	console.log(data);
+	//const data = $("#login :input").serializeArray();
+	const username = $("#username").val();
+	const password = $("#password").val();
+	const data = {username: username, password: password}
+	doPost('/login', data)
 });
+
+const doPost = (endpoint, data) => {
+    $.ajax(baseURL+endpoint,{
+        type: "POST",
+        data: JSON.stringify(data)  ,
+        success: (result, status, xhr) => {
+            window.location.replace("login.html");
+        }
+    })
+}
 
 function openCity(evt, cityName) {
   // Declare all variables

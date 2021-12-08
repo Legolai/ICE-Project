@@ -23,23 +23,24 @@ public class LoginServlet extends HttpServlet {
                 jb.append(line);
         } catch (Exception e) { /*report an error*/ }
 
-
         JSONObject jsonObject = new JSONObject(jb.toString());
 
         String username = jsonObject.getString("username");
         String password = jsonObject.getString("password");
 
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.setContentType("application/json");
+        response.setCharacterEncoding("utf-8");
+        PrintWriter out = response.getWriter();
+
         if (username.equalsIgnoreCase("admin") && password.equals("Admin")) {
-            response.setStatus(200);
-            response.addHeader("Accept", "*");
-            response.setContentType("application/json");
-            response.setCharacterEncoding("utf-8");
-            PrintWriter out = response.getWriter();
+            response.setStatus(201);
             out.println("{\"access_token\":\"21313esadf\"}");
-            out.close();  // Always close the output writer
         } else {
             response.setStatus(401);
+            out.println("{\"access_token\":\"Denied\"}");
         }
+        out.close();  // Always close the output writer
     }
 
 }
