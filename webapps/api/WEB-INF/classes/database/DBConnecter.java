@@ -37,25 +37,26 @@ public class DBConnecter {
         PreparedStatement preparedStatement= null;
 
         try {
-            System.out.println("trying to connect");
             connect();
-            System.out.println("Connected!");
-            String query = "SELECT * FROM User WHERE username = ? AND password = ?";
+            System.out.println("Connected to db");
+            String query = "SELECT * FROM Favorite_Website_DB.User WHERE username = ? AND password = ?";
             preparedStatement = conn.prepareStatement(query);
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            System.out.println();
-
-            if ( resultSet.isBeforeFirst() ) {
+            if (resultSet.isBeforeFirst()) {
                 User user = new User();
-                user.setUser_id(resultSet.getInt("user_id"));
-                user.setName(resultSet.getString("username"));
-                user.setUsername(resultSet.getString("username"));
-                user.setPassword(resultSet.getString("password"));
-                user.setEmail(resultSet.getString("email"));
+                while (resultSet.next()) {
+                    user.setUser_id(resultSet.getInt("user_id"));
+                    user.setName(resultSet.getString("firstname"));
+                    user.setName(resultSet.getString("surname"));
+                    user.setUsername(resultSet.getString("username"));
+                    user.setPassword(resultSet.getString("password"));
+                    user.setEmail(resultSet.getString("email"));
+                }
+                close();
                 return user;
             }
         } catch (SQLException throwables) {

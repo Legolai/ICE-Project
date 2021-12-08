@@ -5,7 +5,7 @@ Favorite_Website_DB;
 
 SET
 FOREIGN_KEY_CHECKS=0;
-DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS User;
 DROP TABLE IF EXISTS Bookmark;
 DROP TABLE IF EXISTS Media;
 DROP TABLE IF EXISTS Genre;
@@ -19,6 +19,8 @@ CREATE TABLE User
 (
     user_id TINYINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(255) NOT NULL,
+    firstname VARCHAR(255) NOT NULL,
+    surname VARCHAR(255) NOT NULL,
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL
     #primary key (id)
@@ -74,8 +76,9 @@ CREATE TABLE Bookmark_Tag
 );
 
 
-INSERT INTO User (email, username, password) VALUES ("Michael@email", "michael", "m123");
-INSERT INTO User (email, username, password) VALUES ("Nicholai@email", "nicholai", "n123");
+INSERT INTO User (email,firstname, surname, username, password) VALUES ("Michael@email","Mic","cahel", "michael", "m123");
+INSERT INTO User (email,firstname, surname, username, password) VALUES ("Nicholai@email","Mic","cahel", "nicholai", "n123");
+INSERT INTO User (email,firstname, surname, username, password) VALUES ("test","test","test", "test", "test");
 
 INSERT INTO Bookmark (user_id, bookmark_name, url, status, rating) VALUES (2, "Avatar", "", "Completed", 12);
 INSERT INTO Media (media_name) VALUES ("Movie");

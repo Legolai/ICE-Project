@@ -4,6 +4,7 @@ import controllers.UserController;
 import entities.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -46,7 +47,10 @@ public class LoginServlet extends HttpServlet {
 
         if (user != null ) {
             response.setStatus(201);
-            out.println(JSONObject.valueToString(user));
+            JSONObject userAsJSON = new JSONObject(user);
+            //Har gjort klar til at vi kan sende cookies som vi kan bruge til at læse sessions eller tokens
+            //response.addCookie(createCookie(userAsJSON));
+            out.println(userAsJSON);
         } else {
             response.setStatus(401);
             out.println("{\"access\":\"Denied\"}");
@@ -54,4 +58,14 @@ public class LoginServlet extends HttpServlet {
         out.close();  // Always close the output writer
     }
 
+
+    public Cookie createCookie(JSONObject cookieValue) {
+        final String cookieName = "Faverite_manager_cookie";
+        final int expiryTime = 60 * 60 * 24;  // 24h in seconds
+        final String cookiePath = "/";
+        Cookie cookie = new Cookie(cookieName, cookieValue.toString().replace(" ",""));
+        cookie.setMaxAge(expiryTime);  // A negative value means that the cookie is not stored persistently and will be deleted when the Web browser exits. A zero value causes the cookie to be deleted.
+        cookie.setPath(cookiePath);  // The cookie is visible to all the pages in the directory you specify, and all the pages in that directory's subdirectories
+        return cookie;
+    }
 }

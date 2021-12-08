@@ -9,7 +9,7 @@
 	--accent-color: #2A4C74;
 	--error-color: #EBC55C;
 	--warning-color: #e55b5b;
-	--accept-color: #79B473;
+	--success-color: #79B473;
 	--dark-color: #2A2D34;
 	--bg-color: #F1F7F9;
 }
@@ -76,12 +76,12 @@ nav ul li a:hover {
 	width: clamp(200px, 60%, 600px);
 }
 
-.form input, .form label {
-	-webkit-transition: border-bottom .4s, color .4s;
-	-moz-transition: border-bottom .4s, color .4s;
-	-ms-transition: border-bottom .4s, color .4s;
-	-o-transition: border-bottom .4s, color .4s;
-	transition: border-bottom .4s, color .4s;
+.form input, .form label, .btn-submit{
+	-webkit-transition: border-bottom .4s, color .4s, background-color .4s;
+	-moz-transition: border-bottom .4s, color .4s, background-color .4s;
+	-ms-transition: border-bottom .4s, color .4s, background-color .4s;
+	-o-transition: border-bottom .4s, color .4s, background-color .4s;
+	transition: border-bottom .4s, color .4s, background-color .4s;
 }
 
 .form input{
@@ -108,16 +108,27 @@ nav ul li a:hover {
 }
 
 .btn-submit:hover {
-	opacity: 0.6;
+	background-color: var(--secondary-color);
 }
 .input:focus {
-	border-bottom: 2px solid cornflowerblue;
+	border-bottom: 2px solid var(--secondary-color);
 }
 
 .warning-label{
-	color: #e55b5b;
+	color: var(--warning-color);
 }
 
 .form .warning-input{
-	border-bottom: 2px solid #e55b5b;
+	border-bottom: 2px solid var(--warning-color);;
+}
+
+.success-label {
+	color: var(--success-color);
+}
+.form .success-input{
+	border-bottom: 2px solid var(--success-color);;
+}
+
+.submit-sucess {
+	background-color: var(--success-color);
 }

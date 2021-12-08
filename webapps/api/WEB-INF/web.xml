@@ -1,11 +1,2 @@
 <web-app>
-    <Resource name="jdbc/mysql" auth="Container" type="javax.sql.DataSource"
-              username="root"
-              password="root"
-              driverClassName="com.mysql.cj.jdbc.Driver"
-              url="jdbc:mysql://db:3307/Favorite_Website_DB"
-              maxTotal="25"
-              maxIdle="10"
-              defaultTransactionIsolation="READ_COMMITTED"
-              validationQuery="Select 1" />
 </web-app>

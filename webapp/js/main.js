@@ -15,15 +15,23 @@ const doPost = (endpoint, data) => {
         type: "POST",
         data: JSON.stringify(data)  ,
         success: (result, status, xhr) => {
-            //window.location.replace("index.html?token="+result.access_token);
-            console.log(result)
+            $(".form .input").addClass('success-input')
+            $(".form label").addClass('success-label')
+            $(".btn-submit").addClass('submit-sucess')
+            setInterval(() => {
+                $(".container").addClass('animate__fadeOutDown')
+            }, 1000)
+            setInterval(() => {
+                //window.location.replace("index.html?token="+result.access_token);
+            }, 1000)
+
         },
         error: () => {
-            $(".form .input").addClass('warning-input animate__shakeX animate__animated')
+            $(".form .input").addClass('warning-input animate__shakeX')
             $(".form label").addClass('warning-label')
 
             setInterval(() => {
-                $(".form .input").removeClass('warning-input animate__shakeX animate__animated')
+                $(".form .input").removeClass('warning-input animate__shakeX')
                 $(".form label").removeClass('warning-label')
             },2000)
         }

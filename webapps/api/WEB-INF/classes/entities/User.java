@@ -5,27 +5,6 @@ public class User {
     private String name;
     private String username;
     private String email;
-
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     private String password;
 
     public User() {
@@ -34,26 +13,44 @@ public class User {
         email = "";
         password = "";
     }
-    
-    public void fillUser(String info) {
-        String[] splitted = info.split(";");
 
-        name = splitted[0];
-        username = splitted[1];
-        email = splitted[2];
-        password = splitted[3];
+    public int getUser_id() {
+        return user_id;
     }
 
-    public String userToString() {
-        String res = "";
-
-        res += name+";";
-        res += username+";";
-        res += email+";";
-        res += password;
-
-        return res;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
