@@ -21,6 +21,7 @@ services:
     volumes:
       - ./webapps/api:/usr/local/tomcat/webapps/api
       - ./conf/web.xml:/usr/local/tomcat/conf/web.xml
+      - ./lib/json-java.jar:/usr/local/tomcat/lib/json-java.jar
     ports:
       - '8888:8080'
     environment:
