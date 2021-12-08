@@ -42,10 +42,10 @@ public class LoginServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         userController = new Controller();
-        System.out.println(userController.login(username, password));
-        if ( userController.login(username, password) != null  ) {
+        User user = userController.login(username, password);
+
+        if (user != null ) {
             response.setStatus(201);
-            User user = userController.login(username, password);
             out.println(JSONObject.valueToString(user));
         } else {
             response.setStatus(401);

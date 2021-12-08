@@ -8,7 +8,6 @@
           <element id="module-output" name="ICE-Project" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="mysql-connector" />
           <element id="file-copy" path="$PROJECT_DIR$/lib/mysql-connector-java-8.0.23.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/lib/json-java.jar" />
         </element>

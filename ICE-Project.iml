@@ -37,7 +37,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/mysql-connector-java-8.0.23.jar!/" />
@@ -46,6 +46,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" exported="" name="mysql-connector" level="project" />
+    <orderEntry type="library" name="mysql-connector-java-8.0.23" level="project" />
   </component>
 </module>

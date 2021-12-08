@@ -36,7 +36,6 @@ public class Controller implements UserController, BookmarkController{
 
     @Override
     public User login(String username, String password) {
-        System.out.println("test");
         return dbConnecter.authenticate(username, password);
     }
 

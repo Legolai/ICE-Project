@@ -9,19 +9,15 @@ import java.util.ArrayList;
 public class DBConnecter {
 
     private Connection conn;
-    private static final String DB_URL = "jdbc:mysql://localhost:3307/Favorite_Website_DB?characterEncoding=utf8";
+    private static final String DB_URL = "jdbc:mysql://localhost:3307/Favorite_Website_DB";
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "root";
 
     public DBConnecter() {
-        System.out.println("db connecter");
-        this.conn = null;
-        System.out.println("db connected");
-
+        conn = null;
     }
 
     private void connect() throws SQLException {
-        System.out.println("trying to load driver1");
         System.out.println(" driver test");
         this.conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
         System.out.println(" driver loadded");
@@ -40,14 +36,14 @@ public class DBConnecter {
     }
 
     public User authenticate(String username, String password) {
-        Statement stmt = null;
+        PreparedStatement preparedStatement= null;
 
         try {
             System.out.println("trying to connect");
             connect();
             System.out.println("Connected!");
             String query = "SELECT * FROM Favorite_Website_DB.User WHERE username = ? AND password = ?";
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement = conn.prepareStatement(query);
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
 
@@ -64,6 +60,7 @@ public class DBConnecter {
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            System.out.println("failed!");
         }
         return null;
     }
