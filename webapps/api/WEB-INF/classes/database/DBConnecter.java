@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class DBConnecter {
 
     private Connection conn;
-    private static final String DB_URL = "jdbc:mysql://localhost:3307/Favorite_Website_DB";
+    private static final String DB_URL = "jdbc:mysql://db:3306/Favorite_Website_DB";
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "root";
 
@@ -18,9 +18,7 @@ public class DBConnecter {
     }
 
     private void connect() throws SQLException {
-        System.out.println(" driver test");
         this.conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-        System.out.println(" driver loadded");
     }
 
     public ArrayList<Bookmark> getBookmarks(String user) {
@@ -42,14 +40,16 @@ public class DBConnecter {
             System.out.println("trying to connect");
             connect();
             System.out.println("Connected!");
-            String query = "SELECT * FROM Favorite_Website_DB.User WHERE username = ? AND password = ?";
+            String query = "SELECT * FROM User WHERE username = ? AND password = ?";
             preparedStatement = conn.prepareStatement(query);
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
 
-            ResultSet resultSet = preparedStatement.executeQuery(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-            if (resultSet.getRow() > 0 ) {
+            System.out.println();
+
+            if ( resultSet.isBeforeFirst() ) {
                 User user = new User();
                 user.setUser_id(resultSet.getInt("user_id"));
                 user.setName(resultSet.getString("username"));
