@@ -23,7 +23,6 @@ CREATE TABLE User
     surname VARCHAR(255) NOT NULL,
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL
-    #primary key (id)
 );
 
 CREATE TABLE Bookmark
@@ -32,9 +31,11 @@ CREATE TABLE Bookmark
     user_id TINYINT NOT NULL,
     bookmark_name VARCHAR(255) NOT NULL,
     url VARCHAR(255) NOT NULL,
+    media_name VARCHAR(255) NOT NULL,
     status ENUM("Watching", "Completed", "On Hold", "Dropped", "Plan to Watch"),
     rating TINYINT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES User (user_id)
+    FOREIGN KEY (user_id) REFERENCES User (user_id),
+    FOREIGN KEY (media_name) REFERENCES Media (media_name)
 );
 
 CREATE TABLE Media
@@ -53,15 +54,9 @@ CREATE TABLE Tag
     tag_name varchar(255) not null
 );
 
-CREATE TABLE Bookmark_Media
-(
-    bookmark_id TINYINT NOT NULL,
-    media_id TINYINT NOT NULL,
-    FOREIGN KEY (bookmark_id) REFERENCES Bookmark (bookmark_id),
-    FOREIGN KEY (media_id) REFERENCES Media (media_id)
-);
 CREATE TABLE Bookmark_Genre
 (
+    bg_pk TINYINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     bookmark_id TINYINT NOT NULL,
     genre_id TINYINT NOT NULL,
     FOREIGN KEY (bookmark_id) REFERENCES Bookmark (bookmark_id),
@@ -69,6 +64,7 @@ CREATE TABLE Bookmark_Genre
 );
 CREATE TABLE Bookmark_Tag
 (
+    bt_pk TINYINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     bookmark_id TINYINT NOT NULL,
     tag_id TINYINT NOT NULL,
     FOREIGN KEY (bookmark_id) REFERENCES Bookmark (bookmark_id),
@@ -80,17 +76,17 @@ INSERT INTO User (email,firstname, surname, username, password) VALUES ("Michael
 INSERT INTO User (email,firstname, surname, username, password) VALUES ("Nicholai@email","Mic","cahel", "nicholai", "n123");
 INSERT INTO User (email,firstname, surname, username, password) VALUES ("test","test","test", "test", "test");
 
-INSERT INTO Bookmark (user_id, bookmark_name, url, status, rating) VALUES (2, "Avatar", "", "Completed", 12);
-INSERT INTO Bookmark (user_id, bookmark_name, url, status, rating) VALUES (2, "Fairy tail", "", "Completed", 12);
-INSERT INTO Bookmark (user_id, bookmark_name, url, status, rating) VALUES (2, "One piece", "", "Watching", 12);
-INSERT INTO Bookmark (user_id, bookmark_name, url, status, rating) VALUES (3, "Bleach", "", "Completed", 12);
-INSERT INTO Bookmark (user_id, bookmark_name, url, status, rating) VALUES (3, "Black Clover", "", "Completed", 12);
-INSERT INTO Bookmark (user_id, bookmark_name, url, status, rating) VALUES (3, "Demon Slayer", "", "Watching", 12);
+INSERT INTO Bookmark (user_id, bookmark_name, url, media_name, status, rating) VALUES (2, "Avatar", "", "Movie", "Completed", 12);
+INSERT INTO Bookmark (user_id, bookmark_name, url, media_name, status, rating) VALUES (2, "Fairy tail", "", "Anime", "Completed", 12);
+INSERT INTO Bookmark (user_id, bookmark_name, url, media_name, status, rating) VALUES (2, "One piece", "", "Anime", "Watching", 12);
+INSERT INTO Bookmark (user_id, bookmark_name, url, media_name, status, rating) VALUES (3, "Bleach", "", "Anime", "Completed", 12);
+INSERT INTO Bookmark (user_id, bookmark_name, url, media_name, status, rating) VALUES (3, "Black Clover", "", "Anime", "Completed", 12);
+INSERT INTO Bookmark (user_id, bookmark_name, url, media_name, status, rating) VALUES (3, "Demon Slayer", "", "Anime", "Watching", 12);
 INSERT INTO Media (media_name) VALUES ("Movie");
+INSERT INTO Media (media_name) VALUES ("Anime");
 INSERT INTO Genre (genre_name) VALUES ("Sci-Fi");
 INSERT INTO Tag (tag_name) VALUES ("Sick CGI");
 
-INSERT INTO Bookmark_Media (bookmark_id, media_id) VALUES (1, 1);
 INSERT INTO Bookmark_Genre (bookmark_id, genre_id) VALUES (1, 1);
 INSERT INTO Bookmark_Tag (bookmark_id, tag_id) VALUES (1, 1);
 
@@ -100,7 +96,6 @@ select * from Bookmark;
 select * from Media;
 select * from Genre;
 select * from Tag;
-select * from Bookmark_Media;
 select * from Bookmark_Genre;
 select * from Bookmark_Tag;
 
