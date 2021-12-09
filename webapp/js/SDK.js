@@ -3,7 +3,9 @@ const baseURL = "http://localhost:8888/api";
 
 const SDK = {
     login: (data) => {
-        $.post( baseURL+"/login", JSON.stringify(data), {
+        $.ajax( baseURL+"/login", {
+            method: "POST",
+            data: JSON.stringify(data),
             xhrFields: { withCredentials: true },
             crossDomain: true}
         )
@@ -31,16 +33,16 @@ const SDK = {
     getAll: () => {
         $.ajax(baseURL+"/getAll",
             {
-                method: "get",
+                method: "GET",
                 xhrFields: { withCredentials: true },
                 crossDomain: true}
         )
         .done((result) => {
-            console.log(result)
-            //return result
+            console.log(result);
         }).fail(() => {
-            //window.location = "login.html"
+            window.location = "login.html"
+            return null;
         })
-
     }
+
 }

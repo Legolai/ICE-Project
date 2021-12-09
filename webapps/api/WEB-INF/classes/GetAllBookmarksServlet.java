@@ -7,24 +7,21 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.json.JSONObject;
+import org.json.JSONArray;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
 @WebServlet("/getAll")
-public class GetAllServlet extends HttpServlet {
+public class GetAllBookmarksServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        System.out.println("har ramt request");
 
         HttpSession session = request.getSession(false);
-        if (session != null )
-            System.out.println("er på den anden side");
-        else
-            System.out.println("den er null");
+        System.out.println("fra getAll: " + session.getId());
+        User user = (User) request.getSession().getAttribute("user");
 
         response.addHeader("Access-Control-Allow-Origin", "http://localhost:63342");
         response.addHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -34,16 +31,19 @@ public class GetAllServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         BookmarkController bookmarkController = new Controller();
-        ArrayList<Bookmark> bookmarks = bookmarkController.getAll(new User());
+        System.out.println(bookmarkController.getAll(user));
+        ArrayList<Bookmark> bookmarks = bookmarkController.getAll(user);
+        System.out.println(bookmarks.size());
+
 
         if (bookmarks != null ) {
             session.setAttribute("bookmarks", bookmarks);
 
             response.setStatus(201);
-            JSONObject bookmarksAsJSON = new JSONObject(bookmarks);
 
-            //Har gjort klar til at vi kan sende cookies som vi kan bruge til at læse sessions eller tokens
-            //response.addCookie("JSESSIONID", session.getId());
+            JSONArray bookmarksAsJSON = new JSONArray(bookmarks);
+
+            System.out.println(bookmarksAsJSON);
 
             out.println(bookmarksAsJSON);
 

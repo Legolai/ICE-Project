@@ -1,6 +1,7 @@
-$(document).ready(() => {
+$(document).ready(async () => {
 
-    SDK.getAll();
+    let bookmarks = SDK.getAll();
 
+    console.log(bookmarks);
 
 })

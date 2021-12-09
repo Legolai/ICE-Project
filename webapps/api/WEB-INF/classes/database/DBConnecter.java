@@ -10,7 +10,7 @@ import java.util.List;
 public class DBConnecter {
 
     private Connection conn;
-    private static final String DB_URL = "jdbc:mysql://db:3307/Favorite_Website_DB";
+    private static final String DB_URL = "jdbc:mysql://db:3306/Favorite_Website_DB";
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "root";
 
@@ -103,30 +103,28 @@ public class DBConnecter {
             preparedStatement.setInt(1, user.getUser_id());
 
             ResultSet resultSet = preparedStatement.executeQuery();
-            ArrayList<Bookmark> bookmarks = new ArrayList<>();
 
-            if (resultSet.next() == false) {
-                return null;
-            } else {
-                do {
+            if (resultSet.isBeforeFirst()) {
+                ArrayList<Bookmark> bookmarks = new ArrayList<>();
+                while (resultSet.next()) {
                     Bookmark bookmark = new Bookmark();
                     bookmark.setBookmark_id(resultSet.getInt("bookmark_id"));
                     bookmark.setUser_id(user.getUser_id());
                     bookmark.setUrl(resultSet.getString("url"));
                     bookmark.setName(resultSet.getString("bookmark_name"));
-                    bookmark.setMedia(resultSet.getString("media_name"));
                     bookmark.setStatus(resultSet.getString("status"));
                     bookmark.setRating(resultSet.getInt("rating"));
-
+/*
                     String s2 = "SELECT * FROM Favorite_Website_DB.Bookmark_Genre WHERE bookmark_id = ?";
                     String s3 = "SELECT * FROM Favorite_Website_DB.Genre WHERE genre_id = ?";
                     getBookmarksGenreOrTag(bookmark, s2, s3, "genre_id", "genre_name");
                     s2 = "SELECT * FROM Favorite_Website_DB.Bookmark_Tag WHERE bookmark_id = ?";
                     s3 = "SELECT * FROM Favorite_Website_DB.Tag WHERE tag_id = ?";
                     getBookmarksGenreOrTag(bookmark, s2, s3, "tag_id", "tag_name");
-
+*/
                     bookmarks.add(bookmark);
-                } while (resultSet.next());
+                }
+                return bookmarks;
             }
             close();
         } catch (SQLException e){
@@ -224,10 +222,42 @@ public class DBConnecter {
         }
     }
 
+    public User getUser(int user_id) {
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connect();
+
+            String query = "SELECT * FROM Favorite_Website_DB.User WHERE user_id = ?";
+            preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setInt(1, user_id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.isBeforeFirst()) {
+                User user = new User();
+                while (resultSet.next()) {
+                    user.setUser_id(resultSet.getInt("user_id"));
+                    user.setFirstname(resultSet.getString("firstname"));
+                    user.setSurname(resultSet.getString("surname"));
+                    user.setUsername(resultSet.getString("username"));
+                    user.setPassword(resultSet.getString("password"));
+                    user.setEmail(resultSet.getString("email"));
+                }
+                close();
+                return user;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            System.out.println("failed!");
+        }
+        return null;
+    }
 
 
 
     private void close() throws SQLException {
         this.conn.close();
     }
+
 }
