@@ -94,7 +94,6 @@ select * from Bookmark;
 select * from Media;
 select * from Genre;
 select * from Tag;
-select * from Bookmark_Media;
 select * from Bookmark_Genre;
 select * from Bookmark_Tag;
 

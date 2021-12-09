@@ -86,7 +86,11 @@ public class DBConnecter {
                     do {
                         list.add(rs3.getString(name));
                     } while (rs2.next());
-                    bm.setGenres(list);
+                    if (id.equals("genre_id")) {
+                        bm.setGenres(list);
+                    } else {
+                        bm.setTags(list);
+                    }
                 } while (rs2.next());
             }
         } catch (SQLException e){
