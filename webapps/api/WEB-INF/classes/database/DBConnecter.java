@@ -22,6 +22,77 @@ public class DBConnecter {
         this.conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
     }
 
+
+    public User authenticate(String username, String password) {
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connect();
+
+            String query = "SELECT * FROM Favorite_Website_DB.User WHERE username = ? AND password = ?";
+            preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.isBeforeFirst()) {
+                User user = new User();
+                while (resultSet.next()) {
+                    user.setUser_id(resultSet.getInt("user_id"));
+                    user.setFirstname(resultSet.getString("firstname"));
+                    user.setSurname(resultSet.getString("surname"));
+                    user.setUsername(resultSet.getString("username"));
+                    user.setPassword(resultSet.getString("password"));
+                    user.setEmail(resultSet.getString("email"));
+                }
+                close();
+                return user;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            System.out.println("failed!");
+        }
+        return null;
+    }
+
+    public void saveUser(User user) {
+        String sql = "";
+        if (user.getUser_id() > 0) {
+            sql = "INSERT INTO User (user_id, email, firstname, surname, username, password) " +
+                    "VALUES (?,?,?,?,?,?) ON DUPLICATE KEY UPDATE email=?, firstname=?, surname=?, username=?, password=?;";
+        } else {
+            sql = "INSERT INTO User (email, firstname, surname, username, password) " +
+                    "VALUES (?,?,?,?,?,?) ON DUPLICATE KEY UPDATE email=?, firstname=?, surname=?, username=?, password=?;";
+        }
+        try {
+            connect();
+            System.out.println("Creating statement...");
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            if (user.getUser_id() > 0) {
+                pstmt.setInt(1, user.getUser_id());
+                pstmt.setString(2, user.getEmail());
+                pstmt.setString(3, user.getFirstname());
+                pstmt.setString(4, user.getSurname());
+                pstmt.setString(5, user.getUsername());
+                pstmt.setString(6, user.getPassword());
+            } else {
+                pstmt.setString(1, user.getEmail());
+                pstmt.setString(2, user.getFirstname());
+                pstmt.setString(3, user.getSurname());
+                pstmt.setString(4, user.getUsername());
+                pstmt.setString(5, user.getPassword());
+            }
+
+            pstmt.executeBatch();
+            pstmt.close();
+            close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public ArrayList<Bookmark> getBookmarks(User user) {
         PreparedStatement preparedStatement = null;
         try {
@@ -154,38 +225,7 @@ public class DBConnecter {
     }
 
 
-    public User authenticate(String username, String password) {
-        PreparedStatement preparedStatement = null;
 
-        try {
-            connect();
-
-            String query = "SELECT * FROM Favorite_Website_DB.User WHERE username = ? AND password = ?";
-            preparedStatement = conn.prepareStatement(query);
-            preparedStatement.setString(1, username);
-            preparedStatement.setString(2, password);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.isBeforeFirst()) {
-                User user = new User();
-                while (resultSet.next()) {
-                    user.setUser_id(resultSet.getInt("user_id"));
-                    user.setFirstname(resultSet.getString("firstname"));
-                    user.setSurname(resultSet.getString("surname"));
-                    user.setUsername(resultSet.getString("username"));
-                    user.setPassword(resultSet.getString("password"));
-                    user.setEmail(resultSet.getString("email"));
-                }
-                close();
-                return user;
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-            System.out.println("failed!");
-        }
-        return null;
-    }
 
     private void close() throws SQLException {
         this.conn.close();
