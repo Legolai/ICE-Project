@@ -57,13 +57,12 @@ public class DBConnecter {
                     bookmarks.add(bookmark);
                 } while (resultSet.next());
             }
-
+            close();
         } catch (SQLException e){
             e.printStackTrace();
         }
         return null;
     }
-
     private Bookmark getBookmarksGenreOrTag(Bookmark bm, String s2, String s3, String id, String name) {
         PreparedStatement ps2 = null;
         PreparedStatement ps3 = null;
@@ -97,6 +96,61 @@ public class DBConnecter {
             e.printStackTrace();
         }
         return bm;
+    }
+
+    public void saveBookmark(Bookmark bm) {
+        String sql = "";
+        if (bm.getBookmark_id() > 0) {
+            sql = "INSERT INTO Bookmark (bookmark_id, user_id, bookmark_name, url, media_name, status, rating) " +
+                    "VALUES (?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE bookmark_name=?, url=?, media_name=?, status=?, rating=?;";
+        } else {
+            sql = "INSERT INTO Bookmark (user_id, bookmark_name, url, media_name, status, rating) " +
+                    "VALUES (?,?,?,?,?,?) ON DUPLICATE KEY UPDATE bookmark_name=?, url=?, media_name=?, status=?, rating=?;";
+        }
+
+        try {
+            connect();
+            System.out.println("Creating statement...");
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            if (bm.getBookmark_id() > 0) {
+                pstmt.setInt(1, bm.getBookmark_id());
+                pstmt.setInt(2, bm.getUser_id());
+                pstmt.setString(3,bm.getName());
+                pstmt.setString(4,bm.getUrl());
+                pstmt.setString(5,bm.getMedia());
+                pstmt.setString(6,bm.getStatus());
+                pstmt.setInt(7, bm.getRating());
+            } else {
+                pstmt.setInt(1, bm.getUser_id());
+                pstmt.setString(2,bm.getName());
+                pstmt.setString(3,bm.getUrl());
+                pstmt.setString(4,bm.getMedia());
+                pstmt.setString(5,bm.getStatus());
+                pstmt.setInt(6, bm.getRating());
+            }
+
+            // Checks if the media exists in database, if not insert it
+            String query = "SELECT * FROM Favorite_Website_DB.Media WHERE media_name = ?";
+            PreparedStatement pstmtMedia = conn.prepareStatement(query);
+            pstmtMedia.setString(1, bm.getMedia());
+            ResultSet rs = pstmtMedia.executeQuery();
+            if (rs.next() == false) {
+                String sqlmedia = "INSERT INTO Media (media_name) VALUES (?) ON DUPLICATE KEY media_name = media_name";
+                pstmtMedia = conn.prepareStatement(sqlmedia, Statement.RETURN_GENERATED_KEYS);
+                pstmtMedia.setString(1,bm.getMedia());
+            } else {
+                //do nothing
+            }
+
+            pstmtMedia.executeBatch();
+            pstmtMedia.close();
+            pstmt.executeBatch();
+            pstmt.close();
+            close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 

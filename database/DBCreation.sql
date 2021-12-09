@@ -41,6 +41,7 @@ CREATE TABLE Bookmark
 
 CREATE TABLE Media
 (
+    media_id TINYINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     media_name varchar(255) not null
 );
 CREATE TABLE Genre
@@ -56,6 +57,7 @@ CREATE TABLE Tag
 
 CREATE TABLE Bookmark_Genre
 (
+    bg_pk TINYINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     bookmark_id TINYINT NOT NULL,
     genre_id TINYINT NOT NULL,
     FOREIGN KEY (bookmark_id) REFERENCES Bookmark (bookmark_id),
@@ -63,6 +65,7 @@ CREATE TABLE Bookmark_Genre
 );
 CREATE TABLE Bookmark_Tag
 (
+    bt_pk TINYINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     bookmark_id TINYINT NOT NULL,
     tag_id TINYINT NOT NULL,
     FOREIGN KEY (bookmark_id) REFERENCES Bookmark (bookmark_id),
