@@ -1,7 +1,8 @@
 $(document).ready(async () => {
 
-    let bookmarks = SDK.getAll();
+    //SDK.get(endpoints.checkSession)
 
-    console.log(bookmarks);
+    SDK.get(endpoints.getall);
+
 
 })

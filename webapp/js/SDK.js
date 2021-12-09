@@ -1,48 +1,53 @@
 const baseURL = "http://localhost:8888/api";
-
+const endpoints = {
+    login: "/login",
+    signup: "/signUp",
+    getall: "/getAll",
+    checkSession: "/checkSession"
+}
 
 const SDK = {
-    login: (data) => {
-        $.ajax( baseURL+"/login", {
+    post: (endpoint, data) => {
+        $.ajax( baseURL+endpoint, {
             method: "POST",
             data: JSON.stringify(data),
             xhrFields: { withCredentials: true },
             crossDomain: true}
         )
-        .done(() => {
+            .done(() => {
+                $(".form .input").addClass('success-input')
+                $(".form label").addClass('success-label')
+                $(".btn-submit").addClass('submit-success')
+                setInterval(() => {
+                    $(".container").addClass('animate__bounceOutDown')
+                        .on('animationend', () => {
+                            window.location = "index.html"
+                        })
+                }, 1000)
+            })
+            .fail(() => {
+                $(".form .input").addClass('warning-input animate__shakeX')
+                $(".form label").addClass('warning-label')
+                setInterval(() => {
+                    $(".form .input").removeClass('warning-input animate__shakeX')
+                    $(".form label").removeClass('warning-label')
+                },2000)
+            })
+    },
+    get: (endpoint) => {
+        $.ajax(baseURL + endpoint,
+{
+            method: "GET",
+            xhrFields: {withCredentials: true},
+            crossDomain: true
+        })
+        .done((result) => {
 
-            $(".form .input").addClass('success-input')
-            $(".form label").addClass('success-label')
-            $(".btn-submit").addClass('submit-sucess')
-            setInterval(() => {
-                $(".container").addClass('animate__fadeOutDown')
-            }, 1000)
-            setInterval(() => {
-                window.location = "index.html"
-            }, 1750)
         })
         .fail(() => {
-            $(".form .input").addClass('warning-input animate__shakeX')
-            $(".form label").addClass('warning-label')
-            setInterval(() => {
-                $(".form .input").removeClass('warning-input animate__shakeX')
-                $(".form label").removeClass('warning-label')
-            },2000)
-        })
-    },
-    getAll: () => {
-        $.ajax(baseURL+"/getAll",
-            {
-                method: "GET",
-                xhrFields: { withCredentials: true },
-                crossDomain: true}
-        )
-        .done((result) => {
-            console.log(result);
-        }).fail(() => {
-            window.location = "login.html"
-            return null;
+            if (endpoint === endpoints.checkSession){
+                //window.location = "login.html"
+            }
         })
     }
-
 }
