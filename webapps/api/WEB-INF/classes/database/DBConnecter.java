@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class DBConnecter {
 
     private Connection conn;
-    private static final String DB_URL = "jdbc:mysql://db:3306/Favorite_Website_DB";
+    private static final String DB_URL = "jdbc:mysql://db:3307/Favorite_Website_DB";
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "root";
 

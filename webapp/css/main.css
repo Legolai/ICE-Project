@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cabin:wght@500;600;700&family=Roboto+Slab:wght@400;700&family=Signika:wght@300;400;600&display=swap');
+
 * {
 	box-sizing: border-box;
 	outline: transparent;
@@ -12,15 +14,20 @@
 	--success-color: #79B473;
 	--dark-color: #2A2D34;
 	--bg-color: #F1F7F9;
+	--header-font: 'Cabin', sans-serif;
+	--subheader-font: 'Roboto Slab', serif;;
+	--body-font: 'Signika', sans-serif;;
 }
 
 body {
 	padding: 0;
 	margin: 0;
-	font-family: "Courier New", Courier, monospace;
+	font-family: var(--body-font);
 	font-size: 14px;
 	height: 100vh;
 	background-color: var(--bg-color);
+	display: flex;
+	justify-content: center;
 }
 
 a {
@@ -31,15 +38,17 @@ nav {
 	display: flex;
 	width: 100%;
 	background-color: var(--accent-color);
+	justify-content: center;
 }
 
 nav ul {
 	display: flex;
 	list-style: none;
-	gap: 10px;
-	flex: 1;
+	gap: 20px;
+	width: clamp(100px, 80%, 800px);
 	margin: 10px;
-	padding: 10px;
+	padding: 15px;
+
 }
 
 nav ul li:last-child {
@@ -47,14 +56,18 @@ nav ul li:last-child {
 }
 
 nav ul li a {
-	padding: 10px 15px;
+	padding: 5px 10px;
 	color: var(--bg-color);
 	font-weight: normal;
+	text-transform: capitalize;
+	cursor: pointer;
+	font-size: 1.125rem;
+	text-align: center;
 }
 
 nav ul li:last-child a {
 	background-color: var(--primary-color);
-	text-align: center;
+	padding: 10px 20px;
 	border-radius: 10px;
 }
 
@@ -62,17 +75,27 @@ nav ul li a:hover {
 	opacity: 0.6;
 }
 
+nav ul li:not(:last-child) a:hover {
+	border-bottom: 2px solid var(--bg-color);
+}
+
+nav ul li:not(:last-child) .active {
+	border-bottom: 2px solid var(--bg-color);
+}
+
 .container {
+	flex-grow: 1;
 	display: flex;
-	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	height: 100vh;
+}
+
+.flex-coloum{
+	display: flex;
+	flex-direction: column;
 }
 
 .form {
-	display: flex;
-	flex-direction: column;
 	width: clamp(200px, 60%, 600px);
 }
 
@@ -96,6 +119,18 @@ nav ul li a:hover {
 	font-size: 1.25em;
 }
 
+.form .container {
+	margin-top: 10px;
+	justify-content: space-between;
+}
+
+.form .container a:hover {
+	text-decoration: underline;
+}
+.form .container a:last-child {
+	color: var(--secondary-color);
+}
+
 .btn-submit {
 	font-size: 1.5em;
 	font-weight: 600;
@@ -104,7 +139,6 @@ nav ul li a:hover {
 	color: white;
 	border: none;
 	padding: 15px 10px;
-	margin-top: 20px;
 }
 
 .btn-submit:hover {
@@ -131,4 +165,14 @@ nav ul li a:hover {
 
 .submit-sucess {
 	background-color: var(--success-color);
+}
+
+.header {
+	font-size: 2.5em;
+	font-family: var(--header-font);
+}
+
+.sub-header {
+	font-size: 1.5em;
+	font-family: var(--subheader-font);
 }
