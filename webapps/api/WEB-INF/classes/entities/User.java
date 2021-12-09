@@ -2,16 +2,18 @@ package entities;
 
 public class User {
     private int user_id;
-    private String name;
+    private String firstname;
+    private String surname;
     private String username;
     private String email;
     private String password;
 
     public User() {
-        name = "";
-        username = "";
-        email = "";
-        password = "";
+        firstname =  "";
+        surname =  "";
+        username =  "";
+        email =  "";
+        password =  "";
     }
 
     public int getUser_id() {
@@ -22,12 +24,20 @@ public class User {
         this.user_id = user_id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getUsername() {

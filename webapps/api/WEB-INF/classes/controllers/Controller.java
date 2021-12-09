@@ -15,8 +15,8 @@ public class Controller implements UserController, BookmarkController{
     }
 
     @Override
-    public ArrayList<Bookmark> getAll(String accessToken) {
-        return null;
+    public ArrayList<Bookmark> getAll(User user) {
+        return dbConnecter.getBookmarks(user);
     }
 
     @Override

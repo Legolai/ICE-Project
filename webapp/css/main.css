@@ -106,6 +106,13 @@ nav ul li:not(:last-child) .active {
 	-o-transition: border-bottom .4s, color .4s, background-color .4s;
 	transition: border-bottom .4s, color .4s, background-color .4s;
 }
+.input::placeholder,.input::placeholder, label ~ .input{
+	-webkit-transition: all .5s;
+	-moz-transition: all .5s;
+	-ms-transition: all .5s;
+	-o-transition: all .5s;
+	transition: all .5s;
+}
 
 .form input{
 	padding: 15px 10px;
@@ -117,6 +124,28 @@ nav ul li:not(:last-child) .active {
 
 .form label {
 	font-size: 1.25em;
+}
+ label ~ .input, label ~ input:valid {
+	 -webkit-transform: translateY(-20px);
+	 -moz-transform: translateY(-20px);
+	 -ms-transform: translateY(-20px);
+	 -o-transform: translateY(-20px);
+	 transform: translateY(-20px);
+	 
+ }
+ label ~ .input:focus-within, label ~ .input:hover, label ~ .input:valid{
+	 -webkit-transform: translateY(0);
+	 -moz-transform: translateY(0);
+	 -ms-transform: translateY(0);
+	 -o-transform: translateY(0);
+	 transform: translateY(0);	 
+ }
+.input:focus-within::placeholder,.input:hover::placeholder {
+	-webkit-transform: translateY(-50px);
+	-moz-transform: translateY(-50px);
+	-ms-transform: translateY(-50px);
+	-o-transform: translateY(-50px);
+	transform: translateY(-50px);
 }
 
 .form .container {

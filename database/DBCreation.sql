@@ -81,6 +81,11 @@ INSERT INTO User (email,firstname, surname, username, password) VALUES ("Nichola
 INSERT INTO User (email,firstname, surname, username, password) VALUES ("test","test","test", "test", "test");
 
 INSERT INTO Bookmark (user_id, bookmark_name, url, status, rating) VALUES (2, "Avatar", "", "Completed", 12);
+INSERT INTO Bookmark (user_id, bookmark_name, url, status, rating) VALUES (2, "Fairy tail", "", "Completed", 12);
+INSERT INTO Bookmark (user_id, bookmark_name, url, status, rating) VALUES (2, "One piece", "", "Watching", 12);
+INSERT INTO Bookmark (user_id, bookmark_name, url, status, rating) VALUES (3, "Bleach", "", "Completed", 12);
+INSERT INTO Bookmark (user_id, bookmark_name, url, status, rating) VALUES (3, "Black Clover", "", "Completed", 12);
+INSERT INTO Bookmark (user_id, bookmark_name, url, status, rating) VALUES (3, "Demon Slayer", "", "Watching", 12);
 INSERT INTO Media (media_name) VALUES ("Movie");
 INSERT INTO Genre (genre_name) VALUES ("Sci-Fi");
 INSERT INTO Tag (tag_name) VALUES ("Sick CGI");
