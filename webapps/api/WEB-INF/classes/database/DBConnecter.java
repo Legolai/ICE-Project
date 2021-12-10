@@ -6,6 +6,7 @@ import entities.User;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class DBConnecter {
 
@@ -33,6 +34,38 @@ public class DBConnecter {
             preparedStatement = conn.prepareStatement(query);
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.isBeforeFirst()) {
+                User user = new User();
+                while (resultSet.next()) {
+                    user.setUser_id(resultSet.getInt("user_id"));
+                    user.setFirstname(resultSet.getString("firstname"));
+                    user.setSurname(resultSet.getString("surname"));
+                    user.setUsername(resultSet.getString("username"));
+                    user.setPassword(resultSet.getString("password"));
+                    user.setEmail(resultSet.getString("email"));
+                }
+                close();
+                return user;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            System.out.println("failed!");
+        }
+        return null;
+    }
+
+    public User getUser(int user_id) {
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connect();
+
+            String query = "SELECT * FROM Favorite_Website_DB.User WHERE user_id = ?";
+            preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setInt(1, user_id);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -93,6 +126,8 @@ public class DBConnecter {
         }
     }
 
+
+
     public ArrayList<Bookmark> getBookmarks(User user) {
         PreparedStatement preparedStatement = null;
         try {
@@ -132,6 +167,7 @@ public class DBConnecter {
         }
         return null;
     }
+
     private Bookmark getBookmarksGenreOrTag(Bookmark bm, String s2, String s3, String id, String name) {
         PreparedStatement ps2 = null;
         PreparedStatement ps3 = null;
@@ -222,38 +258,31 @@ public class DBConnecter {
         }
     }
 
-    public User getUser(int user_id) {
-        PreparedStatement preparedStatement = null;
+
+
+    public void deleteUserORBookmark(int id, String name, String userOrBookmark) {
+        String sql = "";        //id is user or bookmark id, and name is username or bookmark_name
+        if (userOrBookmark.toLowerCase(Locale.ROOT).equals("user")) {
+            sql = "DELETE * FROM Favorite_Website_DB.User WHERE user_id = ? AND username = ?";
+        } else {
+            sql = "DELETE * FROM Favorite_Website_DB.Bookmark WHERE bookmark_id = ? AND bookmark_name = ?";
+        }
 
         try {
             connect();
+            System.out.println("Creating statement...");
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-            String query = "SELECT * FROM Favorite_Website_DB.User WHERE user_id = ?";
-            preparedStatement = conn.prepareStatement(query);
-            preparedStatement.setInt(1, user_id);
+            pstmt.setInt(1, id);
+            pstmt.setString(2, name);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.isBeforeFirst()) {
-                User user = new User();
-                while (resultSet.next()) {
-                    user.setUser_id(resultSet.getInt("user_id"));
-                    user.setFirstname(resultSet.getString("firstname"));
-                    user.setSurname(resultSet.getString("surname"));
-                    user.setUsername(resultSet.getString("username"));
-                    user.setPassword(resultSet.getString("password"));
-                    user.setEmail(resultSet.getString("email"));
-                }
-                close();
-                return user;
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-            System.out.println("failed!");
+            pstmt.executeBatch();
+            pstmt.close();
+            close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return null;
     }
-
 
 
     private void close() throws SQLException {
