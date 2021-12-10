@@ -25,6 +25,12 @@ CREATE TABLE User
     password VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE Media
+(
+    media_id TINYINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    media_name varchar(255) not null UNIQUE
+);
+
 CREATE TABLE Bookmark
 (
     bookmark_id TINYINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -38,11 +44,6 @@ CREATE TABLE Bookmark
     FOREIGN KEY (media_name) REFERENCES Media (media_name)
 );
 
-CREATE TABLE Media
-(
-    media_id TINYINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    media_name varchar(255) not null
-);
 CREATE TABLE Genre
 (
     genre_id TINYINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -76,16 +77,18 @@ INSERT INTO User (email,firstname, surname, username, password) VALUES ("Michael
 INSERT INTO User (email,firstname, surname, username, password) VALUES ("Nicholai@email","Mic","cahel", "nicholai", "n123");
 INSERT INTO User (email,firstname, surname, username, password) VALUES ("test","test","test", "test", "test");
 
+INSERT INTO Media (media_name) VALUES ("Movie");
+INSERT INTO Media (media_name) VALUES ("Anime");
+INSERT INTO Genre (genre_name) VALUES ("Sci-Fi");
+INSERT INTO Tag (tag_name) VALUES ("Sick CGI");
+
 INSERT INTO Bookmark (user_id, bookmark_name, url, media_name, status, rating) VALUES (2, "Avatar", "", "Movie", "Completed", 12);
 INSERT INTO Bookmark (user_id, bookmark_name, url, media_name, status, rating) VALUES (2, "Fairy tail", "", "Anime", "Completed", 12);
 INSERT INTO Bookmark (user_id, bookmark_name, url, media_name, status, rating) VALUES (2, "One piece", "", "Anime", "Watching", 12);
 INSERT INTO Bookmark (user_id, bookmark_name, url, media_name, status, rating) VALUES (3, "Bleach", "", "Anime", "Completed", 12);
 INSERT INTO Bookmark (user_id, bookmark_name, url, media_name, status, rating) VALUES (3, "Black Clover", "", "Anime", "Completed", 12);
 INSERT INTO Bookmark (user_id, bookmark_name, url, media_name, status, rating) VALUES (3, "Demon Slayer", "", "Anime", "Watching", 12);
-INSERT INTO Media (media_name) VALUES ("Movie");
-INSERT INTO Media (media_name) VALUES ("Anime");
-INSERT INTO Genre (genre_name) VALUES ("Sci-Fi");
-INSERT INTO Tag (tag_name) VALUES ("Sick CGI");
+
 
 INSERT INTO Bookmark_Genre (bookmark_id, genre_id) VALUES (1, 1);
 INSERT INTO Bookmark_Tag (bookmark_id, tag_id) VALUES (1, 1);
