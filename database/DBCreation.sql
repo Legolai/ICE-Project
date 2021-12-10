@@ -36,6 +36,7 @@ CREATE TABLE Bookmark
     bookmark_id TINYINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     user_id TINYINT NOT NULL,
     bookmark_name VARCHAR(255) NOT NULL,
+    description VARCHAR(255) NOT NULL,
     url VARCHAR(255) NOT NULL,
     media_name VARCHAR(255) NOT NULL,
     status ENUM("Watching", "Completed", "On Hold", "Dropped", "Plan to Watch"),
@@ -82,12 +83,12 @@ INSERT INTO Media (media_name) VALUES ("Anime");
 INSERT INTO Genre (genre_name) VALUES ("Sci-Fi");
 INSERT INTO Tag (tag_name) VALUES ("Sick CGI");
 
-INSERT INTO Bookmark (user_id, bookmark_name, url, media_name, status, rating) VALUES (2, "Avatar", "", "Movie", "Completed", 12);
-INSERT INTO Bookmark (user_id, bookmark_name, url, media_name, status, rating) VALUES (2, "Fairy tail", "", "Anime", "Completed", 12);
-INSERT INTO Bookmark (user_id, bookmark_name, url, media_name, status, rating) VALUES (2, "One piece", "", "Anime", "Watching", 12);
-INSERT INTO Bookmark (user_id, bookmark_name, url, media_name, status, rating) VALUES (3, "Bleach", "", "Anime", "Completed", 12);
-INSERT INTO Bookmark (user_id, bookmark_name, url, media_name, status, rating) VALUES (3, "Black Clover", "", "Anime", "Completed", 12);
-INSERT INTO Bookmark (user_id, bookmark_name, url, media_name, status, rating) VALUES (3, "Demon Slayer", "", "Anime", "Watching", 12);
+INSERT INTO Bookmark (user_id, bookmark_name, description, url, media_name, status, rating) VALUES (2, "Avatar", "about blue people on another planet", "", "Movie", "Completed", 12);
+INSERT INTO Bookmark (user_id, bookmark_name, description, url, media_name, status, rating) VALUES (2, "Fairy tail", "so much to complain about", "", "Anime", "Completed", 12);
+INSERT INTO Bookmark (user_id, bookmark_name, description, url, media_name, status, rating) VALUES (2, "One piece", "awesome, the manga not anime", "", "Anime", "Watching", 12);
+INSERT INTO Bookmark (user_id, bookmark_name, description, url, media_name, status, rating) VALUES (3, "Bleach", "eh can't remember", "", "Anime", "Completed", 12);
+INSERT INTO Bookmark (user_id, bookmark_name, description, url, media_name, status, rating) VALUES (3, "Black Clover", "I, michael, haven't seen it yet", "", "Anime", "Completed", 12);
+INSERT INTO Bookmark (user_id, bookmark_name, description, url, media_name, status, rating) VALUES (3, "Demon Slayer", "I, michael, haven't seen it yet", "", "Anime", "Watching", 12);
 
 
 INSERT INTO Bookmark_Genre (bookmark_id, genre_id) VALUES (1, 1);
