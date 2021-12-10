@@ -23,6 +23,9 @@ public class DBConnecter {
         this.conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
     }
 
+    private void close() throws SQLException {
+        this.conn.close();
+    }
 
     public User authenticate(String username, String password) {
         PreparedStatement preparedStatement = null;
@@ -89,14 +92,14 @@ public class DBConnecter {
         return null;
     }
 
-    public void saveUser(User user) {
+    public User saveUser(User user) {
         String sql = "";
         if (user.getUser_id() > 0) {
             sql = "INSERT INTO User (user_id, email, firstname, surname, username, password) " +
                     "VALUES (?,?,?,?,?,?) ON DUPLICATE KEY UPDATE email=?, firstname=?, surname=?, username=?, password=?;";
         } else {
             sql = "INSERT INTO User (email, firstname, surname, username, password) " +
-                    "VALUES (?,?,?,?,?,?) ON DUPLICATE KEY UPDATE email=?, firstname=?, surname=?, username=?, password=?;";
+                    "VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE email=?, firstname=?, surname=?, username=?, password=?;";
         }
         try {
             connect();
@@ -110,26 +113,52 @@ public class DBConnecter {
                 pstmt.setString(4, user.getSurname());
                 pstmt.setString(5, user.getUsername());
                 pstmt.setString(6, user.getPassword());
+
+                pstmt.setString(7, user.getEmail());
+                pstmt.setString(8, user.getFirstname());
+                pstmt.setString(9, user.getSurname());
+                pstmt.setString(10, user.getUsername());
+                pstmt.setString(11, user.getPassword());
+
             } else {
                 pstmt.setString(1, user.getEmail());
                 pstmt.setString(2, user.getFirstname());
                 pstmt.setString(3, user.getSurname());
                 pstmt.setString(4, user.getUsername());
                 pstmt.setString(5, user.getPassword());
+
+                pstmt.setString(6, user.getEmail());
+                pstmt.setString(7, user.getFirstname());
+                pstmt.setString(8, user.getSurname());
+                pstmt.setString(9, user.getUsername());
+                pstmt.setString(10, user.getPassword());
             }
 
-            pstmt.executeBatch();
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0){
+                ResultSet generatedKeys = pstmt.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    user.setUser_id(generatedKeys.getInt(1));
+                }
+
+                pstmt.close();
+                close();
+                return user;
+            }
+
             pstmt.close();
             close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
 
 
     public ArrayList<Bookmark> getBookmarks(User user) {
         PreparedStatement preparedStatement = null;
+        ArrayList<Bookmark> bookmarks = new ArrayList<>();
         try {
             connect();
 
@@ -140,7 +169,6 @@ public class DBConnecter {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.isBeforeFirst()) {
-                ArrayList<Bookmark> bookmarks = new ArrayList<>();
                 while (resultSet.next()) {
                     Bookmark bookmark = new Bookmark();
                     bookmark.setBookmark_id(resultSet.getInt("bookmark_id"));
@@ -159,13 +187,12 @@ public class DBConnecter {
 */
                     bookmarks.add(bookmark);
                 }
-                return bookmarks;
             }
             close();
         } catch (SQLException e){
             e.printStackTrace();
         }
-        return null;
+        return bookmarks;
     }
 
     private Bookmark getBookmarksGenreOrTag(Bookmark bm, String s2, String s3, String id, String name) {

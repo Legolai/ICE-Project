@@ -5,31 +5,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../css/overflowHidden.css">
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/animate.css">
-    <script
-            src="https://code.jquery.com/jquery-3.6.0.min.js"
-            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-            crossorigin="anonymous"></script>
+    <script src="../js/jQuery.min.js" defer></script>
     <script src="../js/SDK.js" defer></script>
     <script src="../js/main.js" defer></script>
     <title>Document</title>
 </head>
 <body>
     <div class="container flex-coloum animate__animated">
-        <h1 class="animate__fadeInUp animate__animated header">Login</h1>
-        
-        <form id="login" class="form flex-coloum animate__fadeInUp animate__animated" action="">
+        <h1 class="animate__bounceInUp animate__animated header">Login</h1>
+
+        <form id="login" class="form flex-coloum animate__bounceInUp animate__animated" action="">
+            <div class="container__input">
             <label class="animate__animated sub-header" for="username">Username</label>
-            <input class="input animate__animated" id="username" placeholder="username" type="text" name="username" required>
+            <input class="input animate__animated" id="username" type="text" name="username" required>
+            </div>
+            <div class="container__input">
             <label class="animate__animated sub-header" for="password">Password</label>
-            <input class="input animate__animated" id="password" placeholder="password" type="password" name="password" required>
+            <input class="input animate__animated" id="password" type="password" name="password" required>
+            </div>
             <div class="container animate__animated">
                 <a>Forgot password?</a>
-                <a href="signup.html">Sign up</a>
+                <a id="aToSignup">Sign up</a>
             </div>
             <input class="btn-submit sub-header" type="submit" value="Login">
         </form>
-    </div>    
+    </div>
 </body>
 </html>

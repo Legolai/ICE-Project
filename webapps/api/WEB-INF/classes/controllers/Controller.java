@@ -35,18 +35,22 @@ public class Controller implements UserController, BookmarkController{
     }
 
     @Override
-    public User getUser(int user_id) {
-        return dbConnecter.getUser(user_id);
-    }
-
-    @Override
     public User login(String username, String password) {
         return dbConnecter.authenticate(username, password);
     }
 
     @Override
-    public boolean updateUser(String accessToken, String... info) {
-        return false;
+    public User updateUser(String username, String password, String email
+        //, String firstname, String surname
+    ) {
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setEmail(email);
+        //user.setFirstname(firstname);
+        //user.setSurname(surname);
+        return dbConnecter.saveUser(user);
+
     }
 
     @Override
