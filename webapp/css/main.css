@@ -3,6 +3,8 @@
 * {
 	box-sizing: border-box;
 	outline: transparent;
+	margin: 0;
+	padding: 0;
 }
 
 :root {
@@ -23,7 +25,8 @@ body {
 	padding: 0;
 	margin: 0;
 	font-family: var(--body-font);
-	font-size: 14px;
+	font-size: 1vw;
+	font-size-adjust: revert;
 	height: 100vh;
 	background-color: var(--bg-color);
 	display: flex;
@@ -61,18 +64,33 @@ nav ul li a {
 	font-weight: normal;
 	text-transform: capitalize;
 	cursor: pointer;
-	font-size: 1.125rem;
+	font-size: 1.125em;
 	text-align: center;
 	transition: all .5s;
 }
 
+nav ul li a:hover {
+	opacity: 0.6;
+}
+
+nav ul li:not(:nth-last-child(2), :nth-last-child(1)) a:hover {
+	border-bottom: 2px solid var(--bg-color);
+}
+
+nav ul li:not(:nth-last-child(2), :nth-last-child(1)) .active {
+	border-bottom: 2px solid var(--bg-color);
+}
+
+main {
+	width: clamp(100px, 80%, 800px);
+}
+
 .btn, .btn-outlined {
-	font-size: 1.125rem;
+	font-size: 1.125em;
 	padding: 10px 20px;
 	transition: all .5s;
 	text-align: center;
 }
-
 
 .btn {
 	background-color: var(--primary-color);
@@ -95,23 +113,16 @@ nav ul li a {
 	color: var(--accent-color);
 }
 
-
-nav ul li a:hover {
-	opacity: 0.6;
-}
-
-nav ul li:not(:nth-last-child(2), :nth-last-child(1)) a:hover {
-	border-bottom: 2px solid var(--bg-color);
-}
-
-nav ul li:not(:nth-last-child(2), :nth-last-child(1)) .active {
-	border-bottom: 2px solid var(--bg-color);
-}
-
 .container {
 	flex-grow: 1;
 	display: flex;
+}
+
+.flex-align-center, .flex-center{
 	align-items: center;
+}
+
+.flex-justify-center, .flex-center{
 	justify-content: center;
 }
 
@@ -255,3 +266,39 @@ nav ul li:not(:nth-last-child(2), :nth-last-child(1)) .active {
 	font-size: 1.5em;
 	font-family: var(--subheader-font);
 }
+
+.fav-items {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 10px;
+	columns: 3;
+}
+
+.fav-item {
+	flex-basis: 32%;
+	background-color: var(--primary-color);
+	color: white;
+	padding: 10px;
+}
+
+.tabs {
+	flex-grow: 1;
+	justify-content: space-between;
+	gap: 0;
+	margin: 10px 0;
+}
+
+.tab {
+	background-color: var(--dark-color);
+	padding: 10px 15px;
+	color: white;
+	border: none;
+	flex-grow: 1;
+	transition: all .5s;
+}
+.tab-active {
+	background-color: var(--primary-color);
+}
+
+

@@ -6,11 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="../css/main.css">
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
     <script src="../js/main.js" defer></script>
+    <script src="../js/tabs.js" defer></script>
     <title>Title</title>
 </head>
 <body>
-    <div class="container flex-coloum">
+    <div class="container flex-align-center flex-coloum">
         <nav>
             <ul>
                 <li><a class="active">home</a></li>
@@ -21,7 +26,14 @@
             </ul>
         </nav>
         <main class="container flex-coloum">
+            <div id="favourites" class="">
+                <div id="tabs" class="flex-row tabs">
 
+                </div>
+                <div id="fav-items" class="fav-items">
+
+                </div>
+            </div>
         </main>
     </div>
 </body>
