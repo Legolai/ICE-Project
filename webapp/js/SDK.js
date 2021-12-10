@@ -12,26 +12,31 @@ const SDK = {
             method: "POST",
             data: JSON.stringify(data),
             xhrFields: { withCredentials: true },
-            crossDomain: true}
+            crossDomain: true},
         )
-            .done(() => {
-                $(".form .input").addClass('success-input')
-                $(".form label").addClass('success-label')
-                $(".btn-submit").addClass('submit-success')
-                setInterval(() => {
-                    $(".container").addClass('animate__bounceOutDown')
-                        .on('animationend', () => {
-                            window.location = "index.html"
-                        })
-                }, 1000)
+            .done((result,statusText, xhr) => {
+                switch (xhr.status) {
+                    case 202:
+                        $(".form .input").addClass('warning-input')
+                        $(".form label").addClass('warning-label animate__shakeX')
+                            .on('animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd', () => {
+                                $(".form label").removeClass('warning-label animate__shakeX')
+                                $(".form .input").removeClass('warning-input')
+                            })
+
+                        break;
+                    default:
+                        $(".form .input").addClass('success-input')
+                        $(".form label").addClass('success-label')
+                        $(".btn-submit").addClass('submit-success')
+                        $(".container").addClass('animate__bounceOutDown animate__delay-1s')
+                            .on('animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd', () => {
+                                window.location = "index.html"
+                            })
+                        break;
+                }
             })
             .fail(() => {
-                $(".form .input").addClass('warning-input animate__shakeX')
-                $(".form label").addClass('warning-label')
-                setInterval(() => {
-                    $(".form .input").removeClass('warning-input animate__shakeX')
-                    $(".form label").removeClass('warning-label')
-                },2000)
             })
     },
     get: (endpoint) => {
@@ -42,6 +47,20 @@ const SDK = {
             crossDomain: true
         })
         .done((result) => {
+            if (endpoint === endpoints.getall) {
+                result.forEach((item) => {
+                    $("#fav-items").append("<div id='' class='fav-item'>" +
+                        "<h2 class='sub-header'>"+item.name+"</h2>" +
+                        "<p>"+item.rating+"</p>" +
+                        "<div class='flex-row'>"+(item.genres.map((g) => ("<div class='genre'>" + g + "</div>") ))+"</div>" +
+                        "<div class='flex-row'>"+(item.tags.map((t) => ("<div class='tag'>" + t + "</div>")))+"</div>" +
+                        "<p>"+item.description+"</p>" +
+                        "<a href=''>"+item.url+"</a>" +
+                        "<p>"+item.media+"</p>" +
+                        "<p class='status'>"+item.status+"</p>" +
+                        "</div>")
+                })
+            }
 
         })
         .fail(() => {

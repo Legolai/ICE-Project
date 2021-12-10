@@ -15,11 +15,10 @@ public class SignUpServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        System.out.println("har ramt");
+        System.out.println("SignUp endpoint reached");
 
-        HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession();
         System.out.println("from signup: "+ session.getId());
-
 
         StringBuffer jb = new StringBuffer();
         String line = null;
@@ -30,6 +29,7 @@ public class SignUpServlet extends HttpServlet {
         } catch (Exception e) { /*report an error*/ }
 
         JSONObject jsonObject = new JSONObject(jb.toString());
+        System.out.println("Json from request: " +jsonObject);
         //String surname = jsonObject.getString("firstname");
         //String firstname = jsonObject.getString("surname");
         String username = jsonObject.getString("username");
@@ -44,11 +44,12 @@ public class SignUpServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         UserController userController = new Controller();
-        User user = userController.updateUser(username, password, email
+        User user = userController.newUser(username, password, email
             //, String firstname, String surname
         );
 
         if ( user != null ) {
+            System.out.println("status 201");
             session.setAttribute("user", user);
 
             response.setStatus(201);
@@ -57,21 +58,10 @@ public class SignUpServlet extends HttpServlet {
 
             out.println(userAsJSON);
         } else {
-            response.setStatus(401);
-            out.println("{\"access\":\"Denied\"}");
+            System.out.println("status 202");
+            response.setStatus(202);
+            out.println("{\"UserCreated\":\"false\"}");
         }
         out.close();  // Always close the output writer
-    }
-
-
-    public Cookie createCookie(String cookieValue) {
-        final String cookieName = "Favorite_bookmarks_manager_user_id";
-        final int expiryTime = 60 * 60 * 24;  // 24h in seconds
-        final String cookiePath = "http://localhost/";
-        Cookie cookie = new Cookie(cookieName, cookieValue);
-        cookie.setDomain("localhost");
-        cookie.setMaxAge(expiryTime);  // A negative value means that the cookie is not stored persistently and will be deleted when the Web browser exits. A zero value causes the cookie to be deleted.
-        cookie.setPath(cookiePath);  // The cookie is visible to all the pages in the directory you specify, and all the pages in that directory's subdirectories
-        return cookie;
     }
 }

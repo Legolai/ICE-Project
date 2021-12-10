@@ -30,13 +30,13 @@ $(document).ready(() => {
 
 	$("#aToLogin").on('click', () => {
 		$(".animate__bounceInUp").toggleClass('animate__bounceOutDown animate__bounceInUp')
-			.on('animationend', () => {
+			.on('animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd', () => {
 				window.location = "login.html"
 		})
 	})
 	$("#aToSignup").on('click', () => {
 		$(".animate__bounceInUp").toggleClass('animate__bounceOutDown animate__bounceInUp')
-			.on('animationend', () => {
+			.on('animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd', () => {
 				window.location = "signup.html"
 		})
 	})

@@ -92,21 +92,51 @@ public class DBConnecter {
         return null;
     }
 
-    public User saveUser(User user) {
-        String sql = "";
-        if (user.getUser_id() > 0) {
-            sql = "INSERT INTO User (user_id, email, firstname, surname, username, password) " +
-                    "VALUES (?,?,?,?,?,?) ON DUPLICATE KEY UPDATE email=?, firstname=?, surname=?, username=?, password=?;";
-        } else {
-            sql = "INSERT INTO User (email, firstname, surname, username, password) " +
-                    "VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE email=?, firstname=?, surname=?, username=?, password=?;";
-        }
+    public User newUser(User user) {
         try {
             connect();
-            System.out.println("Creating statement...");
+
+            String sql = "INSERT INTO User (email, firstname, surname, username, password) VALUES (?,?,?,?,?)";
             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-            if (user.getUser_id() > 0) {
+            pstmt.setString(1, user.getEmail());
+            pstmt.setString(2, user.getFirstname());
+            pstmt.setString(3, user.getSurname());
+            pstmt.setString(4, user.getUsername());
+            pstmt.setString(5, user.getPassword());
+
+            int rowsAffected = pstmt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                ResultSet generatedKeys = pstmt.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    user.setUser_id(generatedKeys.getInt(1));
+                }
+
+                pstmt.close();
+                close();
+                return user;
+            }
+
+            pstmt.close();
+            close();
+        } catch (SQLIntegrityConstraintViolationException e) {
+            return null;
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+    public User updateUser(User user) {
+            try {
+                connect();
+
+                String sql = "INSERT INTO User (user_id, email, firstname, surname, username, password) " +
+                "VALUES (?,?,?,?,?,?) ON DUPLICATE KEY UPDATE email=?, firstname=?, surname=?, username=?, password=?";
+
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+
                 pstmt.setInt(1, user.getUser_id());
                 pstmt.setString(2, user.getEmail());
                 pstmt.setString(3, user.getFirstname());
@@ -120,40 +150,22 @@ public class DBConnecter {
                 pstmt.setString(10, user.getUsername());
                 pstmt.setString(11, user.getPassword());
 
-            } else {
-                pstmt.setString(1, user.getEmail());
-                pstmt.setString(2, user.getFirstname());
-                pstmt.setString(3, user.getSurname());
-                pstmt.setString(4, user.getUsername());
-                pstmt.setString(5, user.getPassword());
 
-                pstmt.setString(6, user.getEmail());
-                pstmt.setString(7, user.getFirstname());
-                pstmt.setString(8, user.getSurname());
-                pstmt.setString(9, user.getUsername());
-                pstmt.setString(10, user.getPassword());
-            }
+                int rowsAffected = pstmt.executeUpdate();
 
-            int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected > 0){
-                ResultSet generatedKeys = pstmt.getGeneratedKeys();
-                if (generatedKeys.next()) {
-                    user.setUser_id(generatedKeys.getInt(1));
+                if (rowsAffected > 0) {
+                    pstmt.close();
+                    close();
+                    return user;
                 }
 
                 pstmt.close();
                 close();
-                return user;
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-
-            pstmt.close();
-            close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         return null;
     }
-
 
 
     public ArrayList<Bookmark> getBookmarks(User user) {

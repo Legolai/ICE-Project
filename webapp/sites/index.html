@@ -9,11 +9,11 @@
     <link rel="stylesheet" href="../css/main.css">
     <script src="../js/jQuery.min.js" defer></script>
     <script src="../js/SDK.js" defer></script>
-    <script src="../js/index.js" defer></script>
+    <script src="../js/tabs.js" defer></script>
     <title>Title</title>
 </head>
 <body>
-    <div class="container flex-coloum">
+    <div class="container flex-align-center flex-coloum">
         <nav class="animate__animated animate__slideInDown">
             <ul>
                 <li><a class="active">home</a></li>
@@ -23,8 +23,15 @@
                 <li><a class="btn-outlined" href="login.html">Sign in</a></li>
             </ul>
         </nav>
-        <main class="container flex-coloum">
+        <main class="container flex-coloum animate__animated animate__fadeIn">
+            <div id="favourites" class="">
+                <div id="tabs" class="flex-row tabs">
 
+                </div>
+                <div id="fav-items" class="fav-items">
+
+                </div>
+            </div>
         </main>
     </div>
 </body>

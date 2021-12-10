@@ -18,8 +18,10 @@ public class GetAllBookmarksServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        System.out.println("Login endpoint reached");
 
         HttpSession session = request.getSession(false);
+        
         System.out.println("fra getAll: " + session.getId());
         User user = (User) request.getSession().getAttribute("user");
 

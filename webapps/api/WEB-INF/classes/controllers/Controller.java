@@ -49,8 +49,20 @@ public class Controller implements UserController, BookmarkController{
         user.setEmail(email);
         //user.setFirstname(firstname);
         //user.setSurname(surname);
-        return dbConnecter.saveUser(user);
+        return dbConnecter.updateUser(user);
+    }
 
+    @Override
+    public User newUser(String username, String password, String email
+        //, String firstname, String surname
+    ) {
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setEmail(email);
+        //user.setFirstname(firstname);
+        //user.setSurname(surname);
+        return dbConnecter.newUser(user);
     }
 
     @Override

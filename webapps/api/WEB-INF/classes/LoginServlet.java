@@ -17,6 +17,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        System.out.println("Login endpoint reached");
 
         HttpSession session = request.getSession();
         System.out.println("from login: "+ session.getId());
@@ -57,17 +58,5 @@ public class LoginServlet extends HttpServlet {
             out.println("{\"access\":\"Denied\"}");
         }
         out.close();  // Always close the output writer
-    }
-
-
-    public Cookie createCookie(String cookieValue) {
-        final String cookieName = "Favorite_bookmarks_manager_user_id";
-        final int expiryTime = 60 * 60 * 24;  // 24h in seconds
-        final String cookiePath = "http://localhost/";
-        Cookie cookie = new Cookie(cookieName, cookieValue);
-        cookie.setDomain("localhost");
-        cookie.setMaxAge(expiryTime);  // A negative value means that the cookie is not stored persistently and will be deleted when the Web browser exits. A zero value causes the cookie to be deleted.
-        cookie.setPath(cookiePath);  // The cookie is visible to all the pages in the directory you specify, and all the pages in that directory's subdirectories
-        return cookie;
     }
 }
