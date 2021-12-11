@@ -74,7 +74,7 @@ CREATE TABLE Bookmark_Tag
 
 
 INSERT INTO User (email,firstname, surname, username, password) VALUES ("Michael@email","Mic","cahel", "michael", "m123");
-INSERT INTO User (email,firstname, surname, username, password) VALUES ("Nicholai@email","Mic","cahel", "nicholai", "n123");
+INSERT INTO User (email,firstname, surname, username, password) VALUES ("Nicolai@email","Mic","cahel", "Nicolai", "n123");
 INSERT INTO User (email,firstname, surname, username, password) VALUES ("test","test","test", "test", "test");
 
 INSERT INTO Media (media_name) VALUES ("Movie");

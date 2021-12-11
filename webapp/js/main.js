@@ -1,6 +1,7 @@
 $(document).ready(() => {
 
 	$("#login").submit((event) => {
+		console.log("submitted")
 		event.preventDefault();
 
 		const username = $("#username").val();
@@ -30,13 +31,13 @@ $(document).ready(() => {
 
 	$("#aToLogin").on('click', () => {
 		$(".animate__bounceInUp").toggleClass('animate__bounceOutDown animate__bounceInUp')
-			.on('animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd', () => {
+			.on('animationend webkitAnimationEnd', () => {
 				window.location = "login.html"
 		})
 	})
 	$("#aToSignup").on('click', () => {
 		$(".animate__bounceInUp").toggleClass('animate__bounceOutDown animate__bounceInUp')
-			.on('animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd', () => {
+			.on('animationend webkitAnimationEnd', () => {
 				window.location = "signup.html"
 		})
 	})

@@ -12,20 +12,21 @@ public class SessionServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-        System.out.println("ramt");
+        System.out.println("Session endpoint reached");
 
         HttpSession session = request.getSession(false);
         PrintWriter out = response.getWriter();
-        if (session != null) {
-        System.out.println("fra Session: " + session.getId());
 
-        response.addHeader("Access-Control-Allow-Origin", "http://localhost:63342");
-        response.addHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-        response.addHeader("Access-Control-Allow-Credentials", "true");
-        response.setContentType("application/json");
-        response.setCharacterEncoding("utf-8");
-        response.setStatus(201);
+        if (session != null) {
+            System.out.println("fra Session: " + session.getId());
+
+            response.addHeader("Access-Control-Allow-Origin", "http://localhost:63342");
+            response.addHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+            response.addHeader("Access-Control-Allow-Credentials", "true");
+            response.setContentType("application/json");
+            response.setCharacterEncoding("utf-8");
+            response.setStatus(201);
+            out.println("{\"JSESSIONID\":\""+ session.getId() +"\"}");
 
         } else {
             System.out.println("ingen session");

@@ -21,7 +21,7 @@ public class GetAllBookmarksServlet extends HttpServlet {
         System.out.println("Login endpoint reached");
 
         HttpSession session = request.getSession(false);
-        
+
         System.out.println("fra getAll: " + session.getId());
         User user = (User) request.getSession().getAttribute("user");
 

@@ -264,6 +264,9 @@ main {
 	font-size: 1em;
 	font-family: var(--subheader-font);
 }
+#tabs .sub-header:hover {
+	background-color: var(--accent-color);
+}
 
 .fav-items {
 	display: flex;
