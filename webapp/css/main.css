@@ -26,7 +26,6 @@ body {
 	margin: 0;
 	font-family: var(--body-font);
 	font-size: 1vw;
-	font-size-adjust: revert;
 	height: 100vh;
 	background-color: var(--bg-color);
 	display: flex;
