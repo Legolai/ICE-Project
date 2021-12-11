@@ -48,8 +48,8 @@ const SDK = {
         })
         .done((result) => {
             if (endpoint === endpoints.getall) {
-                result.forEach((item) => {
-                    $("#fav-items").append("<div id='' class='fav-item'>" +
+                result.forEach((item, i) => {
+                    $("#fav-items").append("<div id='"+ ("fav-item-" + i) +"' class='fav-item'>" +
                         "<h2 class='sub-header'>"+item.name+"</h2>" +
                         "<p>"+item.rating+"</p>" +
                         "<div class='flex-row'>"+(item.genres.map((g) => ("<div class='genre'>" + g + "</div>") ))+"</div>" +
@@ -59,6 +59,17 @@ const SDK = {
                         "<p>"+item.media+"</p>" +
                         "<p class='status'>"+item.status+"</p>" +
                         "</div>")
+                })
+                $(".fav-item").click(function () {
+                    const clone = $(this).clone();
+                    const modal = $(".modal");
+                    modal.append(clone);
+                    modal.css("display", "block");
+                    if(modal.hasClass("animate__fadeOut animate__delay-2s"))
+                        modal.removeClass("animate__fadeOut animate__delay-2s")
+                    modal.off("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd")
+                    modal.addClass("animate__fadeIn");
+                    clone.addClass("modal-content animate__animated animate__jackInTheBox animate__delay-1s");
                 })
             }
 
