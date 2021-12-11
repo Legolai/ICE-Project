@@ -27,6 +27,17 @@ public class Bookmark {
         tags = new ArrayList<>();
         rating = 0;
     }
+    public Bookmark(int user_id, String name, String description, String url, String media, String status, int rating) {
+        this.user_id = user_id;
+        this.name = name;
+        this.description = description;
+        this.url = url;
+        this.media = media;
+        this.status = status;
+        genres = new ArrayList<>();
+        tags = new ArrayList<>();
+        this.rating = rating;
+    }
 
     public void fillBookmark(String info) {
         String[] splitted = info.split(";");

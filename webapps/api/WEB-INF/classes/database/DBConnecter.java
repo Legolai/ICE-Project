@@ -126,7 +126,6 @@ public class DBConnecter {
             e.printStackTrace();
         }
         return null;
-
     }
     public User updateUser(User user) {
             try {
@@ -185,6 +184,7 @@ public class DBConnecter {
                     Bookmark bookmark = new Bookmark();
                     bookmark.setBookmark_id(resultSet.getInt("bookmark_id"));
                     bookmark.setUser_id(user.getUser_id());
+                    bookmark.setDescription(resultSet.getString("description"));
                     bookmark.setUrl(resultSet.getString("url"));
                     bookmark.setName(resultSet.getString("bookmark_name"));
                     bookmark.setStatus(resultSet.getString("status"));
@@ -245,14 +245,14 @@ public class DBConnecter {
         return null;
     }
 
-    public void saveBookmark(Bookmark bm) {
+    public Bookmark saveBookmark(Bookmark bm) {
         String sql = "";
         if (bm.getBookmark_id() > 0) {
-            sql = "INSERT INTO Bookmark (bookmark_id, user_id, bookmark_name, url, media_name, status, rating) " +
-                    "VALUES (?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE bookmark_name=?, url=?, media_name=?, status=?, rating=?;";
+            sql = "INSERT INTO Bookmark (bookmark_id, user_id, bookmark_name, description, url, media_name, status, rating) " +
+                    "VALUES (?,?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE bookmark_name=?, description=?, url=?, media_name=?, status=?, rating=?;";
         } else {
-            sql = "INSERT INTO Bookmark (user_id, bookmark_name, url, media_name, status, rating) " +
-                    "VALUES (?,?,?,?,?,?) ON DUPLICATE KEY UPDATE bookmark_name=?, url=?, media_name=?, status=?, rating=?;";
+            sql = "INSERT INTO Bookmark (user_id, bookmark_name, description, url, media_name, status, rating) " +
+                    "VALUES (?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE bookmark_name=?, description=?, url=?, media_name=?, status=?, rating=?;";
         }
 
         try {
@@ -264,17 +264,19 @@ public class DBConnecter {
                 pstmt.setInt(1, bm.getBookmark_id());
                 pstmt.setInt(2, bm.getUser_id());
                 pstmt.setString(3,bm.getName());
+                pstmt.setString(4,bm.getDescription());
+                pstmt.setString(5,bm.getUrl());
+                pstmt.setString(6,bm.getMedia());
+                pstmt.setString(7,bm.getStatus());
+                pstmt.setInt(8, bm.getRating());
+            } else {
+                pstmt.setInt(1, bm.getUser_id());
+                pstmt.setString(2,bm.getName());
+                pstmt.setString(3,bm.getDescription());
                 pstmt.setString(4,bm.getUrl());
                 pstmt.setString(5,bm.getMedia());
                 pstmt.setString(6,bm.getStatus());
                 pstmt.setInt(7, bm.getRating());
-            } else {
-                pstmt.setInt(1, bm.getUser_id());
-                pstmt.setString(2,bm.getName());
-                pstmt.setString(3,bm.getUrl());
-                pstmt.setString(4,bm.getMedia());
-                pstmt.setString(5,bm.getStatus());
-                pstmt.setInt(6, bm.getRating());
             }
 
             // Checks if the media exists in database, if not insert it
@@ -282,20 +284,34 @@ public class DBConnecter {
             PreparedStatement pstmtMedia = conn.prepareStatement(query);
             pstmtMedia.setString(1, bm.getMedia());
             ResultSet rs = pstmtMedia.executeQuery();
-            if (rs.next() == false) {
+            if (!rs.isBeforeFirst()) {
                 String sqlmedia = "INSERT INTO Media (media_name) VALUES (?) ON DUPLICATE KEY media_name = media_name";
                 pstmtMedia = conn.prepareStatement(sqlmedia, Statement.RETURN_GENERATED_KEYS);
                 pstmtMedia.setString(1,bm.getMedia());
             }
-
             pstmtMedia.executeBatch();
             pstmtMedia.close();
-            pstmt.executeBatch();
+
+            //TODO: genres and tags doesn't get added
+
+            int rowsAffected = pstmt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                ResultSet generatedKeys = pstmt.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    bm.setBookmark_id(generatedKeys.getInt(1));
+                }
+
+                pstmt.close();
+                close();
+                return bm;
+            }
             pstmt.close();
             close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
 
