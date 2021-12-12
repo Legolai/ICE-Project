@@ -13,7 +13,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/signUp")
+@WebServlet("/updateUser")
 public class updateUserServlet extends HttpServlet {
 
     @Override
