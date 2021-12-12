@@ -1,15 +1,27 @@
 $(document).ready(() => {
-    SDK.get(endpoints.checkSession);
+    SDK.post(endpoints.session, data = {Session: "validate"});
     let entrance = 'animate__zoomIn'
     let exit = 'animate__zoomOut'
 
+    $('#logout').click((event) => {
+        event.preventDefault();
+        const data = {Session: "delete"}
+        SDK.post(endpoints.session, data);
+    })
+
     const showItem = (element) => {
+        /*
         $(element).addClass(entrance);
         $(element).removeClass(exit);
+         */
+        $(element).show(0);
     }
     const hideItem = (element) => {
+        /*
         $(element).removeClass(entrance);
         $(element).addClass(exit)
+         */
+        $(element).hide(0);
     }
 
     const tabNames = ["All", "Watching", "Completed", "On Hold", "Dropped", "Plan to Watch"]
@@ -35,7 +47,7 @@ $(document).ready(() => {
             else {
                 $("#fav-items *").each((i, item) => {
                     showItem(item)
-                    })
+                })
             }
         })
     })
@@ -45,10 +57,10 @@ $(this).click(function (event) {
     const modal = $(".modal");
     if(event.target == modal[0]) {
 
-        modal.removeClass("animate__fadeIn");
-        modal.children().removeClass("animate__jackInTheBox animate__delay-1s");
-        modal.children().toggleClass("animate__hinge");
-        modal.addClass("animate__fadeOut animate__delay-2s")
+        modal.removeClass("animate__fadeIn animate__fast");
+        modal.children().removeClass("animate__bounceInDown animate__faster");
+        modal.children().toggleClass("animate__bounceOutUp animate__faster");
+        modal.addClass("animate__fadeOut animate__fast")
             .on('animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd', () => {
                 modal.css("display","none");
                 modal.empty();
