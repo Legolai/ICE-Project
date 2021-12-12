@@ -1,29 +1,24 @@
 import controllers.BookmarkController;
 import controllers.Controller;
-import controllers.UserController;
 import entities.Bookmark;
-import entities.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
-@WebServlet("/addBookmark")
-public class addBookmarkServlet extends HttpServlet {
+@WebServlet("/updateBookmark")
+public class UpdateBookmarkServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        System.out.println("AddBookmark endpoint reached");
+        System.out.println("UpdateBookmark endpoint reached");
 
         HttpSession session = request.getSession();
-        System.out.println("from addbookmark: "+ session.getId());
+        System.out.println("from updateBookmark: "+ session.getId());
 
         StringBuffer jb = new StringBuffer();
         String line = null;
@@ -34,7 +29,7 @@ public class addBookmarkServlet extends HttpServlet {
         } catch (Exception e) { /*report an error*/ }
 
         JSONObject jsonObject = new JSONObject(jb.toString());
-        
+
 
         response.addHeader("Access-Control-Allow-Origin", "http://localhost:63342");
         response.addHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -44,7 +39,7 @@ public class addBookmarkServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         BookmarkController bookmarkController = new Controller();
-        Bookmark bookmark = bookmarkController.addBookmark(jsonObject);
+        Bookmark bookmark = bookmarkController.updateBookmark(jsonObject);
 
         if ( bookmark != null ) {
             System.out.println("status 201");
