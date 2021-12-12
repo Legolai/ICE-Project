@@ -13,15 +13,16 @@ $(document).ready(() => {
 	$("#signup").submit((event) => {
 		event.preventDefault();
 
-		//const firstname = $("#firstname").val();
-		//const surname = $("#surname").val();
+		const firstname = $("#firstname").val();
+		const surname = $("#surname").val();
 		const username = $("#username").val();
 		const password = $("#password").val();
-		const passwordRepeat = $("#passwordrepeat").val();
 		const email = $("#email").val();
 
 
 		const data = {
+			firstname: firstname,
+			surname: surname,
 			username: username,
 			password: password,
 			email: email

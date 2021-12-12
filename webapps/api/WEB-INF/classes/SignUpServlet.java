@@ -29,9 +29,8 @@ public class SignUpServlet extends HttpServlet {
         } catch (Exception e) { /*report an error*/ }
 
         JSONObject jsonObject = new JSONObject(jb.toString());
-        System.out.println("Json from request: " +jsonObject);
-        //String surname = jsonObject.getString("firstname");
-        //String firstname = jsonObject.getString("surname");
+        String surname = jsonObject.getString("firstname");
+        String firstname = jsonObject.getString("surname");
         String username = jsonObject.getString("username");
         String password = jsonObject.getString("password");
         String email = jsonObject.getString("email");
@@ -44,9 +43,7 @@ public class SignUpServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         UserController userController = new Controller();
-        User user = userController.newUser(username, password, email
-            //, String firstname, String surname
-        );
+        User user = userController.newUser(username, password, email, firstname, surname);
 
         if ( user != null ) {
             System.out.println("status 201");

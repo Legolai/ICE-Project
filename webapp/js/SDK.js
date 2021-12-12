@@ -21,7 +21,7 @@ const SDK = {
                         console.log("session is valid")
                         if (result.Session === "deleted" ) {
                             $("body nav").toggleClass('animate__bounceOutUp animate__bounceInDown')
-                            $("#selector-panel").toggleClass('animate__bounceInRight animate__bounceOutRight')
+                            $("#selector-panel").toggleClass('animate__bounceInRight animate__bounceOutLeft')
                             $("#favourites").toggleClass('animate__bounceInRight animate__bounceOutRight')
                                 .on('animationend webkitAnimationEnd', () => {
                                     window.location.replace("login.html")
@@ -32,11 +32,11 @@ const SDK = {
                     default:
                         switch (xhr.status) {
                             case 202:
-                                $(".form .input").addClass('warning-input')
-                                $(".form label").addClass('warning-label animate__shakeX')
+                                $(".form #username, .form #email").addClass('warning-input')
+                                $(".form label[for=username],.form label[for=email]").addClass('warning-label animate__shakeX')
                                     .one('animationend webkitAnimationEnd', () => {
-                                        $(".form label").removeClass('warning-label animate__shakeX')
-                                        $(".form .input").removeClass('warning-input')
+                                        $(".form label[for=username],.form label[for=email").removeClass('warning-label animate__shakeX')
+                                        $(".form #username, .form #email").removeClass('warning-input')
                                     })
 
                                 break;

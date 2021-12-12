@@ -237,14 +237,14 @@ main {
 	color: var(--warning-color);
 }
 
-.form .warning-input{
+.form .warning-input, input:focus:invalid{
 	border-bottom: 2px solid var(--warning-color);;
 }
 
 .success-label {
 	color: var(--success-color);
 }
-.form .success-input{
+.form .success-input, input:focus:valid{
 	border-bottom: 2px solid var(--success-color);;
 }
 
@@ -312,6 +312,9 @@ main {
 }
 .tab-active {
 	background-color: var(--primary-color);
+}
+.tab-active:hover {
+	background-color: var(--primary-color) !important;
 }
 
 .panel {
