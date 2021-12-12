@@ -20,19 +20,23 @@
     <form id="signup" class="form flex-column animate__bounceInUp animate__animated" action="">
         <div class="flex-column">
             <label class="animate__animated sub-header" for="username">Username</label>
-            <input class="input animate__animated" id="username" type="text" name="username" required>
+            <input class="input animate__animated" id="username" type="text" name="username" required autocomplete="username">
+        </div>
+        <div class="flex-column">
+            <label class="animate__animated sub-header" for="firstname">Firstname</label>
+            <input class="input animate__animated" id="firstname" type="text" name="firstname" required autocomplete="given-name">
+        </div>
+        <div class="flex-column">
+            <label class="animate__animated sub-header" for="surname">Surname </label>
+            <input class="input animate__animated" id="surname" type="text" name="surname" required autocomplete="family-name">
         </div>
         <div class="flex-column">
             <label class="animate__animated sub-header" for="email">E-mail</label>
-            <input class="input animate__animated" id="email" type="email" name="email" required>
+            <input class="input animate__animated" id="email" type="email" name="email" required autocomplete="email">
         </div>
         <div class="flex-column">
             <label class="animate__animated sub-header" for="password">Password</label>
-            <input class="input animate__animated" id="password" type="password" name="password" required>
-        </div>
-        <div class="flex-column">
-            <label class="animate__animated sub-header" for="passwordrepeat">Repeat Password </label>
-            <input class="input animate__animated" id="passwordrepeat" type="password" name="passwordrepeat" required>
+            <input class="input animate__animated" id="password" type="password" name="password" required autocomplete="new-password" minlength="6">
         </div>
         <input class="btn-submit sub-header" type="submit" value="Sign Up">
         <a class="btn-submit-outlined" id="aToLogin">Sign In</a>
