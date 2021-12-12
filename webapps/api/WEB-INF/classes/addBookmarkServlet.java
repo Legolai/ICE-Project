@@ -1,19 +1,14 @@
 import controllers.BookmarkController;
 import controllers.Controller;
-import controllers.UserController;
 import entities.Bookmark;
-import entities.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 @WebServlet("/addBookmark")
 public class addBookmarkServlet extends HttpServlet {
@@ -22,7 +17,7 @@ public class addBookmarkServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         System.out.println("AddBookmark endpoint reached");
 
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
         System.out.println("from addbookmark: "+ session.getId());
 
         StringBuffer jb = new StringBuffer();

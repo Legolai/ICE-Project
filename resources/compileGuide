@@ -1,5 +1,6 @@
-Navigate to ICE folder in cmd
+Navigate to ICE folder wth cmd
 
+in ICE root folder
 run:
 cd webapps/api/WEB-INF/
 
