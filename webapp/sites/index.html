@@ -13,8 +13,8 @@
     <title>Title</title>
 </head>
 <body>
-    <div class="container flex-align-center flex-coloum">
-        <nav class="animate__animated animate__bounceInDown">
+    <div class="container flex-align-center flex-column">
+        <nav class="animate__animated animate__slideInDown">
             <ul>
                 <li><a class="active">home</a></li>
                 <li><a>about</a></li>
@@ -23,16 +23,21 @@
                 <li><a class="btn-outlined" href="login.html">Sign in</a></li>
             </ul>
         </nav>
-        <main class="container flex-coloum">
-            <div id="favourites" class="">
-                <div id="tabs" class="flex-row tabs animate__animated animate__fadeIn animate__delay-1s">
-
+        <main class="container grid-row-1-coloum-2-1-3 animate__animated animate__fadeIn">
+            <div id="selector-panel" class="flex-column panel">
+                <input type="text" id="search" class="search" placeholder="Search...">
+            </div>
+            <div id="favourites" class="flex-column">
+                <div id="tabs" class="flex-row tabs">
                 </div>
                 <div id="fav-items" class="fav-items">
 
                 </div>
             </div>
         </main>
+        <div class="modal animate__animated">
+
+        </div>
     </div>
 </body>
 </html>
