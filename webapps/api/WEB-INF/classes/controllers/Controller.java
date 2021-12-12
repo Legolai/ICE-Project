@@ -67,6 +67,11 @@ public class Controller implements UserController, BookmarkController{
         return dbConnecter.authenticate(username, password);
     }
 
+
+    @Override
+    public User getUser(User user) {
+        return dbConnecter.getUser(user);
+    }
     @Override
     public Boolean updateUser(User user, String key, String value) {
         return dbConnecter.updateUser(user, key, value);
@@ -81,10 +86,5 @@ public class Controller implements UserController, BookmarkController{
         user.setFirstname(firstname);
         user.setSurname(surname);
         return dbConnecter.newUser(user);
-    }
-
-    @Override
-    public void logout() {
-
     }
 }

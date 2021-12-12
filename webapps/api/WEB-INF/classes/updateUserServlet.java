@@ -46,20 +46,19 @@ public class updateUserServlet extends HttpServlet {
 
         UserController userController = new Controller();
         Boolean userUpdated = userController.updateUser(user, key, value);
-
-        if ( userUpdated ) {
+        user = userController.getUser(user);
+        if ( userUpdated && user != null) {
             System.out.println("status 201");
+
             session.setAttribute("user", user);
 
             response.setStatus(201);
 
-            JSONObject userAsJSON = new JSONObject(user);
-
-            out.println(userAsJSON);
+            out.println("{\"userUpdated\":\"true\"}");
         } else {
             System.out.println("status 202");
             response.setStatus(202);
-            out.println("{\"UserCreated\":\"false\"}");
+            out.println("{\"userUpdated\":\"false\"}");
         }
         out.close();  // Always close the output writer
     }

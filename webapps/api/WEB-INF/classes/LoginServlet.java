@@ -49,12 +49,10 @@ public class LoginServlet extends HttpServlet {
 
             response.setStatus(201);
 
-            JSONObject userAsJSON = new JSONObject(user);
-
-            out.println(userAsJSON);
+            out.println("{\"authenticated\":\"true\"}");
         } else {
             response.setStatus(401);
-            out.println("{\"access\":\"Denied\"}");
+            out.println("{\"authenticated\":\"false\"}");
         }
         out.close();  // Always close the output writer
     }

@@ -60,7 +60,7 @@ public class DBConnecter {
         return null;
     }
 
-    public User getUser(int user_id) {
+    public User getUser(User user) {
         PreparedStatement preparedStatement = null;
 
         try {
@@ -68,19 +68,19 @@ public class DBConnecter {
 
             String query = "SELECT * FROM Favorite_Website_DB.User WHERE user_id = ?";
             preparedStatement = conn.prepareStatement(query);
-            preparedStatement.setInt(1, user_id);
+            preparedStatement.setInt(1, user.getUser_id());
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.isBeforeFirst()) {
-                User user = new User();
+                User tmpUser = new User();
                 while (resultSet.next()) {
-                    user.setUser_id(resultSet.getInt("user_id"));
-                    user.setFirstname(resultSet.getString("firstname"));
-                    user.setSurname(resultSet.getString("surname"));
-                    user.setUsername(resultSet.getString("username"));
-                    user.setPassword(resultSet.getString("password"));
-                    user.setEmail(resultSet.getString("email"));
+                    tmpUser.setUser_id(resultSet.getInt("user_id"));
+                    tmpUser.setFirstname(resultSet.getString("firstname"));
+                    tmpUser.setSurname(resultSet.getString("surname"));
+                    tmpUser.setUsername(resultSet.getString("username"));
+                    tmpUser.setPassword(resultSet.getString("password"));
+                    tmpUser.setEmail(resultSet.getString("email"));
                 }
                 close();
                 return user;
