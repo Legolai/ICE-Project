@@ -30,6 +30,7 @@ body {
 	background-color: var(--bg-color);
 	display: flex;
 	justify-content: center;
+	overflow-y: scroll;
 }
 
 a {
@@ -65,7 +66,7 @@ nav ul {
 
 }
 
-nav ul li:nth-last-child(2) {
+nav ul li:last-child {
 	margin-left: auto;
 }
 
@@ -80,19 +81,16 @@ nav ul li a {
 	background-image: linear-gradient(var(--bg-color), var(--bg-color));
 }
 
-/*
-nav ul li a:hover {
-	opacity: 0.6;
+
+nav ul li:not(:last-child) a:hover {
+	background-position: 100% 100%; /*OR bottom right*/
+	background-size: 100% 2px;
 }
 
-nav ul li:not(:nth-last-child(2), :nth-last-child(1)) a:hover {
-	border-bottom: 2px solid var(--bg-color);
+nav ul li:not(:last-child) .active {
+	background-position: 100% 100%; /*OR bottom right*/
+	background-size: 100% 2px;
 }
-
-nav ul li:not(:nth-last-child(2), :nth-last-child(1)) .active {
-	border-bottom: 2px solid var(--bg-color);
-}
-*/
 
 main {
 	width: clamp(100px, 100%, 800px);
@@ -278,6 +276,21 @@ main {
 	background-color: var(--primary-color);
 	color: white;
 	padding: 10px;
+	-webkit-transition: all .2s ease-in-out;
+	-moz-transition: all .2s ease-in-out;
+	-ms-transition: all .2s ease-in-out;
+	-o-transition: all .2s ease-in-out;
+	transition: all .2s ease-in-out;
+}
+.fav-item:hover{
+	-webkit-box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.5);
+	-moz-box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.5);
+	box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.5);
+	-webkit-transform: scale(1.1);
+	-moz-transform: scale(1.1);
+	-ms-transform: scale(1.1);
+	-o-transform: scale(1.1);
+	transform: scale(1.1);
 }
 
 .tabs {
@@ -295,6 +308,7 @@ main {
 	border: none;
 	transition: all .5s;
 	flex-grow: 1;
+	white-space: nowrap;
 }
 .tab-active {
 	background-color: var(--primary-color);

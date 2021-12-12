@@ -45,7 +45,6 @@ public class LoginServlet extends HttpServlet {
         User user = userController.login(username, password);
 
         if (user != null ) {
-            //kan ikke få til at virke
             session.setAttribute("user", user);
 
             response.setStatus(201);

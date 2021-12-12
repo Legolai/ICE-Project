@@ -3,35 +3,60 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/checkSession")
+@WebServlet("/session")
 public class SessionServlet extends HttpServlet {
 
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         System.out.println("Session endpoint reached");
 
         HttpSession session = request.getSession(false);
         PrintWriter out = response.getWriter();
 
-        if (session != null) {
-            System.out.println("fra Session: " + session.getId());
+        StringBuffer jb = new StringBuffer();
+        String line = null;
+        try {
+            BufferedReader reader = request.getReader();
+            while ((line = reader.readLine()) != null)
+                jb.append(line);
+        } catch (Exception e) { /*report an error*/ }
 
-            response.addHeader("Access-Control-Allow-Origin", "http://localhost:63342");
-            response.addHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-            response.addHeader("Access-Control-Allow-Credentials", "true");
-            response.setContentType("application/json");
-            response.setCharacterEncoding("utf-8");
+        JSONObject jsonObject = new JSONObject(jb.toString());
+        String requestParamenter = jsonObject.getString("Session");
+
+        response.addHeader("Access-Control-Allow-Origin", "http://localhost:63342");
+        response.addHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        response.addHeader("Access-Control-Allow-Credentials", "true");
+        response.setContentType("application/json");
+        response.setCharacterEncoding("utf-8");
+
+
+        if (session != null) {
             response.setStatus(201);
-            out.println("{\"JSESSIONID\":\""+ session.getId() +"\"}");
+
+            switch (requestParamenter) {
+                case "delete":
+                    System.out.println("deleting session: " + session.getId());
+                    session.invalidate();
+                    out.println("{\"Session\":\"deleted\"}");
+                    break;
+
+                default:
+                    System.out.println("Session: " + session.getId());
+                    out.println("{\"Session\":\""+ session.getId() +"\"}");
+                    break;
+            }
 
         } else {
             System.out.println("ingen session");
             response.setStatus(401);
-            out.println("{\"JSESSIONID\":\"Null\"}");
+            out.println("{\"Session\":\"Null\"}");
         }
         out.close();  // Always close the output writer
     }
