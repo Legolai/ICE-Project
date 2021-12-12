@@ -60,7 +60,7 @@ public class DBConnecter {
         return null;
     }
 
-    public User getUser(int user_id) {
+    public User getUser(User user) {
         PreparedStatement preparedStatement = null;
 
         try {
@@ -68,19 +68,19 @@ public class DBConnecter {
 
             String query = "SELECT * FROM Favorite_Website_DB.User WHERE user_id = ?";
             preparedStatement = conn.prepareStatement(query);
-            preparedStatement.setInt(1, user_id);
+            preparedStatement.setInt(1, user.getUser_id());
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.isBeforeFirst()) {
-                User user = new User();
+                User tmpUser = new User();
                 while (resultSet.next()) {
-                    user.setUser_id(resultSet.getInt("user_id"));
-                    user.setFirstname(resultSet.getString("firstname"));
-                    user.setSurname(resultSet.getString("surname"));
-                    user.setUsername(resultSet.getString("username"));
-                    user.setPassword(resultSet.getString("password"));
-                    user.setEmail(resultSet.getString("email"));
+                    tmpUser.setUser_id(resultSet.getInt("user_id"));
+                    tmpUser.setFirstname(resultSet.getString("firstname"));
+                    tmpUser.setSurname(resultSet.getString("surname"));
+                    tmpUser.setUsername(resultSet.getString("username"));
+                    tmpUser.setPassword(resultSet.getString("password"));
+                    tmpUser.setEmail(resultSet.getString("email"));
                 }
                 close();
                 return user;
@@ -127,35 +127,27 @@ public class DBConnecter {
         }
         return null;
     }
-    public User updateUser(User user) {
+    public Boolean updateUser(User user, String key, String value) {
             try {
                 connect();
 
-                String sql = "INSERT INTO User (user_id, email, firstname, surname, username, password) " +
-                "VALUES (?,?,?,?,?,?) ON DUPLICATE KEY UPDATE email=?, firstname=?, surname=?, username=?, password=?";
+                String sql = "INSERT INTO User ? " +
+                "VALUES ? WHERE user_id = ? ON DUPLICATE KEY UPDATE ?=?";
 
                 PreparedStatement pstmt = conn.prepareStatement(sql);
 
-                pstmt.setInt(1, user.getUser_id());
-                pstmt.setString(2, user.getEmail());
-                pstmt.setString(3, user.getFirstname());
-                pstmt.setString(4, user.getSurname());
-                pstmt.setString(5, user.getUsername());
-                pstmt.setString(6, user.getPassword());
-
-                pstmt.setString(7, user.getEmail());
-                pstmt.setString(8, user.getFirstname());
-                pstmt.setString(9, user.getSurname());
-                pstmt.setString(10, user.getUsername());
-                pstmt.setString(11, user.getPassword());
-
+                pstmt.setString(1, key);
+                pstmt.setString(2, value);
+                pstmt.setInt(3, user.getUser_id());
+                pstmt.setString(4, key);
+                pstmt.setString(5, value);
 
                 int rowsAffected = pstmt.executeUpdate();
 
                 if (rowsAffected > 0) {
                     pstmt.close();
                     close();
-                    return user;
+                    return true;
                 }
 
                 pstmt.close();
@@ -163,7 +155,7 @@ public class DBConnecter {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        return null;
+        return false;
     }
 
 

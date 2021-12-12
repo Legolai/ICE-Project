@@ -1,0 +1,12 @@
+./classes/database/DBConnecter.java
+./classes/addBookmarkServlet.java
+./classes/updateUserServlet.java
+./classes/SignUpServlet.java
+./classes/SessionServlet.java
+./classes/GetAllBookmarksServlet.java
+./classes/LoginServlet.java
+./classes/controllers/BookmarkController.java
+./classes/controllers/Controller.java
+./classes/controllers/UserController.java
+./classes/entities/Bookmark.java
+./classes/entities/User.java
