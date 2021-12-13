@@ -4,14 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eb19d21f-f5a3-431b-b496-431c63fb8ce8" name="Changes" comment="profile page">
+    <list default="true" id="eb19d21f-f5a3-431b-b496-431c63fb8ce8" name="Changes" comment="profile page missing setup to api">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/css/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webapp/js/SDK.js" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/js/SDK.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/js/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/js/profile.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webapp/sites/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/sites/profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/UpdateUserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/UpdateUserServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/UserInfoServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/UserInfoServlet.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,6 +73,14 @@
       <updated>1639315889055</updated>
       <workItem from="1639315891694" duration="1757000" />
     </task>
+    <task id="LOCAL-00001" summary="profile page missing setup to api">
+      <created>1639415472236</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1639415472236</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -96,5 +100,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="profile page missing setup to api" />
+    <option name="LAST_COMMIT_MESSAGE" value="profile page missing setup to api" />
   </component>
 </project>
