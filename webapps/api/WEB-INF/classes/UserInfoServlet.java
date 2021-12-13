@@ -1,3 +1,5 @@
+import controllers.Controller;
+import controllers.UserController;
 import entities.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -7,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -14,20 +17,26 @@ import java.io.PrintWriter;
 public class UserInfoServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("Profile endpoint reached");
+        HttpSession session = request.getSession(false);
+        System.out.println("from profile: "+ session.getId());
 
-        HttpSession session = req.getSession(false);
-
-        PrintWriter out = resp.getWriter();
+        response.addHeader("Access-Control-Allow-Origin", "http://localhost:63342");
+        response.addHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        response.addHeader("Access-Control-Allow-Credentials", "true");
+        response.setContentType("application/json");
+        response.setCharacterEncoding("utf-8");
+        PrintWriter out = response.getWriter();
 
         if (session != null) {
             User user = (User) session.getAttribute("user");
             JSONObject userJSON = new JSONObject(user);
-            resp.setStatus(200);
-            out.println("{\"user\":"+userJSON.toString()+"}");
+            response.setStatus(200);
+            out.println("{\"user\":"+userJSON+"}");
         }
         else {
-            resp.setStatus(401);
+            response.setStatus(401);
             out.println("{\"user\":\"denied\"}");
         }
 
