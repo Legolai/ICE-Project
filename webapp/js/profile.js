@@ -3,7 +3,9 @@ $(document).ready(() => {
     let entrance = 'animate__zoomIn'
     let exit = 'animate__zoomOut'
 
-    const userInfo = SDK.get(endpoints.profile);
+    SDK.get(endpoints.profile).then((result) => {
+        console.log(result);
+    });
 
 
 

@@ -69,24 +69,11 @@ const SDK = {
             })
     },
     get: (endpoint) => {
-        $.ajax(baseURL + endpoint,
+        return $.ajax(baseURL + endpoint,
 {
             method: "GET",
             xhrFields: {withCredentials: true},
             crossDomain: true
-        })
-        .then((result) => {
-            if (endpoint === endpoints.getall) {
-                return new Promise((resolve) => {
-                    console.log(resolve)
-                    return result
-                })
-            }
-            else if (endpoint === endpoints.profile) {
-                return new Promise((resolve) => {
-                    return result
-                })
-            }
         })
         .fail(() => {
             console.log(endpoint)

@@ -9,8 +9,6 @@
       <change beforePath="$PROJECT_DIR$/webapp/js/SDK.js" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/js/SDK.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webapp/js/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/js/profile.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webapp/js/tabs.js" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/js/tabs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/AddBookmarkServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/AddBookmarkServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/database/DBConnecter.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/database/DBConnecter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
