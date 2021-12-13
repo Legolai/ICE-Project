@@ -1,0 +1,273 @@
+Index: webapp/css/UserHome.css
+===================================================================
+diff --git a/webapp/css/UserHome.css b/webapp/css/UserHome.css
+deleted file mode 100644
+--- a/webapp/css/UserHome.css	(revision b5f1b149f6f324fad1fc6b5a4af123cd8c0172b8)
++++ /dev/null	(revision b5f1b149f6f324fad1fc6b5a4af123cd8c0172b8)
+@@ -1,35 +0,0 @@
+-/* Style the tab */
+-.tab {
+-  overflow: hidden;
+-  border: 1px solid #ccc;
+-  background-color: #f1f1f1;
+-}
+-
+-/* Style the buttons that are used to open the tab content */
+-.tab button {
+-  background-color: inherit;
+-  float: left;
+-  border: none;
+-  outline: none;
+-  cursor: pointer;
+-  padding: 14px 16px;
+-  transition: 0.3s;
+-}
+-
+-/* Change background color of buttons on hover */
+-.tab button:hover {
+-  background-color: #ddd;
+-}
+-
+-/* Create an active/current tablink class */
+-.tab button.active {
+-  background-color: #ccc;
+-}
+-
+-/* Style the tab content */
+-.tabcontent {
+-  display: none;
+-  padding: 6px 12px;
+-  border: 1px solid #ccc;
+-  border-top: none;
+-}
+\ No newline at end of file
+Index: ICE-Project.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<module type=\"JAVA_MODULE\" version=\"4\">\n  <component name=\"NewModuleRootManager\" inherit-compiler-output=\"true\">\n    <exclude-output />\n    <content url=\"file://$MODULE_DIR$\">\n      <sourceFolder url=\"file://$MODULE_DIR$/webapps/api/WEB-INF/classes\" isTestSource=\"false\" />\n    </content>\n    <orderEntry type=\"inheritedJdk\" />\n    <orderEntry type=\"sourceFolder\" forTests=\"false\" />\n    <orderEntry type=\"module-library\" exported=\"\">\n      <library>\n        <CLASSES>\n          <root url=\"jar://$MODULE_DIR$/lib/servlet-api.jar!/\" />\n        </CLASSES>\n        <JAVADOC />\n        <SOURCES />\n      </library>\n    </orderEntry>\n    <orderEntry type=\"module-library\" exported=\"\">\n      <library>\n        <CLASSES>\n          <root url=\"jar://$MODULE_DIR$/lib/json-java.jar!/\" />\n        </CLASSES>\n        <JAVADOC />\n        <SOURCES />\n      </library>\n    </orderEntry>\n  </component>\n</module>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ICE-Project.iml b/ICE-Project.iml
+--- a/ICE-Project.iml	(revision b5f1b149f6f324fad1fc6b5a4af123cd8c0172b8)
++++ b/ICE-Project.iml	(date 1638961754956)
+@@ -25,5 +25,14 @@
+         <SOURCES />
+       </library>
+     </orderEntry>
++    <orderEntry type="module-library" exported="">
++      <library>
++        <CLASSES>
++          <root url="jar://$MODULE_DIR$/lib/mysql-connector-java-8.0.23.jar!/" />
++        </CLASSES>
++        <JAVADOC />
++        <SOURCES />
++      </library>
++    </orderEntry>
+   </component>
+ </module>
+\ No newline at end of file
+Index: webapp/sites/UserHome.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/webapp/sites/UserHome.html b/webapp/sites/index.html
+rename from webapp/sites/UserHome.html
+rename to webapp/sites/index.html
+--- a/webapp/sites/UserHome.html	(revision b5f1b149f6f324fad1fc6b5a4af123cd8c0172b8)
++++ b/webapp/sites/index.html	(date 1638963815282)
+@@ -4,45 +4,17 @@
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+-    <link rel="stylesheet" href="../css/UserHome.css">
+-    <script src="../js/main.js" defer></script>
+-    <title>Title</title>
++    <link rel="stylesheet" href="../css/main.css">
++    <script src="../js/tabs.js" defer></script>
++    <title>Home</title>
+ </head>
+-<body>
+-    <!-- Tab links -->
+-    <div class="tab">
+-        <button class="tablinks" onclick="openTab(event, 'Watching')">Watching</button>
+-        <button class="tablinks" onclick="openTab(event, 'Completed')">Completed</button>
+-        <button class="tablinks" onclick="openTab(event, 'On Hold')">On Hold</button>
+-        <button class="tablinks" onclick="openTab(event, 'Dropped')">Dropped</button>
+-        <button class="tablinks" onclick="openTab(event, 'Plan to Watch')">Plan to Watch</button>
+-        <button class="tablinks" onclick="openTab(event, 'All')">All</button>
+-    </div>
+-
+-    <!-- Tab content -->
+-    <div id="Watching" class="tabcontent">
+-        <h3>Watching</h3>
+-        <p>This is the tab for favorites you're currently watching.</p>
+-    </div>
+-    <div id="Completed" class="tabcontent">
+-        <h3>Completed</h3>
+-        <p>This is the tab for favorites you have completed.</p>
+-    </div>
+-    <div id="On Hold" class="tabcontent">
+-        <h3>On Hold</h3>
+-        <p>This is the tab for favorites you have on hold.</p>
+-    </div>
+-    <div id="Dropped" class="tabcontent">
+-        <h3>Dropped</h3>
+-        <p>This is the tab for favorites you have dropped.</p>
+-    </div>
+-    <div id="Plan to Watch" class="tabcontent">
+-        <h3>Plan to Watch</h3>
+-        <p>This is the tab for favorites you plan on watching.</p>
+-    </div>
+-    <div id="All" class="tabcontent">
+-        <h3>All</h3>
+-        <p>This is the tab for all of your favorites.</p>
+-    </div>
+-</body>
++    <body>
++        <nav>
++            <ul>
++                <li><a>Home</a></li>
++                <li><a>About</a></li>
++                <li><a href="login.html">Login</a></li>
++            </ul>
++        </nav>
++    </body>
+ </html>
+\ No newline at end of file
+Index: webapp/js/main.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>const baseURL = \"http://localhost:8888/api\";\n\n$(\"#login\").submit((event) => {\n\tevent.preventDefault();\n\n\t//const data = $(\"#login :input\").serializeArray();\n\tconst username = $(\"#username\").val();\n\tconst password = $(\"#password\").val();\n\tconst data = {username: username, password: password}\n\tdoPost('/login', data)\n});\n\nconst doPost = (endpoint, data) => {\n    $.ajax(baseURL+endpoint,{\n        type: \"POST\",\n        data: JSON.stringify(data)  ,\n        success: (result, status, xhr) => {\n            window.location.replace(\"login.html\");\n        }\n    })\n}\n\nfunction openCity(evt, cityName) {\n  // Declare all variables\n  var i, tabcontent, tablinks;\n\n  // Get all elements with class=\"tabcontent\" and hide them\n  tabcontent = document.getElementsByClassName(\"tabcontent\");\n  for (i = 0; i < tabcontent.length; i++) {\n    tabcontent[i].style.display = \"none\";\n  }\n\n  // Get all elements with class=\"tablinks\" and remove the class \"active\"\n  tablinks = document.getElementsByClassName(\"tablinks\");\n  for (i = 0; i < tablinks.length; i++) {\n    tablinks[i].className = tablinks[i].className.replace(\" active\", \"\");\n  }\n\n  // Show the current tab, and add an \"active\" class to the button that opened the tab\n  document.getElementById(cityName).style.display = \"block\";\n  evt.currentTarget.className += \" active\";\n}\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/webapp/js/main.js b/webapp/js/main.js
+--- a/webapp/js/main.js	(revision b5f1b149f6f324fad1fc6b5a4af123cd8c0172b8)
++++ b/webapp/js/main.js	(date 1638963592344)
+@@ -15,29 +15,9 @@
+         type: "POST",
+         data: JSON.stringify(data)  ,
+         success: (result, status, xhr) => {
+-            window.location.replace("login.html");
++            window.location.replace("index.html");
+         }
+     })
+ }
+ 
+-function openCity(evt, cityName) {
+-  // Declare all variables
+-  var i, tabcontent, tablinks;
+-
+-  // Get all elements with class="tabcontent" and hide them
+-  tabcontent = document.getElementsByClassName("tabcontent");
+-  for (i = 0; i < tabcontent.length; i++) {
+-    tabcontent[i].style.display = "none";
+-  }
+-
+-  // Get all elements with class="tablinks" and remove the class "active"
+-  tablinks = document.getElementsByClassName("tablinks");
+-  for (i = 0; i < tablinks.length; i++) {
+-    tablinks[i].className = tablinks[i].className.replace(" active", "");
+-  }
+-
+-  // Show the current tab, and add an "active" class to the button that opened the tab
+-  document.getElementById(cityName).style.display = "block";
+-  evt.currentTarget.className += " active";
+-}
+ 
+Index: webapp/css/main.css
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>* {\n\tbox-sizing: border-box;\n}\n\nbody {\n\tpadding: 0;\n\tmargin: 0;\n\tfont-family: \"Courier New\", Courier, monospace;\n\tfont-size: 14px;\n}\n\n.container {\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-items: center;\n\tjustify-content: center;\n\theight: 100vh;\n}\n\n.form {\n\tdisplay: flex;\n\tflex-direction: column;\n\twidth: clamp(200px, 60%, 600px);\n}\n\n.form input[type=\"text\"],\n.form input[type=\"password\"] {\n\tpadding: 15px 10px;\n\tmargin-bottom: 15px;\n\tfont-size: 1.125em;\n\tborder: none;\n\tborder-bottom: 2px solid cornflowerblue;\n}\n\n.form label {\n\tfont-size: 1.25em;\n}\n\n.btn-submit {\n\tfont-size: 1.5em;\n\tfont-weight: 600;\n\tbackground-color: cornflowerblue;\n\tletter-spacing: 2px;\n\tcolor: white;\n\tborder: none;\n\tpadding: 15px 10px;\n\tmargin-top: 20px;\n}\n\n.btn-submit:hover {\n\topacity: 0.6;\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/webapp/css/main.css b/webapp/css/main.css
+--- a/webapp/css/main.css	(revision b5f1b149f6f324fad1fc6b5a4af123cd8c0172b8)
++++ b/webapp/css/main.css	(date 1638966833484)
+@@ -2,11 +2,63 @@
+ 	box-sizing: border-box;
+ }
+ 
++:root {
++	--primary-color: #336C8E;
++	--secondary-color: #46ACC2;
++	--accent-color: #2A4C74;
++	--error-color: #EBC55C;
++	--warning-color: #e55b5b;
++	--accept-color: #79B473;
++	--dark-color: #2A2D34;
++	--bg-color: #F1F7F9;
++}
++
+ body {
+ 	padding: 0;
+ 	margin: 0;
+ 	font-family: "Courier New", Courier, monospace;
+ 	font-size: 14px;
++	height: 100vh;
++	background-color: var(--bg-color);
++}
++
++a {
++	text-decoration: none;
++}
++
++nav {
++	display: flex;
++	width: 100%;
++	background-color: var(--accent-color);
++}
++
++nav ul {
++	display: flex;
++	list-style: none;
++	gap: 10px;
++	flex: 1;
++	margin: 10px;
++	padding: 10px;
++}
++
++nav ul li:last-child {
++	margin-left: auto;
++}
++
++nav ul li a {
++	padding: 10px 15px;
++	color: var(--bg-color);
++	font-weight: normal;
++}
++
++nav ul li:last-child a {
++	background-color: var(--primary-color);
++	text-align: center;
++	border-radius: 10px;
++}
++
++nav ul li a:hover {
++	opacity: 0.6;
+ }
+ 
+ .container {
+@@ -29,7 +81,7 @@
+ 	margin-bottom: 15px;
+ 	font-size: 1.125em;
+ 	border: none;
+-	border-bottom: 2px solid cornflowerblue;
++	border-bottom: 2px solid var(--primary-color);
+ }
+ 
+ .form label {
+@@ -39,7 +91,7 @@
+ .btn-submit {
+ 	font-size: 1.5em;
+ 	font-weight: 600;
+-	background-color: cornflowerblue;
++	background-color: var(--primary-color);
+ 	letter-spacing: 2px;
+ 	color: white;
+ 	border: none;
+diff --git a/webapp/js/tabs.js b/webapp/js/tabs.js
+new file mode 100644

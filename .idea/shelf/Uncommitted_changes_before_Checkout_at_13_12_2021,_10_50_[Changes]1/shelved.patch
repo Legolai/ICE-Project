@@ -1,0 +1,399 @@
+Index: webapp/sites/login.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <link href=\"https://fonts.googleapis.com/icon?family=Material+Icons\" rel=\"stylesheet\">\n    <link rel=\"stylesheet\" href=\"../css/overflowHidden.css\">\n    <link rel=\"stylesheet\" href=\"../css/main.css\">\n    <link rel=\"stylesheet\" href=\"../css/animate.css\">\n    <script src=\"../js/jQuery.min.js\" defer></script>\n    <script src=\"../js/SDK.js\" defer></script>\n    <script src=\"../js/main.js\" defer></script>\n    <title>Document</title>\n</head>\n<body>\n    <main class=\"container flex-column flex-center animate__animated\">\n        <h1 class=\"animate__bounceInUp animate__animated header\">Login</h1>\n\n        <form id=\"login\" class=\"form flex-column animate__bounceInUp animate__animated\" action=\"\">\n            <div class=\"flex-column\">\n                <label class=\"animate__animated sub-header\" for=\"username\">Username</label>\n                <input class=\"input animate__animated\" id=\"username\" type=\"text\" name=\"username\" required autocomplete=\"username\">\n            </div>\n            <div class=\"flex-column\">\n                <label class=\"animate__animated sub-header\" for=\"password\">Password</label>\n                <input class=\"input animate__animated\" id=\"password\" type=\"password\" name=\"password\" required autocomplete=\"current-password\">\n            </div>\n            <div class=\"container animate__animated\">\n                <a>Forgot password?</a>\n                <a id=\"aToSignup\">Sign up</a>\n            </div>\n            <input class=\"btn-submit sub-header\" type=\"submit\" value=\"Login\">\n        </form>\n    </main>\n</body>\n</html>\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/webapp/sites/login.html b/webapp/sites/login.html
+--- a/webapp/sites/login.html	
++++ b/webapp/sites/login.html	
+@@ -11,7 +11,7 @@
+     <script src="../js/jQuery.min.js" defer></script>
+     <script src="../js/SDK.js" defer></script>
+     <script src="../js/main.js" defer></script>
+-    <title>Document</title>
++    <title>Login</title>
+ </head>
+ <body>
+     <main class="container flex-column flex-center animate__animated">
+Index: webapp/js/tabs.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>$(document).ready(() => {\n    SDK.post(endpoints.session, data = {Session: \"validate\"});\n    let entrance = 'animate__zoomIn'\n    let exit = 'animate__zoomOut'\n\n    $('#logout').click((event) => {\n        event.preventDefault();\n        const data = {Session: \"delete\"}\n        SDK.post(endpoints.session, data);\n    })\n\n    const showItem = (element) => {\n        /*\n        $(element).addClass(entrance);\n        $(element).removeClass(exit);\n         */\n        $(element).show(0);\n    }\n    const hideItem = (element) => {\n        /*\n        $(element).removeClass(entrance);\n        $(element).addClass(exit)\n         */\n        $(element).hide(0);\n    }\n\n    const tabNames = [\"All\", \"Watching\", \"Completed\", \"On Hold\", \"Dropped\", \"Plan to Watch\"]\n    tabNames.forEach((tabName) => {\n        const tabId = tabName.replaceAll(\" \", \"\");\n        $(\"#tabs\").append(\"<button id='\"+tabId+\"' class='tab sub-header\"+ (tabName === tabNames[0] ? \" tab-active\" : \"\") +\"'>\" + tabName + \"</button>\")\n        const tab = $(\"#\" + tabId);\n        tab.click(() => {\n            $(\".tab-active\").removeClass(\"tab-active\");\n            tab.addClass(\"tab-active\");\n            if(tabName.toLowerCase() != \"all\"){\n                $(\".fav-item\").filter(function() {\n                    const show = $(this).find(\".status\").text().toLowerCase() == tabName.toLowerCase();\n                    if(show) {\n                        if ($(this).hasClass(exit))\n                        showItem($(this));\n                    } else {\n                        hideItem($(this))\n\n                    }\n                })\n            }\n            else {\n                $(\"#fav-items *\").each((i, item) => {\n                    showItem(item)\n                })\n            }\n        })\n    })\n})\n\n$(this).click(function (event) {\n    const modal = $(\".modal\");\n    if(event.target == modal[0]) {\n\n        modal.removeClass(\"animate__fadeIn animate__fast\");\n        modal.children().removeClass(\"animate__bounceInDown animate__faster\");\n        modal.children().toggleClass(\"animate__bounceOutUp animate__faster\");\n        modal.addClass(\"animate__fadeOut animate__fast\")\n            .on('animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd', () => {\n                modal.css(\"display\",\"none\");\n                modal.empty();\n            })\n    }\n})\n\n$(document).ready(function(){\n    $(\"#search\").on(\"keyup\", function() {\n        const value = $(this).val().toLowerCase();\n        $(\".fav-item\").filter(function() {\n            if($(this).find(\".status\").text().toLowerCase() == $(\".tab-active\").text().toLowerCase() || $(\".tab-active\").text().toLowerCase() == \"all\")\n                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)\n        });\n    });\n});\n\n\n\n\n\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/webapp/js/tabs.js b/webapp/js/tabs.js
+--- a/webapp/js/tabs.js	
++++ b/webapp/js/tabs.js	
+@@ -2,6 +2,32 @@
+     SDK.post(endpoints.session, data = {Session: "validate"});
+     let entrance = 'animate__zoomIn'
+     let exit = 'animate__zoomOut'
++    const bookmarks = SDK.get(endpoints.getall);
++
++    bookmarks.forEach((item, i) => {
++        $("#fav-items").append("<div id='"+ ("fav-item-" + i) +"' class='fav-item'>" +
++            "<h2 class='sub-header'>"+item.name+"</h2>" +
++            "<p>"+item.rating+"</p>" +
++            "<div class='flex-row'>"+(item.genres.map((g) => ("<div class='genre'>" + g + "</div>") ))+"</div>" +
++            "<div class='flex-row'>"+(item.tags.map((t) => ("<div class='tag'>" + t + "</div>")))+"</div>" +
++            "<p>"+item.description+"</p>" +
++            "<a href=''>"+item.url+"</a>" +
++            "<p>"+item.media+"</p>" +
++            "<p class='status'>"+item.status+"</p>" +
++            "</div>")
++    })
++
++    $(".fav-item").click(function () {
++        const clone = $(this).clone();
++        const modal = $(".modal");
++        modal.append(clone);
++        modal.css("display", "block");
++        if(modal.hasClass("animate__fadeOut animate__fast"))
++            modal.removeClass("animate__fadeOut animate__fast")
++        modal.off("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd")
++        modal.addClass("animate__fadeIn animate__fast");
++        clone.addClass('modal-content animate__animated animate__bounceInDown animate__fast');
++    })
+ 
+     $('#logout').click((event) => {
+         event.preventDefault();
+@@ -24,6 +50,14 @@
+         $(element).hide(0);
+     }
+ 
++    $("#search").on("keyup", function() {
++        const value = $(this).val().toLowerCase();
++        $(".fav-item").filter(function() {
++            if($(this).find(".status").text().toLowerCase() == $(".tab-active").text().toLowerCase() || $(".tab-active").text().toLowerCase() == "all")
++                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
++        });
++    });
++
+     const tabNames = ["All", "Watching", "Completed", "On Hold", "Dropped", "Plan to Watch"]
+     tabNames.forEach((tabName) => {
+         const tabId = tabName.replaceAll(" ", "");
+@@ -35,12 +69,11 @@
+             if(tabName.toLowerCase() != "all"){
+                 $(".fav-item").filter(function() {
+                     const show = $(this).find(".status").text().toLowerCase() == tabName.toLowerCase();
+-                    if(show) {
+-                        if ($(this).hasClass(exit))
++                    const search = $(this).text().toLowerCase().indexOf($("#search").val().toLowerCase()) > -1;
++                    if(show && search) {
+                         showItem($(this));
+                     } else {
+                         hideItem($(this))
+-
+                     }
+                 })
+             }
+@@ -56,7 +89,6 @@
+ $(this).click(function (event) {
+     const modal = $(".modal");
+     if(event.target == modal[0]) {
+-
+         modal.removeClass("animate__fadeIn animate__fast");
+         modal.children().removeClass("animate__bounceInDown animate__faster");
+         modal.children().toggleClass("animate__bounceOutUp animate__faster");
+@@ -68,15 +100,6 @@
+     }
+ })
+ 
+-$(document).ready(function(){
+-    $("#search").on("keyup", function() {
+-        const value = $(this).val().toLowerCase();
+-        $(".fav-item").filter(function() {
+-            if($(this).find(".status").text().toLowerCase() == $(".tab-active").text().toLowerCase() || $(".tab-active").text().toLowerCase() == "all")
+-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+-        });
+-    });
+-});
+ 
+ 
+ 
+Index: webapp/sites/index.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <link href=\"https://fonts.googleapis.com/icon?family=Material+Icons\" rel=\"stylesheet\">\n    <link rel=\"stylesheet\" href=\"../css/animate.css\">\n    <link rel=\"stylesheet\" href=\"../css/main.css\">\n    <script src=\"../js/jQuery.min.js\" defer></script>\n    <script src=\"../js/SDK.js\" defer></script>\n    <script src=\"../js/tabs.js\" defer></script>\n    <title>Title</title>\n</head>\n<body>\n    <div class=\"container flex-align-center flex-column\">\n        <nav class=\"animate__animated animate__bounceInDown\">\n            <ul>\n                <li><a class=\"active\">home</a></li>\n                <li><a>about</a></li>\n                <li><a>contact</a></li>\n                <li><a class=\"btn\" id=\"logout\">Logout</a></li>\n            </ul>\n        </nav>\n        <main class=\"container grid-row-1-coloum-2-1-3\">\n            <div id=\"selector-panel\" class=\"flex-column panel animate__animated animate__bounceInLeft\">\n                <input type=\"text\" id=\"search\" class=\"search\" placeholder=\"Search...\">\n            </div>\n            <div id=\"favourites\" class=\"flex-column animate__animated animate__bounceInRight\">\n                <div id=\"tabs\" class=\"flex-row tabs\">\n                </div>\n                <div id=\"fav-items\" class=\"fav-items\">\n\n                </div>\n            </div>\n        </main>\n        <div class=\"modal animate__animated\">\n\n        </div>\n    </div>\n</body>\n</html>\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/webapp/sites/index.html b/webapp/sites/index.html
+--- a/webapp/sites/index.html	
++++ b/webapp/sites/index.html	
+@@ -10,21 +10,20 @@
+     <script src="../js/jQuery.min.js" defer></script>
+     <script src="../js/SDK.js" defer></script>
+     <script src="../js/tabs.js" defer></script>
+-    <title>Title</title>
++    <title>Home</title>
+ </head>
+ <body>
+     <div class="container flex-align-center flex-column">
+         <nav class="animate__animated animate__bounceInDown">
+             <ul>
+-                <li><a class="active">home</a></li>
+-                <li><a>about</a></li>
+-                <li><a>contact</a></li>
++                <li><a href="index.html" class="active">My Page</a></li>
++                <li><a href="profile.html">Profile</a></li>
+                 <li><a class="btn" id="logout">Logout</a></li>
+             </ul>
+         </nav>
+         <main class="container grid-row-1-coloum-2-1-3">
+             <div id="selector-panel" class="flex-column panel animate__animated animate__bounceInLeft">
+-                <input type="text" id="search" class="search" placeholder="Search...">
++                <input type="search" id="search" class="search" placeholder="Search...">
+             </div>
+             <div id="favourites" class="flex-column animate__animated animate__bounceInRight">
+                 <div id="tabs" class="flex-row tabs">
+Index: webapps/api/WEB-INF/classes/UserInfoServlet.java
+===================================================================
+diff --git a/webapps/api/WEB-INF/classes/UserInfoServlet.java b/webapps/api/WEB-INF/classes/UserInfoServlet.java
+new file mode 100644
+--- /dev/null	
++++ b/webapps/api/WEB-INF/classes/UserInfoServlet.java	
+@@ -0,0 +1,36 @@
++import entities.User;
++import jakarta.servlet.ServletException;
++import jakarta.servlet.annotation.WebServlet;
++import jakarta.servlet.http.HttpServlet;
++import jakarta.servlet.http.HttpServletRequest;
++import jakarta.servlet.http.HttpServletResponse;
++import jakarta.servlet.http.HttpSession;
++import org.json.JSONObject;
++
++import java.io.IOException;
++import java.io.PrintWriter;
++
++@WebServlet("/profile")
++public class UserInfoServlet extends HttpServlet {
++
++    @Override
++    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
++
++        HttpSession session = req.getSession(false);
++
++        PrintWriter out = resp.getWriter();
++
++        if (session != null) {
++            User user = (User) session.getAttribute("user");
++            JSONObject userJSON = new JSONObject(user);
++            resp.setStatus(200);
++            out.println("{\"user\":"+userJSON.toString()+"}");
++        }
++        else {
++            resp.setStatus(401);
++            out.println("{\"user\":\"denied\"}");
++        }
++
++        out.close();
++    }
++}
+Index: webapp/sites/profile.html
+===================================================================
+diff --git a/webapp/sites/profile.html b/webapp/sites/profile.html
+new file mode 100644
+--- /dev/null	
++++ b/webapp/sites/profile.html	
+@@ -0,0 +1,29 @@
++<!DOCTYPE html>
++<html lang="en">
++    <head>
++        <meta charset="UTF-8">
++        <meta http-equiv="X-UA-Compatible" content="IE=edge">
++        <meta name="viewport" content="width=device-width, initial-scale=1.0">
++        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
++        <link rel="stylesheet" href="../css/animate.css">
++        <link rel="stylesheet" href="../css/main.css">
++        <script src="../js/jQuery.min.js" defer></script>
++        <script src="../js/SDK.js" defer></script>
++        <script src="../js/profile.js" defer></script>
++        <title>Profile</title>
++    </head>
++    <body>
++        <div class="container flex-align-center flex-column">
++            <nav class="animate__animated animate__bounceInDown">
++                <ul>
++                    <li><a href="index.html">My Page</a></li>
++                    <li><a class="active" href="profile.html">Profile</a></li>
++                    <li><a class="btn" id="logout">Logout</a></li>
++                </ul>
++            </nav>
++            <main class="container ">
++
++            </main>
++        </div>
++    </body>
++</html>
+Index: webapp/css/main.css
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>@import url('https://fonts.googleapis.com/css2?family=Cabin:wght@500;600;700&family=Roboto+Slab:wght@400;700&family=Signika:wght@300;400;600&display=swap');\n\n* {\n\tbox-sizing: border-box;\n\toutline: transparent;\n\tmargin: 0;\n\tpadding: 0;\n}\n\n:root {\n\t--primary-color: #336C8E;\n\t--secondary-color: #46ACC2;\n\t--accent-color: #2A4C74;\n\t--error-color: #EBC55C;\n\t--warning-color: #e55b5b;\n\t--success-color: #79B473;\n\t--dark-color: #2A2D34;\n\t--bg-color: #F1F7F9;\n\t--header-font: 'Cabin', sans-serif;\n\t--subheader-font: 'Roboto Slab', serif;;\n\t--body-font: 'Signika', sans-serif;;\n}\n\nbody {\n\tpadding: 0;\n\tmargin: 0;\n\tfont-family: var(--body-font);\n\tfont-size: 1vw;\n\theight: 100vh;\n\tbackground-color: var(--bg-color);\n\tdisplay: flex;\n\tjustify-content: center;\n\toverflow-y: scroll;\n}\n\na {\n\ttext-decoration: none;\n\tcursor: pointer;\n\tdisplay: inline-block;\n\tpadding-bottom:2px;\n\tbackground-image: linear-gradient(var(--primary-color), var(--secondary-color));\n\tbackground-position: 0 100%; /*OR bottom left*/\n\tbackground-size: 0% 2px;\n\tbackground-repeat: no-repeat;\n\t-webkit-transition: background-size .3s, background-position 0s .3s;\n\t-moz-transition: background-size .3s, background-position 0s .3s;\n\t-ms-transition: background-size .3s, background-position 0s .3s;\n\t-o-transition: background-size .3s, background-position 0s .3s;\n\ttransition: background-size .3s, background-position 0s .3s;\n}\n\nnav {\n\tdisplay: flex;\n\twidth: 100%;\n\tbackground-color: var(--accent-color);\n\tjustify-content: center;\n}\n\nnav ul {\n\tdisplay: flex;\n\tlist-style: none;\n\tgap: 20px;\n\twidth: clamp(100px, 100%, 800px);\n\tmargin: 10px;\n\tpadding: 15px;\n\n}\n\nnav ul li:last-child {\n\tmargin-left: auto;\n}\n\nnav ul li a {\n\tpadding: 5px 10px;\n\tcolor: var(--bg-color);\n\tfont-weight: normal;\n\ttext-transform: capitalize;\n\tcursor: pointer;\n\tfont-size: 1.125em;\n\ttext-align: center;\n\tbackground-image: linear-gradient(var(--bg-color), var(--bg-color));\n}\n\n\nnav ul li:not(:last-child) a:hover {\n\tbackground-position: 100% 100%; /*OR bottom right*/\n\tbackground-size: 100% 2px;\n}\n\nnav ul li:not(:last-child) .active {\n\tbackground-position: 100% 100%; /*OR bottom right*/\n\tbackground-size: 100% 2px;\n}\n\nmain {\n\twidth: clamp(100px, 100%, 800px);\n}\n\n.btn, .btn-outlined {\n\tfont-size: 1.125em;\n\tpadding: 10px 20px;\n\ttransition: all .5s;\n\ttext-align: center;\n}\n\n.form .flex-column:focus-within label{\n\t-webkit-transform: translateY(-5px) translateX(10px) scale(1.02);\n\t-moz-transform: translateY(-5px) translateX(10px) scale(1.02);\n\t-ms-transform: translateY(-5px) translateX(10px) scale(1.02);\n\t-o-transform: translateY(-5px) translateX(10px) scale(1.02);\n\ttransform: translateY(-5px) translateX(10px) scale(1.02);\n}\n\n.btn:hover, .btn-outlined:hover,.btn-submit:hover, .btn-submit-outlined:hover, .form .flex-column .input:focus{\n\t-webkit-box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.5);\n\t-moz-box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.5);\n\tbox-shadow: 0px 3px 6px 0px rgba(0,0,0,0.5);\n\t-webkit-transform: translateY(-5px);\n\t-moz-transform: translateY(-5px);\n\t-ms-transform: translateY(-5px);\n\t-o-transform: translateY(-5px);\n\ttransform: translateY(-5px);\n}\n\n\n.btn {\n\tbackground-color: var(--primary-color);\n\tcolor: white;\n\tborder: none;\n}\n\n.btn-outlined {\n\tbackground-color: white;\n\tcolor: var(--primary-color);\n\tborder: 2px solid var(--primary-color);\n}\n\n.btn-outlined:hover {\n\tcolor: var(--accent-color);\n}\n\n.container {\n\tflex-grow: 1;\n\tdisplay: flex;\n}\n\n.flex-align-center, .flex-center{\n\talign-items: center;\n}\n\n.flex-justify-center, .flex-center{\n\tjustify-content: center;\n}\n\n.flex-column{\n\tdisplay: flex;\n\tflex-direction: column;\n}\n.flex-row{\n\tdisplay: flex;\n\tflex-direction: row;\n}\n\n.form {\n\twidth: clamp(200px, 60%, 600px);\n}\n\n.form input, .form label, .btn-submit{\n\t-webkit-transition: all .3s ease-in-out;\n\t-moz-transition: all .3s ease-in-out;\n\t-ms-transition: all .3s ease-in-out;\n\t-o-transition: all .3s ease-in-out;\n\ttransition: all .3s ease-in-out;\n}\n\n.form input{\n\tpadding: 15px 10px;\n\tmargin-bottom: 15px;\n\tfont-size: 1.125em;\n\tborder: none;\n\tborder-bottom: 2px solid var(--primary-color);\n}\n\n.form label {\n\tfont-size: 1.25em;\n}\n\n.form .container {\n\tmargin: 5px 0;\n\tjustify-content: space-between;\n}\n\n.form .container a:hover {\n\tbackground-position: 100% 100%; /*OR bottom right*/\n\tbackground-size: 100% 2px;\n}\n.form .container a:last-child {\n\tcolor: var(--secondary-color);\n}\n\n.btn-submit {\n\tfont-size: 1.5em;\n\tfont-weight: 600;\n\tbackground-color: var(--primary-color);\n\tletter-spacing: 2px;\n\tcolor: white;\n\tborder: none;\n\tpadding: 15px 10px;\n}\n\n.btn-submit:hover {\n\tbackground-color: var(--secondary-color);\n}\n\n.btn-submit-outlined {\n\tfont-size: 1.125em;\n\tbackground-color: white;\n\tfont-weight: 600;\n\tcolor: var(--primary-color);\n\tletter-spacing: 2px;\n\tpadding: 1em 2em;\n\ttransition: all .4s;\n\ttext-align: center;\n\tborder: 2px solid var(--primary-color);\n}\n\n.btn-submit-outlined:hover {\n\tcolor: var(--secondary-color);\n\tborder: 2px solid var(--secondary-color);\n}\n\n.input:focus, .input:hover {\n\tborder-bottom: 2px solid var(--secondary-color);\n}\n\n.warning-label{\n\tcolor: var(--warning-color);\n}\n\n.form .warning-input, input:focus:invalid{\n\tborder-bottom: 2px solid var(--warning-color);;\n}\n\n.success-label {\n\tcolor: var(--success-color);\n}\n.form .success-input, input:focus:valid{\n\tborder-bottom: 2px solid var(--success-color);;\n}\n\n.submit-success {\n\tbackground-color: var(--success-color);\n}\n\n.header {\n\tfont-size: 2.5em;\n\tfont-family: var(--header-font);\n}\n\n.sub-header {\n\tfont-size: 1em;\n\tfont-family: var(--subheader-font);\n}\n#tabs .sub-header:hover {\n\tbackground-color: var(--accent-color);\n}\n\n.fav-items {\n\tdisplay: grid;\n\tgrid-template-columns: repeat(auto-fill, minmax(150px, 1fr));\n\tgrid-gap: 10px;\n\tmargin: 10px 0;\n}\n\n.fav-item {\n\tbackground-color: var(--primary-color);\n\tcolor: white;\n\tpadding: 10px;\n\t-webkit-transition: all .2s ease-in-out;\n\t-moz-transition: all .2s ease-in-out;\n\t-ms-transition: all .2s ease-in-out;\n\t-o-transition: all .2s ease-in-out;\n\ttransition: all .2s ease-in-out;\n}\n.fav-item:hover{\n\t-webkit-box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.5);\n\t-moz-box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.5);\n\tbox-shadow: 0px 3px 6px 0px rgba(0,0,0,0.5);\n\t-webkit-transform: scale(1.1);\n\t-moz-transform: scale(1.1);\n\t-ms-transform: scale(1.1);\n\t-o-transform: scale(1.1);\n\ttransform: scale(1.1);\n}\n\n.tabs {\n\tgrid-column: 2 / end;\n\tgrid-row: 1 / 1;\n\tjustify-content: space-between;\n\tdisplay: flex;\n\tgap: 0;\n}\n\n.tab {\n\tbackground-color: var(--dark-color);\n\tpadding: 10px 15px;\n\tcolor: white;\n\tborder: none;\n\ttransition: all .5s;\n\tflex-grow: 1;\n\twhite-space: nowrap;\n}\n.tab-active {\n\tbackground-color: var(--primary-color);\n}\n.tab-active:hover {\n\tbackground-color: var(--primary-color) !important;\n}\n\n.panel {\n\tgrid-column: 1 / 1;\n\tgrid-row: 1/end;\n\tbackground-color: var(--primary-color);\n\tpadding: 15px;\n}\n\n.grid-row-1-coloum-2-1-3{\n\tdisplay: grid;\n\tgrid-template-columns: minmax(50px, 1fr) 3fr;\n\tgap: 10px;\n\tmargin: 10px;\n}\n\n.modal {\n\tdisplay: none; /* Hidden by default */\n\tposition: fixed; /* Stay in place */\n\tz-index: 1; /* Sit on top */\n\tpadding-top: 100px; /* Location of the box */\n\tleft: 0;\n\ttop: 0;\n\twidth: 100%; /* Full width */\n\theight: 100%; /* Full height */\n\toverflow: auto; /* Enable scroll if needed */\n\tbackground-color: rgb(0,0,0); /* Fallback color */\n\tbackground-color: rgba(0,0,0,0.4); /* Black w/ opacity */\n}\n\n.modal-content {\n\tbackground-color: var(--bg-color);\n\tcolor: var(--dark-color);\n\tfont-size: 16px;\n\tmargin: auto;\n\tpadding: 20px;\n\twidth: 80%;\n}\n\n.search{\n\tpadding: 5px 10px;\n}\n\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/webapp/css/main.css b/webapp/css/main.css
+--- a/webapp/css/main.css	
++++ b/webapp/css/main.css	
+@@ -276,6 +276,7 @@
+ 	background-color: var(--primary-color);
+ 	color: white;
+ 	padding: 10px;
++	aspect-ratio: 4 / 3;
+ 	-webkit-transition: all .2s ease-in-out;
+ 	-moz-transition: all .2s ease-in-out;
+ 	-ms-transition: all .2s ease-in-out;
+@@ -356,6 +357,7 @@
+ 
+ .search{
+ 	padding: 5px 10px;
++	border: none;
+ }
+ 
+ 
+Index: webapp/js/profile.js
+===================================================================
+diff --git a/webapp/js/profile.js b/webapp/js/profile.js
+new file mode 100644
+--- /dev/null	
++++ b/webapp/js/profile.js	
+@@ -0,0 +1,14 @@
++$(document).ready(() => {
++    SDK.post(endpoints.session, data = {Session: "validate"});
++    let entrance = 'animate__zoomIn'
++    let exit = 'animate__zoomOut'
++    const userInfo = SDK.get(endpoints.profile);
++    $('#logout').click((event) => {
++        event.preventDefault();
++        const data = {Session: "delete"}
++        SDK.post(endpoints.session, data);
++    })
++
++
++
++})
+\ No newline at end of file
+Index: webapps/api/WEB-INF/classes/LoginServlet.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import controllers.BookmarkController;\nimport controllers.Controller;\nimport controllers.UserController;\nimport entities.User;\nimport jakarta.servlet.RequestDispatcher;\nimport jakarta.servlet.ServletException;\nimport jakarta.servlet.annotation.WebServlet;\nimport jakarta.servlet.http.*;\nimport org.json.JSONObject;\n\nimport java.io.BufferedReader;\nimport java.io.IOException;\nimport java.io.PrintWriter;\n\n@WebServlet(\"/login\")\npublic class LoginServlet extends HttpServlet {\n\n    @Override\n    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {\n        System.out.println(\"Login endpoint reached\");\n\n        HttpSession session = request.getSession();\n        System.out.println(\"from login: \"+ session.getId());\n\n        StringBuffer jb = new StringBuffer();\n        String line = null;\n        try {\n            BufferedReader reader = request.getReader();\n            while ((line = reader.readLine()) != null)\n                jb.append(line);\n        } catch (Exception e) { /*report an error*/ }\n\n        JSONObject jsonObject = new JSONObject(jb.toString());\n        String username = jsonObject.getString(\"username\");\n        String password = jsonObject.getString(\"password\");\n\n        response.addHeader(\"Access-Control-Allow-Origin\", \"http://localhost:63342\");\n        response.addHeader(\"Access-Control-Allow-Headers\", \"Origin, X-Requested-With, Content-Type, Accept\");\n        response.addHeader(\"Access-Control-Allow-Credentials\", \"true\");\n        response.setContentType(\"application/json\");\n        response.setCharacterEncoding(\"utf-8\");\n        PrintWriter out = response.getWriter();\n\n        UserController userController = new Controller();\n        User user = userController.login(username, password);\n\n        if (user != null ) {\n            session.setAttribute(\"user\", user);\n\n            response.setStatus(201);\n\n            out.println(\"{\\\"authenticated\\\":\\\"true\\\"}\");\n        } else {\n            response.setStatus(401);\n            out.println(\"{\\\"authenticated\\\":\\\"false\\\"}\");\n        }\n        out.close();  // Always close the output writer\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/webapps/api/WEB-INF/classes/LoginServlet.java b/webapps/api/WEB-INF/classes/LoginServlet.java
+--- a/webapps/api/WEB-INF/classes/LoginServlet.java	
++++ b/webapps/api/WEB-INF/classes/LoginServlet.java	
+@@ -1,11 +1,12 @@
+-import controllers.BookmarkController;
+ import controllers.Controller;
+ import controllers.UserController;
+ import entities.User;
+-import jakarta.servlet.RequestDispatcher;
+ import jakarta.servlet.ServletException;
+ import jakarta.servlet.annotation.WebServlet;
+-import jakarta.servlet.http.*;
++import jakarta.servlet.http.HttpServlet;
++import jakarta.servlet.http.HttpServletRequest;
++import jakarta.servlet.http.HttpServletResponse;
++import jakarta.servlet.http.HttpSession;
+ import org.json.JSONObject;
+ 
+ import java.io.BufferedReader;
+Index: webapp/js/SDK.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>const baseURL = \"http://localhost:8888/api\";\nconst endpoints = {\n    login: \"/login\",\n    signup: \"/signUp\",\n    getall: \"/getAll\",\n    session: \"/session\"\n}\n\nconst SDK = {\n    post: (endpoint, data) => {\n        $.ajax( baseURL+endpoint, {\n            method: \"POST\",\n            data: JSON.stringify(data),\n            xhrFields: { withCredentials: true },\n            crossDomain: true},\n        )\n            .done((result,statusText, xhr) => {\n                console.log(\".done\")\n                switch (endpoint) {\n                    case endpoints.session:\n                        console.log(\"session is valid\")\n                        if (result.Session === \"deleted\" ) {\n                            $(\"body nav\").toggleClass('animate__bounceOutUp animate__bounceInDown')\n                            $(\"#selector-panel\").toggleClass('animate__bounceInRight animate__bounceOutLeft')\n                            $(\"#favourites\").toggleClass('animate__bounceInRight animate__bounceOutRight')\n                                .on('animationend webkitAnimationEnd', () => {\n                                    window.location.replace(\"login.html\")\n                                })\n                        } else\n                            SDK.get(endpoints.getall);\n                        break;\n                    default:\n                        switch (xhr.status) {\n                            case 202:\n                                $(\".form #username, .form #email\").addClass('warning-input')\n                                $(\".form label[for=username],.form label[for=email]\").addClass('warning-label animate__shakeX')\n                                    .one('animationend webkitAnimationEnd', () => {\n                                        $(\".form label[for=username],.form label[for=email\").removeClass('warning-label animate__shakeX')\n                                        $(\".form #username, .form #email\").removeClass('warning-input')\n                                    })\n\n                                break;\n                            default:\n                                $(\".form .input\").addClass('success-input')\n                                $(\".form label\").addClass('success-label')\n                                $(\".btn-submit\").addClass('submit-success')\n                                $(\".container\").toggleClass('animate__bounceInUp animate__bounceOutDown animate__delay-1s')\n                                $('body>main').one('animationend', () => {\n                                    console.log(\"aniEnd\")\n                                    window.location.replace(\"index.html\");\n                                })\n                                break;\n                        }\n                        break;\n                }\n            })\n            .fail(() => {\n                if (endpoint === endpoints.session) {\n                    window.location.replace(\"login.html\")\n                }\n                if (endpoint === endpoints.login) {\n                    $(\".form label\").addClass('warning-label ')\n                    $(\".form .input\").addClass('warning-input animate__shakeX')\n                        .one('animationend webkitAnimationEnd', () => {\n                            $(\".form .input\").removeClass('warning-input animate__shakeX')\n                            $(\".form label\").removeClass('warning-label')\n                        })\n                }\n            })\n    },\n    get: (endpoint) => {\n        $.ajax(baseURL + endpoint,\n{\n            method: \"GET\",\n            xhrFields: {withCredentials: true},\n            crossDomain: true\n        })\n        .done((result) => {\n            if (endpoint === endpoints.getall) {\n                result.forEach((item, i) => {\n                    $(\"#fav-items\").append(\"<div id='\"+ (\"fav-item-\" + i) +\"' class='fav-item'>\" +\n                        \"<h2 class='sub-header'>\"+item.name+\"</h2>\" +\n                        \"<p>\"+item.rating+\"</p>\" +\n                        \"<div class='flex-row'>\"+(item.genres.map((g) => (\"<div class='genre'>\" + g + \"</div>\") ))+\"</div>\" +\n                        \"<div class='flex-row'>\"+(item.tags.map((t) => (\"<div class='tag'>\" + t + \"</div>\")))+\"</div>\" +\n                        \"<p>\"+item.description+\"</p>\" +\n                        \"<a href=''>\"+item.url+\"</a>\" +\n                        \"<p>\"+item.media+\"</p>\" +\n                        \"<p class='status'>\"+item.status+\"</p>\" +\n                        \"</div>\")\n                })\n\n                $(\".fav-item\").click(function () {\n                    const clone = $(this).clone();\n                    const modal = $(\".modal\");\n                    modal.append(clone);\n                    modal.css(\"display\", \"block\");\n                    if(modal.hasClass(\"animate__fadeOut animate__fast\"))\n                        modal.removeClass(\"animate__fadeOut animate__fast\")\n                    modal.off(\"animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd\")\n                    modal.addClass(\"animate__fadeIn animate__fast\");\n                    clone.addClass('modal-content animate__animated animate__bounceInDown animate__fast');\n                })\n\n            }\n        })\n        .fail(() => {\n            console.log(endpoint)\n            console.log(\"failed\")\n        })\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/webapp/js/SDK.js b/webapp/js/SDK.js
+--- a/webapp/js/SDK.js	
++++ b/webapp/js/SDK.js	
+@@ -3,7 +3,8 @@
+     login: "/login",
+     signup: "/signUp",
+     getall: "/getAll",
+-    session: "/session"
++    session: "/session",
++    profile: "/profile"
+ }
+ 
+ const SDK = {
+@@ -26,8 +27,7 @@
+                                 .on('animationend webkitAnimationEnd', () => {
+                                     window.location.replace("login.html")
+                                 })
+-                        } else
+-                            SDK.get(endpoints.getall);
++                        }
+                         break;
+                     default:
+                         switch (xhr.status) {
+@@ -35,7 +35,7 @@
+                                 $(".form #username, .form #email").addClass('warning-input')
+                                 $(".form label[for=username],.form label[for=email]").addClass('warning-label animate__shakeX')
+                                     .one('animationend webkitAnimationEnd', () => {
+-                                        $(".form label[for=username],.form label[for=email").removeClass('warning-label animate__shakeX')
++                                        $(".form label[for=username],.form label[for=email]").removeClass('warning-label animate__shakeX')
+                                         $(".form #username, .form #email").removeClass('warning-input')
+                                     })
+ 
+@@ -77,31 +77,10 @@
+         })
+         .done((result) => {
+             if (endpoint === endpoints.getall) {
+-                result.forEach((item, i) => {
+-                    $("#fav-items").append("<div id='"+ ("fav-item-" + i) +"' class='fav-item'>" +
+-                        "<h2 class='sub-header'>"+item.name+"</h2>" +
+-                        "<p>"+item.rating+"</p>" +
+-                        "<div class='flex-row'>"+(item.genres.map((g) => ("<div class='genre'>" + g + "</div>") ))+"</div>" +
+-                        "<div class='flex-row'>"+(item.tags.map((t) => ("<div class='tag'>" + t + "</div>")))+"</div>" +
+-                        "<p>"+item.description+"</p>" +
+-                        "<a href=''>"+item.url+"</a>" +
+-                        "<p>"+item.media+"</p>" +
+-                        "<p class='status'>"+item.status+"</p>" +
+-                        "</div>")
+-                })
+-
+-                $(".fav-item").click(function () {
+-                    const clone = $(this).clone();
+-                    const modal = $(".modal");
+-                    modal.append(clone);
+-                    modal.css("display", "block");
+-                    if(modal.hasClass("animate__fadeOut animate__fast"))
+-                        modal.removeClass("animate__fadeOut animate__fast")
+-                    modal.off("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd")
+-                    modal.addClass("animate__fadeIn animate__fast");
+-                    clone.addClass('modal-content animate__animated animate__bounceInDown animate__fast');
+-                })
+-
++                return result;
++            }
++            else if (endpoint === endpoints.profile) {
++                return result;
+             }
+         })
+         .fail(() => {
+Index: webapp/sites/signup.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <link href=\"https://fonts.googleapis.com/icon?family=Material+Icons\" rel=\"stylesheet\">\n    <link rel=\"stylesheet\" href=\"../css/overflowHidden.css\">\n    <link rel=\"stylesheet\" href=\"../css/main.css\">\n    <link rel=\"stylesheet\" href=\"../css/animate.css\">\n    <script src=\"../js/jQuery.min.js\" defer></script>\n    <script src=\"../js/SDK.js\" defer></script>\n    <script src=\"../js/main.js\" defer></script>\n    <title>Document</title>\n</head>\n<body>\n<main class=\"container flex-column flex-center animate__animated\">\n    <h1 class=\"animate__bounceInUp animate__animated header\">Sign Up</h1>\n\n    <form id=\"signup\" class=\"form flex-column animate__bounceInUp animate__animated\" action=\"\">\n        <div class=\"flex-column\">\n            <label class=\"animate__animated sub-header\" for=\"username\">Username</label>\n            <input class=\"input animate__animated\" id=\"username\" type=\"text\" name=\"username\" required autocomplete=\"username\">\n        </div>\n        <div class=\"flex-column\">\n            <label class=\"animate__animated sub-header\" for=\"firstname\">Firstname</label>\n            <input class=\"input animate__animated\" id=\"firstname\" type=\"text\" name=\"firstname\" required autocomplete=\"given-name\">\n        </div>\n        <div class=\"flex-column\">\n            <label class=\"animate__animated sub-header\" for=\"surname\">Surname </label>\n            <input class=\"input animate__animated\" id=\"surname\" type=\"text\" name=\"surname\" required autocomplete=\"family-name\">\n        </div>\n        <div class=\"flex-column\">\n            <label class=\"animate__animated sub-header\" for=\"email\">E-mail</label>\n            <input class=\"input animate__animated\" id=\"email\" type=\"email\" name=\"email\" pattern=\"[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$\" required autocomplete=\"email\">\n        </div>\n        <div class=\"flex-column\">\n            <label class=\"animate__animated sub-header\" for=\"password\">Password</label>\n            <input class=\"input animate__animated\" id=\"password\" type=\"password\" name=\"password\" required autocomplete=\"new-password\" minlength=\"6\">\n        </div>\n        <input class=\"btn-submit sub-header\" type=\"submit\" value=\"Sign Up\">\n        <a class=\"btn-submit-outlined\" id=\"aToLogin\">Sign In</a>\n    </form>\n</main>\n</body>\n</html>\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/webapp/sites/signup.html b/webapp/sites/signup.html
+--- a/webapp/sites/signup.html	
++++ b/webapp/sites/signup.html	
+@@ -11,7 +11,7 @@
+     <script src="../js/jQuery.min.js" defer></script>
+     <script src="../js/SDK.js" defer></script>
+     <script src="../js/main.js" defer></script>
+-    <title>Document</title>
++    <title>Sign up</title>
+ </head>
+ <body>
+ <main class="container flex-column flex-center animate__animated">

@@ -1,0 +1,9 @@
+<changelist name="Uncommitted_changes_before_Update_at_08_12_2021,_13_34_[Changes]" date="1639389168126" recycled="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_08_12_2021,_13_34_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 08/12/2021, 13.34 [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="webapps/api/WEB-INF/classes/LoginServlet.class" />
+    <option name="AFTER_PATH" value="webapps/api/WEB-INF/classes/LoginServlet.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_08_12_2021,_13_34_[Changes]/LoginServlet.class" />
+  </binary>
+</changelist>

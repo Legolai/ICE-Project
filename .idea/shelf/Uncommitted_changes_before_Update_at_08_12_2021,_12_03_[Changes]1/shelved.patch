@@ -1,0 +1,29 @@
+Index: webapp/main.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>const baseURL = \"http://localhost:8888/api\";\n\n$(\"#login\").submit((event) => {\n\tevent.preventDefault();\n\n\tconst data = $(\"#login :input\").serializeArray().map((item) => {return [item.name, item.value];});\n\tconsole.log(event.target);\n\tconsole.log(data);\n});\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/webapp/main.js b/webapp/main.js
+--- a/webapp/main.js	
++++ b/webapp/main.js	
+@@ -2,8 +2,14 @@
+ 
+ $("#login").submit((event) => {
+ 	event.preventDefault();
+-
+-	const data = $("#login :input").serializeArray().map((item) => {return [item.name, item.value];});
+-	console.log(event.target);
+-	console.log(data);
++	const data = {};
++	$("#login :input").serializeArray().map((item) => {data[item.name] = item.value;});
++	$.ajax(baseURL+"/login",{
++		type: "POST",
++		data: JSON.stringify(data),
++		dataType: "application/json",
++		success: function () {
++			console.log("jaja")
++		}
++	});
+ });

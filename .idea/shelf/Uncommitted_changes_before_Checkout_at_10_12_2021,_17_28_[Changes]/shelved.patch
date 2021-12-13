@@ -1,0 +1,26 @@
+Index: webapp/js/tabs.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\n\nconst tabNames = [\"All\", \"Watching\", \"Completed\", \"On Hold\", \"Dropped\", \"Plan to Watch\"]\n\nconst items = [...Array(100).fill(0).map((x, i)=> ({\n    name: \"Hello\",\n    description: \"Lorem ipsum dolor sit amet,\" +\n        \" consectetur adipiscing elit. Nam porta tristique nunc nec sagittis.\" +\n        \" Ut vestibulum, lacus semper consectetur ornare, arcu dui laoreet purus,\" +\n        \" ut varius velit turpis vel neque. Morbi lobortis rhoncus massa sit amet lacinia.\" +\n        \" Curabitur a nunc neque. Praesent mi turpis, consequat vel nibh vitae,\" +\n        \" lacinia bibendum magna. Suspendisse semper dui a quam sollicitudin placerat.\" +\n        \" Vestibulum porttitor orci quis turpis dictum, et efficitur magna facilisis.\" +\n        \" Quisque rhoncus lectus fringilla nunc ornare, sed efficitur risus consectetur.\" +\n        \" Suspendisse potenti. Donec cursus dapibus rutrum. Vivamus laoreet aliquet bibendum.\" +\n        \" Integer non magna et velit lobortis bibendum eu nec urna.\",\n    url: \"www.exampel.com\",\n    media: \"Song\",\n    status: tabNames[i % (tabNames.length-1) + 1],\n    genres: [\"Rock\", \"Hip-hop\", \"K-pop\"],\n    tags: [\"Something\", \"boring\", \"Yahoo\"],\n    rating: 6,\n}))];\n\n\n\ntabNames.forEach((tabName) => {\n    const tabId = tabName.replaceAll(\" \", \"\");\n    $(\"#tabs\").append(\"<button id='\"+tabId+\"' class='tab sub-header\"+ (tabName === tabNames[0] ? \" tab-active\" : \"\") +\"'>\" + tabName + \"</button>\")\n    const tab = $(\"#\" + tabId);\n    tab.click(() => {\n        $(\".tab-active\").removeClass(\"tab-active\");\n        tab.addClass(\"tab-active\");\n        if(tabName.toLowerCase() != \"all\"){\n            $(\".fav-item\").filter(function() {\n                const show = $(this).find(\".status\").text().toLowerCase() == tabName.toLowerCase();\n                if(show)\n                    $(this).show()\n                else\n                    $(this).hide()\n            })\n        }\n        else {\n            $(\"#fav-items *\").show()\n        }\n    })\n})\n\nitems.map((item) => {\n    $(\"#fav-items\").append(\"<div id='' class='fav-item'>\" +\n        \"<h2 class='sub-header'>\"+item.name+\"</h2>\" +\n        \"<p>\"+item.rating+\"</p>\" +\n        \"<div class='flex-row'>\"+(item.genres.map((g) => (\"<div class='genre'>\" + g + \"</div>\") ))+\"</div>\" +\n        \"<div class='flex-row'>\"+(item.tags.map((t) => (\"<div class='tag'>\" + t + \"</div>\")))+\"</div>\" +\n        \"<p>\"+item.description+\"</p>\" +\n        \"<a href=''>\"+item.url+\"</a>\" +\n        \"<p>\"+item.media+\"</p>\" +\n        \"<p class='status'>\"+item.status+\"</p>\" +\n        \"</div>\")\n})\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/webapp/js/tabs.js b/webapp/js/tabs.js
+--- a/webapp/js/tabs.js	
++++ b/webapp/js/tabs.js	
+@@ -6,14 +6,7 @@
+     name: "Hello",
+     description: "Lorem ipsum dolor sit amet," +
+         " consectetur adipiscing elit. Nam porta tristique nunc nec sagittis." +
+-        " Ut vestibulum, lacus semper consectetur ornare, arcu dui laoreet purus," +
+-        " ut varius velit turpis vel neque. Morbi lobortis rhoncus massa sit amet lacinia." +
+-        " Curabitur a nunc neque. Praesent mi turpis, consequat vel nibh vitae," +
+-        " lacinia bibendum magna. Suspendisse semper dui a quam sollicitudin placerat." +
+-        " Vestibulum porttitor orci quis turpis dictum, et efficitur magna facilisis." +
+-        " Quisque rhoncus lectus fringilla nunc ornare, sed efficitur risus consectetur." +
+-        " Suspendisse potenti. Donec cursus dapibus rutrum. Vivamus laoreet aliquet bibendum." +
+-        " Integer non magna et velit lobortis bibendum eu nec urna.",
++        " Ut vestibulum, lacus semper consectetur ornare, arcu dui laoreet purus,",
+     url: "www.exampel.com",
+     media: "Song",
+     status: tabNames[i % (tabNames.length-1) + 1],
