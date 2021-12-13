@@ -1,6 +1,6 @@
 ./classes/database/DBConnecter.java
 ./classes/AddBookmarkServlet.java
-./classes/updateUserServlet.java
+./classes/UpdateUserServlet.java
 ./classes/SignUpServlet.java
 ./classes/SessionServlet.java
 ./classes/GetAllBookmarksServlet.java

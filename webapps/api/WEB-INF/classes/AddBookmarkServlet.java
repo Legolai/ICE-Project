@@ -43,8 +43,6 @@ public class AddBookmarkServlet extends HttpServlet {
 
         if ( bookmark != null ) {
             System.out.println("status 201");
-            session.getAttribute("bookmarks");
-            session.setAttribute("bookmark", bookmark);
 
             response.setStatus(201);
 

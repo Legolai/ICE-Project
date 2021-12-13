@@ -10,5 +10,5 @@ public interface BookmarkController {
     ArrayList<Bookmark> getAll(User user);
     Bookmark addBookmark(JSONObject jsonObject);
     Bookmark updateBookmark(JSONObject jsonObject);
-    void removeBookmark(JSONObject jsonObject);
+    boolean removeBookmark(JSONObject jsonObject);
 }

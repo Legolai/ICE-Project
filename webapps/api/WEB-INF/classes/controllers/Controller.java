@@ -63,13 +63,13 @@ public class Controller implements UserController, BookmarkController{
         return dbConnecter.saveBookmark(bookmark);
     }
     @Override
-    public void removeBookmark(JSONObject jsonObject) {
+    public boolean removeBookmark(JSONObject jsonObject) {
         System.out.println("Json from request: " +jsonObject);
 
         int bookmark_id = jsonObject.getInt("bookmark_id");
         String bookmark_name = jsonObject.getString("bookmark_name");
 
-        dbConnecter.deleteUserORBookmark(bookmark_id, bookmark_name, "bookmark");
+        return dbConnecter.deleteUserORBookmark(bookmark_id, bookmark_name, "bookmark");
     }
 
 
@@ -98,12 +98,12 @@ public class Controller implements UserController, BookmarkController{
         return dbConnecter.newUser(user);
     }
     @Override
-    public void deleteUser(JSONObject jsonObject) {
+    public boolean deleteUser(JSONObject jsonObject) {
         System.out.println("Json from request: " +jsonObject);
 
         int user_id = jsonObject.getInt("user_id");
         String username = jsonObject.getString("username");
 
-        dbConnecter.deleteUserORBookmark(user_id, username, "user");
+        return dbConnecter.deleteUserORBookmark(user_id, username, "user");
     }
 }

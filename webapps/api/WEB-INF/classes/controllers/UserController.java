@@ -8,5 +8,5 @@ public interface UserController {
     User getUser(User user);
     Boolean updateUser(User user, String key, String value);
     User newUser(String username, String password, String email, String firstname, String surname);
-    void deleteUser(JSONObject jsonObject);
+    boolean deleteUser(JSONObject jsonObject);
 }
