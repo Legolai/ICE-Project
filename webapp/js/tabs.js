@@ -8,9 +8,9 @@ $(document).ready(() => {
         bookmarks.forEach((item, i) => {
             $("#fav-items").append("<div id='"+ ("fav-item-" + i) +"' class='fav-item'>" +
                 "<h2 class='sub-header'>"+item.name+"</h2>" +
-                "<p>"+item.rating+"</p>" +
-                "<div class='flex-row'>"+(item.genres.map((g) => ("<div class='genre'>" + g + "</div>") ))+"</div>" +
-                "<div class='flex-row'>"+(item.tags.map((t) => ("<div class='tag'>" + t + "</div>")))+"</div>" +
+                "<p class='rating'>"+item.rating+"</p>" +
+                "<div class='flex-row genres'>"+(item.genres.map((g) => ("<div class='genre'>" + g + "</div>") ))+"</div>" +
+                "<div class='flex-row tags'>"+(item.tags.map((t) => ("<div class='tag'>" + t + "</div>")))+"</div>" +
                 "<p>"+item.description+"</p>" +
                 "<a href=''>"+item.url+"</a>" +
                 "<p>"+item.media+"</p>" +
