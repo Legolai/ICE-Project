@@ -2,38 +2,35 @@ $(document).ready(() => {
     SDK.post(endpoints.session, data = {Session: "validate"});
     let entrance = 'animate__zoomIn'
     let exit = 'animate__zoomOut'
-    const bookmarks = SDK.get(endpoints.getall);
+    console.log("logging bookmarks")
+    SDK.get(endpoints.getall).then((bookmarks) => {
 
-    bookmarks.forEach((item, i) => {
-        $("#fav-items").append("<div id='"+ ("fav-item-" + i) +"' class='fav-item'>" +
-            "<h2 class='sub-header'>"+item.name+"</h2>" +
-            "<p>"+item.rating+"</p>" +
-            "<div class='flex-row'>"+(item.genres.map((g) => ("<div class='genre'>" + g + "</div>") ))+"</div>" +
-            "<div class='flex-row'>"+(item.tags.map((t) => ("<div class='tag'>" + t + "</div>")))+"</div>" +
-            "<p>"+item.description+"</p>" +
-            "<a href=''>"+item.url+"</a>" +
-            "<p>"+item.media+"</p>" +
-            "<p class='status'>"+item.status+"</p>" +
-            "</div>")
-    })
+        bookmarks.forEach((item, i) => {
+            $("#fav-items").append("<div id='"+ ("fav-item-" + i) +"' class='fav-item'>" +
+                "<h2 class='sub-header'>"+item.name+"</h2>" +
+                "<p>"+item.rating+"</p>" +
+                "<div class='flex-row'>"+(item.genres.map((g) => ("<div class='genre'>" + g + "</div>") ))+"</div>" +
+                "<div class='flex-row'>"+(item.tags.map((t) => ("<div class='tag'>" + t + "</div>")))+"</div>" +
+                "<p>"+item.description+"</p>" +
+                "<a href=''>"+item.url+"</a>" +
+                "<p>"+item.media+"</p>" +
+                "<p class='status'>"+item.status+"</p>" +
+                "</div>")
+        })
 
-    $(".fav-item").click(function () {
-        const clone = $(this).clone();
-        const modal = $(".modal");
-        modal.append(clone);
-        modal.css("display", "block");
-        if(modal.hasClass("animate__fadeOut animate__fast"))
-            modal.removeClass("animate__fadeOut animate__fast")
-        modal.off("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd")
-        modal.addClass("animate__fadeIn animate__fast");
-        clone.addClass('modal-content animate__animated animate__bounceInDown animate__fast');
-    })
+        $(".fav-item").click(function () {
+            const clone = $(this).clone();
+            const modal = $(".modal");
+            modal.append(clone);
+            modal.css("display", "block");
+            if(modal.hasClass("animate__fadeOut animate__fast"))
+                modal.removeClass("animate__fadeOut animate__fast")
+            modal.off("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd")
+            modal.addClass("animate__fadeIn animate__fast");
+            clone.addClass('modal-content animate__animated animate__bounceInDown animate__fast');
+        })
+    });
 
-    $('#logout').click((event) => {
-        event.preventDefault();
-        const data = {Session: "delete"}
-        SDK.post(endpoints.session, data);
-    })
 
     const showItem = (element) => {
         /*
