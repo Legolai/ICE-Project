@@ -7,6 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Queue;
 
 public class DBConnecter {
 
@@ -280,11 +281,9 @@ public class DBConnecter {
                 String sqlmedia = "INSERT INTO Media (media_name) VALUES (?) ON DUPLICATE KEY media_name = media_name";
                 pstmtMedia = conn.prepareStatement(sqlmedia, Statement.RETURN_GENERATED_KEYS);
                 pstmtMedia.setString(1,bm.getMedia());
+                pstmtMedia.executeBatch();
             }
-            pstmtMedia.executeBatch();
             pstmtMedia.close();
-
-            //TODO: genres and tags doesn't get added
 
             int rowsAffected = pstmt.executeUpdate();
 
@@ -293,11 +292,14 @@ public class DBConnecter {
                 if (generatedKeys.next()) {
                     bm.setBookmark_id(generatedKeys.getInt(1));
                 }
-
+                // this part checks in Genre and Tag db, if not found, insert
+                checkAndInsertGenreTag(bm);
                 pstmt.close();
                 close();
                 return bm;
             }
+            // this part checks in Genre and Tag db, if not found, insert
+            checkAndInsertGenreTag(bm);
             pstmt.close();
             close();
         } catch (SQLException e) {
@@ -305,7 +307,82 @@ public class DBConnecter {
         }
         return null;
     }
+    private void checkAndInsertGenreTag(Bookmark bm) {
+        String genreQuery = "SELECT * FROM Favorite_Website_DB.Genre WHERE genre_name = ?";
+        String genreSQL = "INSERT INTO Genre (genre_name) VALUES (?)";
+        ArrayList<Integer> genreIDs =  checkAndInsertGenreTag(bm, genreQuery, genreSQL, "genre_id");
+        String tagQuery = "SELECT * FROM Favorite_Website_DB.Tag WHERE tag_name = ?";
+        String tagSQL = "INSERT INTO Tag (tag_name) VALUES (?)";
+        ArrayList<Integer> tagIDs = checkAndInsertGenreTag(bm, tagQuery, tagSQL, "tag_id");
 
+        // this is for the 3rd table for relations between bookmark and genre/tag
+        String genreJoinQuery = "SELECT * FROM Favorite_Website_DB.Bookmark_Genre WHERE bookmark_id = ?, genre_id = ?";
+        String genreJoinSQL = "INSERT INTO Bookmark_Genre (bookmark_id, genre_id) VALUES (?,?)";
+        checkJoinTable(bm.getBookmark_id(),genreIDs, genreJoinQuery, genreJoinSQL, "genre_id");
+        String tagJoinQuery = "SELECT * FROM Favorite_Website_DB.Bookmark_Tag WHERE bookmark_id = ?, tag_id = ?";
+        String tagJoinSQL = "INSERT INTO Bookmark_Tag (bookmark_id, tag_id) VALUES (?,?)";
+        checkJoinTable(bm.getBookmark_id(),genreIDs, tagJoinQuery, tagJoinSQL, "tag_id");
+    }
+    private ArrayList<Integer> checkAndInsertGenreTag(Bookmark bm, String query, String sql, String IDtype) {
+        ArrayList<Integer> genreTagIDs = new ArrayList<>();
+        try {
+            List<String> genreOrTag = new ArrayList<>();
+            if (IDtype.equals("genre_id")) {
+                genreOrTag.addAll(bm.getGenres());
+            } else {
+                genreOrTag.addAll(bm.getTags());
+            }
+
+            int genreTagID = 0;
+            for (String searchInsert : genreOrTag) {
+                // Checks if the genre or tag exists in database
+                PreparedStatement pstmt = conn.prepareStatement(query);
+                pstmt.setString(1, searchInsert);
+                ResultSet rs = pstmt.executeQuery();
+                // if it doesn't exist in the DB, insert it
+                if (!rs.isBeforeFirst()) {
+                    pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                    pstmt.setString(1,searchInsert);
+
+                    int rowsAffected = pstmt.executeUpdate();
+
+                    if (rowsAffected > 0) {
+                        ResultSet generatedKeys = pstmt.getGeneratedKeys();
+                        if (generatedKeys.next()) {
+                            genreTagID = generatedKeys.getInt(1);
+                        }
+                    }
+                } else {
+                    genreTagID = rs.getInt(IDtype);
+                }
+                genreTagIDs.add(genreTagID);
+                pstmt.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return genreTagIDs;
+    }
+    private void checkJoinTable(int bookmarkID, ArrayList<Integer> genreTagIDs, String query, String sql, String IDtype) {
+        try {
+            for (int searchInsert : genreTagIDs) {
+                // Checks if the genre or tag exists in database
+                PreparedStatement pstmt = conn.prepareStatement(query);
+                pstmt.setInt(1, searchInsert);
+                ResultSet rs = pstmt.executeQuery();
+                // if it doesn't exist in the DB, insert it
+                if (!rs.isBeforeFirst()) {
+                    pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                    pstmt.setInt(1,bookmarkID);
+                    pstmt.setInt(2,searchInsert);
+                }
+                pstmt.executeBatch();
+                pstmt.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     public void deleteUserORBookmark(int id, String name, String userOrBookmark) {

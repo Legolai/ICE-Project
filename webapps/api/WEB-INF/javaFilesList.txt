@@ -1,5 +1,5 @@
 ./classes/database/DBConnecter.java
-./classes/addBookmarkServlet.java
+./classes/AddBookmarkServlet.java
 ./classes/updateUserServlet.java
 ./classes/SignUpServlet.java
 ./classes/SessionServlet.java
