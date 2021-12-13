@@ -9,6 +9,6 @@ import java.util.ArrayList;
 public interface BookmarkController {
     ArrayList<Bookmark> getAll(User user);
     Bookmark addBookmark(JSONObject jsonObject);
-    Bookmark updateBookmark(JSONObject jsonObject);
-    void removeBookmark(JSONObject jsonObject);
+    void removeBookmark(String accessToken, String ...info);
+    void updateBookmark(String accessToken, String ...info);
 }
