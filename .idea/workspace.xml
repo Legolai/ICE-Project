@@ -4,17 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eb19d21f-f5a3-431b-b496-431c63fb8ce8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/DeleteUserServlet.java" afterDir="false" />
+    <list default="true" id="eb19d21f-f5a3-431b-b496-431c63fb8ce8" name="Changes" comment="profile page">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/AddBookmarkServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/AddBookmarkServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/DeleteBookmarkServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/DeleteBookmarkServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/BookmarkController.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/BookmarkController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/database/DBConnecter.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/database/DBConnecter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/updateUserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/UpdateUserServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/javaFilesList.txt" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/javaFilesList.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/js/SDK.js" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/js/SDK.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/js/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/js/profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/sites/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/sites/profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/UpdateUserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/UpdateUserServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/UserInfoServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/UserInfoServlet.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,6 +92,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />

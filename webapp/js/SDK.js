@@ -4,7 +4,8 @@ const endpoints = {
     signup: "/signUp",
     getall: "/getAll",
     session: "/session",
-    profile: "/profile"
+    profile: "/profile",
+    updateProfile: "/updateUser"
 }
 
 const SDK = {

@@ -31,6 +31,7 @@ public class UserInfoServlet extends HttpServlet {
 
         if (session != null) {
             User user = (User) session.getAttribute("user");
+            user.setPassword("");
             JSONObject userJSON = new JSONObject(user);
             response.setStatus(200);
             out.println("{\"user\":"+userJSON+"}");

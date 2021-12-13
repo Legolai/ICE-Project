@@ -1,0 +1,162 @@
+Index: webapp/js/tabs.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>$(document).ready(() => {\n    SDK.post(endpoints.session, data = {Session: \"validate\"});\n    let entrance = 'animate__zoomIn'\n    let exit = 'animate__zoomOut'\n    const bookmarks = SDK.get(endpoints.getall);\n\n    bookmarks.forEach((item, i) => {\n        $(\"#fav-items\").append(\"<div id='\"+ (\"fav-item-\" + i) +\"' class='fav-item'>\" +\n            \"<h2 class='sub-header'>\"+item.name+\"</h2>\" +\n            \"<p>\"+item.rating+\"</p>\" +\n            \"<div class='flex-row'>\"+(item.genres.map((g) => (\"<div class='genre'>\" + g + \"</div>\") ))+\"</div>\" +\n            \"<div class='flex-row'>\"+(item.tags.map((t) => (\"<div class='tag'>\" + t + \"</div>\")))+\"</div>\" +\n            \"<p>\"+item.description+\"</p>\" +\n            \"<a href=''>\"+item.url+\"</a>\" +\n            \"<p>\"+item.media+\"</p>\" +\n            \"<p class='status'>\"+item.status+\"</p>\" +\n            \"</div>\")\n    })\n\n    $(\".fav-item\").click(function () {\n        const clone = $(this).clone();\n        const modal = $(\".modal\");\n        modal.append(clone);\n        modal.css(\"display\", \"block\");\n        if(modal.hasClass(\"animate__fadeOut animate__fast\"))\n            modal.removeClass(\"animate__fadeOut animate__fast\")\n        modal.off(\"animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd\")\n        modal.addClass(\"animate__fadeIn animate__fast\");\n        clone.addClass('modal-content animate__animated animate__bounceInDown animate__fast');\n    })\n\n    $('#logout').click((event) => {\n        event.preventDefault();\n        const data = {Session: \"delete\"}\n        SDK.post(endpoints.session, data);\n    })\n\n    const showItem = (element) => {\n        /*\n        $(element).addClass(entrance);\n        $(element).removeClass(exit);\n         */\n        $(element).show(0);\n    }\n    const hideItem = (element) => {\n        /*\n        $(element).removeClass(entrance);\n        $(element).addClass(exit)\n         */\n        $(element).hide(0);\n    }\n\n    $(\"#search\").on(\"keyup\", function() {\n        const value = $(this).val().toLowerCase();\n        $(\".fav-item\").filter(function() {\n            if($(this).find(\".status\").text().toLowerCase() == $(\".tab-active\").text().toLowerCase() || $(\".tab-active\").text().toLowerCase() == \"all\")\n                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)\n        });\n    });\n\n    const tabNames = [\"All\", \"Watching\", \"Completed\", \"On Hold\", \"Dropped\", \"Plan to Watch\"]\n    tabNames.forEach((tabName) => {\n        const tabId = tabName.replaceAll(\" \", \"\");\n        $(\"#tabs\").append(\"<button id='\"+tabId+\"' class='tab sub-header\"+ (tabName === tabNames[0] ? \" tab-active\" : \"\") +\"'>\" + tabName + \"</button>\")\n        const tab = $(\"#\" + tabId);\n        tab.click(() => {\n            $(\".tab-active\").removeClass(\"tab-active\");\n            tab.addClass(\"tab-active\");\n            if(tabName.toLowerCase() != \"all\"){\n                $(\".fav-item\").filter(function() {\n                    const show = $(this).find(\".status\").text().toLowerCase() == tabName.toLowerCase();\n                    const search = $(this).text().toLowerCase().indexOf($(\"#search\").val().toLowerCase()) > -1;\n                    if(show && search) {\n                        showItem($(this));\n                    } else {\n                        hideItem($(this))\n                    }\n                })\n            }\n            else {\n                $(\"#fav-items *\").each((i, item) => {\n                    showItem(item)\n                })\n            }\n        })\n    })\n})\n\n$(this).click(function (event) {\n    const modal = $(\".modal\");\n    if(event.target == modal[0]) {\n        modal.removeClass(\"animate__fadeIn animate__fast\");\n        modal.children().removeClass(\"animate__bounceInDown animate__faster\");\n        modal.children().toggleClass(\"animate__bounceOutUp animate__faster\");\n        modal.addClass(\"animate__fadeOut animate__fast\")\n            .on('animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd', () => {\n                modal.css(\"display\",\"none\");\n                modal.empty();\n            })\n    }\n})\n\n\n\n\n\n\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/webapp/js/tabs.js b/webapp/js/tabs.js
+--- a/webapp/js/tabs.js	(revision 75604ea3081c396e940e3a7a7d34268030e568a1)
++++ b/webapp/js/tabs.js	(date 1639392604501)
+@@ -2,32 +2,9 @@
+     SDK.post(endpoints.session, data = {Session: "validate"});
+     let entrance = 'animate__zoomIn'
+     let exit = 'animate__zoomOut'
+-    const bookmarks = SDK.get(endpoints.getall);
++    SDK.get(endpoints.getall);
+ 
+-    bookmarks.forEach((item, i) => {
+-        $("#fav-items").append("<div id='"+ ("fav-item-" + i) +"' class='fav-item'>" +
+-            "<h2 class='sub-header'>"+item.name+"</h2>" +
+-            "<p>"+item.rating+"</p>" +
+-            "<div class='flex-row'>"+(item.genres.map((g) => ("<div class='genre'>" + g + "</div>") ))+"</div>" +
+-            "<div class='flex-row'>"+(item.tags.map((t) => ("<div class='tag'>" + t + "</div>")))+"</div>" +
+-            "<p>"+item.description+"</p>" +
+-            "<a href=''>"+item.url+"</a>" +
+-            "<p>"+item.media+"</p>" +
+-            "<p class='status'>"+item.status+"</p>" +
+-            "</div>")
+-    })
+ 
+-    $(".fav-item").click(function () {
+-        const clone = $(this).clone();
+-        const modal = $(".modal");
+-        modal.append(clone);
+-        modal.css("display", "block");
+-        if(modal.hasClass("animate__fadeOut animate__fast"))
+-            modal.removeClass("animate__fadeOut animate__fast")
+-        modal.off("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd")
+-        modal.addClass("animate__fadeIn animate__fast");
+-        clone.addClass('modal-content animate__animated animate__bounceInDown animate__fast');
+-    })
+ 
+     $('#logout').click((event) => {
+         event.preventDefault();
+Index: webapps/api/WEB-INF/classes/updateUserServlet.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import controllers.Controller;\nimport controllers.UserController;\nimport entities.User;\nimport jakarta.servlet.ServletException;\nimport jakarta.servlet.annotation.WebServlet;\nimport jakarta.servlet.http.HttpServlet;\nimport jakarta.servlet.http.HttpServletRequest;\nimport jakarta.servlet.http.HttpServletResponse;\nimport jakarta.servlet.http.HttpSession;\nimport org.json.JSONObject;\n\nimport java.io.BufferedReader;\nimport java.io.IOException;\nimport java.io.PrintWriter;\n\n@WebServlet(\"/updateUser\")\npublic class updateUserServlet extends HttpServlet {\n\n    @Override\n    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {\n        System.out.println(\"updateUser endpoint reached\");\n\n        HttpSession session = request.getSession(false);\n        User user = (User) session.getAttribute(\"user\");\n        System.out.println(\"from updateUser: \"+ session.getId());\n\n        StringBuffer jb = new StringBuffer();\n        String line = null;\n        try {\n            BufferedReader reader = request.getReader();\n            while ((line = reader.readLine()) != null)\n                jb.append(line);\n        } catch (Exception e) { /*report an error*/ }\n\n        JSONObject jsonObject = new JSONObject(jb.toString());\n\n        String key = jsonObject.getString(\"key\");\n        String value = jsonObject.getString(\"value\");\n\n        response.addHeader(\"Access-Control-Allow-Origin\", \"http://localhost:63342\");\n        response.addHeader(\"Access-Control-Allow-Headers\", \"Origin, X-Requested-With, Content-Type, Accept\");\n        response.addHeader(\"Access-Control-Allow-Credentials\", \"true\");\n        response.setContentType(\"application/json\");\n        response.setCharacterEncoding(\"utf-8\");\n        PrintWriter out = response.getWriter();\n\n        UserController userController = new Controller();\n        Boolean userUpdated = userController.updateUser(user, key, value);\n        user = userController.getUser(user);\n        if ( userUpdated && user != null) {\n            System.out.println(\"status 201\");\n\n            session.setAttribute(\"user\", user);\n\n            response.setStatus(201);\n\n            out.println(\"{\\\"userUpdated\\\":\\\"true\\\"}\");\n        } else {\n            System.out.println(\"status 202\");\n            response.setStatus(202);\n            out.println(\"{\\\"userUpdated\\\":\\\"false\\\"}\");\n        }\n        out.close();  // Always close the output writer\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/webapps/api/WEB-INF/classes/updateUserServlet.java b/webapps/api/WEB-INF/classes/updateUserServlet.java
+--- a/webapps/api/WEB-INF/classes/updateUserServlet.java	(revision 75604ea3081c396e940e3a7a7d34268030e568a1)
++++ b/webapps/api/WEB-INF/classes/updateUserServlet.java	(date 1639395422143)
+@@ -12,6 +12,7 @@
+ import java.io.BufferedReader;
+ import java.io.IOException;
+ import java.io.PrintWriter;
++import java.util.ArrayList;
+ 
+ @WebServlet("/updateUser")
+ public class updateUserServlet extends HttpServlet {
+Index: webapp/js/SDK.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>const baseURL = \"http://localhost:8888/api\";\nconst endpoints = {\n    login: \"/login\",\n    signup: \"/signUp\",\n    getall: \"/getAll\",\n    session: \"/session\",\n    profile: \"/profile\"\n}\n\nconst SDK = {\n    post: (endpoint, data) => {\n        $.ajax( baseURL+endpoint, {\n            method: \"POST\",\n            data: JSON.stringify(data),\n            xhrFields: { withCredentials: true },\n            crossDomain: true},\n        )\n            .done((result,statusText, xhr) => {\n                console.log(\".done\")\n                switch (endpoint) {\n                    case endpoints.session:\n                        console.log(\"session is valid\")\n                        if (result.Session === \"deleted\" ) {\n                            $(\"body nav\").toggleClass('animate__bounceOutUp animate__bounceInDown')\n                            $(\"#selector-panel\").toggleClass('animate__bounceInRight animate__bounceOutLeft')\n                            $(\"#favourites\").toggleClass('animate__bounceInRight animate__bounceOutRight')\n                                .on('animationend webkitAnimationEnd', () => {\n                                    window.location.replace(\"login.html\")\n                                })\n                        }\n                        break;\n                    default:\n                        switch (xhr.status) {\n                            case 202:\n                                $(\".form #username, .form #email\").addClass('warning-input')\n                                $(\".form label[for=username],.form label[for=email]\").addClass('warning-label animate__shakeX')\n                                    .one('animationend webkitAnimationEnd', () => {\n                                        $(\".form label[for=username],.form label[for=email]\").removeClass('warning-label animate__shakeX')\n                                        $(\".form #username, .form #email\").removeClass('warning-input')\n                                    })\n\n                                break;\n                            default:\n                                $(\".form .input\").addClass('success-input')\n                                $(\".form label\").addClass('success-label')\n                                $(\".btn-submit\").addClass('submit-success')\n                                $(\".container\").toggleClass('animate__bounceInUp animate__bounceOutDown animate__delay-1s')\n                                $('body>main').one('animationend', () => {\n                                    console.log(\"aniEnd\")\n                                    window.location.replace(\"index.html\");\n                                })\n                                break;\n                        }\n                        break;\n                }\n            })\n            .fail(() => {\n                if (endpoint === endpoints.session) {\n                    window.location.replace(\"login.html\")\n                }\n                if (endpoint === endpoints.login) {\n                    $(\".form label\").addClass('warning-label ')\n                    $(\".form .input\").addClass('warning-input animate__shakeX')\n                        .one('animationend webkitAnimationEnd', () => {\n                            $(\".form .input\").removeClass('warning-input animate__shakeX')\n                            $(\".form label\").removeClass('warning-label')\n                        })\n                }\n            })\n    },\n    get: (endpoint) => {\n        $.ajax(baseURL + endpoint,\n{\n            method: \"GET\",\n            xhrFields: {withCredentials: true},\n            crossDomain: true\n        })\n        .done((result) => {\n            if (endpoint === endpoints.getall) {\n                return result;\n            }\n            else if (endpoint === endpoints.profile) {\n                return result;\n            }\n        })\n        .fail(() => {\n            console.log(endpoint)\n            console.log(\"failed\")\n        })\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/webapp/js/SDK.js b/webapp/js/SDK.js
+--- a/webapp/js/SDK.js	(revision 75604ea3081c396e940e3a7a7d34268030e568a1)
++++ b/webapp/js/SDK.js	(date 1639393118740)
+@@ -21,9 +21,9 @@
+                     case endpoints.session:
+                         console.log("session is valid")
+                         if (result.Session === "deleted" ) {
+-                            $("body nav").toggleClass('animate__bounceOutUp animate__bounceInDown')
+                             $("#selector-panel").toggleClass('animate__bounceInRight animate__bounceOutLeft')
+                             $("#favourites").toggleClass('animate__bounceInRight animate__bounceOutRight')
++                            $("body nav").toggleClass('animate__bounceOutUp animate__bounceInDown')
+                                 .on('animationend webkitAnimationEnd', () => {
+                                     window.location.replace("login.html")
+                                 })
+@@ -77,7 +77,30 @@
+         })
+         .done((result) => {
+             if (endpoint === endpoints.getall) {
+-                return result;
++                result.forEach((item) => {
++                    $("#fav-items").append("<div id='"+ ("fav-item-" + item.bookmark_id) +"' class='fav-item'>" +
++                        "<h2 class='sub-header'>"+item.name+"</h2>" +
++                        "<p>"+item.rating+"</p>" +
++                        "<div class='flex-row'>"+(item.genres.map((g) => ("<div class='genre'>" + g + "</div>") ))+"</div>" +
++                        "<div class='flex-row'>"+(item.tags.map((t) => ("<div class='tag'>" + t + "</div>")))+"</div>" +
++                        "<p>"+item.description+"</p>" +
++                        "<a href=''>"+item.url+"</a>" +
++                        "<p>"+item.media+"</p>" +
++                        "<p class='status'>"+item.status+"</p>" +
++                        "</div>")
++                })
++
++                $(".fav-item").click(function () {
++                    const clone = $(this).clone();
++                    const modal = $(".modal");
++                    modal.append(clone);
++                    modal.css("display", "block");
++                    if(modal.hasClass("animate__fadeOut animate__fast"))
++                        modal.removeClass("animate__fadeOut animate__fast")
++                    modal.off("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd")
++                    modal.addClass("animate__fadeIn animate__fast");
++                    clone.addClass('modal-content animate__animated animate__bounceInDown animate__fast');
++                })
+             }
+             else if (endpoint === endpoints.profile) {
+                 return result;
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"eb19d21f-f5a3-431b-b496-431c63fb8ce8\" name=\"Changes\" comment=\"\">\n      <change afterPath=\"$PROJECT_DIR$/webapps/api/WEB-INF/classes/DeleteBookmarkServlet.java\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/webapps/api/WEB-INF/classes/UpdateBookmarkServlet.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/webapps/api/WEB-INF/classes/AddBookmarkServlet.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/webapps/api/WEB-INF/classes/AddBookmarkServlet.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/BookmarkController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/BookmarkController.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/Controller.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/Controller.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/UserController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/UserController.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/webapps/api/WEB-INF/classes/database/DBConnecter.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/webapps/api/WEB-INF/classes/database/DBConnecter.java\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"ComposerSettings\">\n    <execution />\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"ProjectId\" id=\"22BfR0tqSZKrHaUlcHQhxutSm3P\" />\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\">\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\n  </component>\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\">\n    <property name=\"ASKED_ADD_EXTERNAL_FILES\" value=\"true\" />\n    <property name=\"RunOnceActivity.OpenProjectViewOnStart\" value=\"true\" />\n    <property name=\"RunOnceActivity.ShowReadmeOnStart\" value=\"true\" />\n    <property name=\"WebServerToolWindowFactoryState\" value=\"false\" />\n    <property name=\"last_opened_file_path\" value=\"$PROJECT_DIR$/webapps/api/WEB-INF/classes\" />\n    <property name=\"node.js.detected.package.eslint\" value=\"true\" />\n    <property name=\"node.js.detected.package.tslint\" value=\"true\" />\n    <property name=\"node.js.selected.package.eslint\" value=\"(autodetect)\" />\n    <property name=\"node.js.selected.package.tslint\" value=\"(autodetect)\" />\n    <property name=\"nodejs_package_manager_path\" value=\"npm\" />\n  </component>\n  <component name=\"RecentsManager\">\n    <key name=\"CopyFile.RECENT_KEYS\">\n      <recent name=\"$PROJECT_DIR$/webapps/api/WEB-INF/classes\" />\n    </key>\n  </component>\n  <component name=\"RunManager\">\n    <configuration name=\"ICE\" type=\"docker-deploy\" factoryName=\"docker-compose.yml\" server-name=\"Docker\">\n      <deployment type=\"docker-compose.yml\">\n        <settings>\n          <option name=\"envFilePath\" value=\"\" />\n          <option name=\"sourceFilePath\" value=\"Docker-compose.yml\" />\n        </settings>\n      </deployment>\n      <method v=\"2\" />\n    </configuration>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"eb19d21f-f5a3-431b-b496-431c63fb8ce8\" name=\"Changes\" comment=\"\" />\n      <created>1639315889055</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1639315889055</updated>\n      <workItem from=\"1639315891694\" duration=\"1757000\" />\n    </task>\n    <servers />\n  </component>\n  <component name=\"TypeScriptGeneratedFilesManager\">\n    <option name=\"version\" value=\"3\" />\n  </component>\n  <component name=\"Vcs.Log.Tabs.Properties\">\n    <option name=\"TAB_STATES\">\n      <map>\n        <entry key=\"MAIN\">\n          <value>\n            <State />\n          </value>\n        </entry>\n      </map>\n    </option>\n    <option name=\"oldMeFiltersMigrated\" value=\"true\" />\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <option name=\"ADD_EXTERNAL_FILES_SILENTLY\" value=\"true\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 75604ea3081c396e940e3a7a7d34268030e568a1)
++++ b/.idea/workspace.xml	(date 1639395685440)
+@@ -5,14 +5,10 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="eb19d21f-f5a3-431b-b496-431c63fb8ce8" name="Changes" comment="">
+-      <change afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/DeleteBookmarkServlet.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/UpdateBookmarkServlet.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/AddBookmarkServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/AddBookmarkServlet.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/BookmarkController.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/BookmarkController.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/Controller.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/UserController.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/database/DBConnecter.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/database/DBConnecter.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/webapp/js/SDK.js" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/js/SDK.js" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/webapp/js/tabs.js" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/js/tabs.js" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/updateUserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/updateUserServlet.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -38,17 +34,12 @@
+     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+     <property name="WebServerToolWindowFactoryState" value="false" />
+-    <property name="last_opened_file_path" value="$PROJECT_DIR$/webapps/api/WEB-INF/classes" />
++    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+     <property name="node.js.detected.package.eslint" value="true" />
+     <property name="node.js.detected.package.tslint" value="true" />
+     <property name="node.js.selected.package.eslint" value="(autodetect)" />
+     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+     <property name="nodejs_package_manager_path" value="npm" />
+-  </component>
+-  <component name="RecentsManager">
+-    <key name="CopyFile.RECENT_KEYS">
+-      <recent name="$PROJECT_DIR$/webapps/api/WEB-INF/classes" />
+-    </key>
+   </component>
+   <component name="RunManager">
+     <configuration name="ICE" type="docker-deploy" factoryName="docker-compose.yml" server-name="Docker">

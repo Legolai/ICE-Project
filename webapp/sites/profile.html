@@ -1,29 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link rel="stylesheet" href="../css/animate.css">
-        <link rel="stylesheet" href="../css/main.css">
-        <script src="../js/jQuery.min.js" defer></script>
-        <script src="../js/SDK.js" defer></script>
-        <script src="../js/profile.js" defer></script>
-        <title>Profile</title>
-    </head>
-    <body>
-        <div class="container flex-align-center flex-column">
-            <nav class="animate__animated animate__bounceInDown">
-                <ul>
-                    <li><a href="index.html">My Page</a></li>
-                    <li><a class="active" href="profile.html">Profile</a></li>
-                    <li><a class="btn" id="logout">Logout</a></li>
-                </ul>
-            </nav>
-            <main class="container ">
-
-            </main>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../css/animate.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <script src="../js/jQuery.min.js" defer></script>
+    <script src="../js/SDK.js" defer></script>
+    <script src="../js/profile.js" defer></script>
+    <title>Profile</title>
+</head>
+<body>
+<div class="container flex-align-center flex-column">
+    <nav class="animate__animated animate__bounceInDown">
+        <ul>
+            <li><a href="index.html">My Page</a></li>
+            <li><a class="active" href="profile.html">Profile</a></li>
+            <li><a class="btn" id="logout">Logout</a></li>
+        </ul>
+    </nav>
+    <main class="container flex-justify-center">
+        <div class="flex-column ">
+            <h2>Edit Profile</h2>
+            <form id="profile-edit" class="form profile-edit">
+                <div class="flex-column">
+                    <label for="username">Username</label>
+                    <input class="input" name="username" type="text" id="username"/>
+                </div>
+                <div class="flex-row">
+                    <div class="flex-column">
+                        <label for="firstname">Firstname</label>
+                        <input class="input" name="firstname" type="text" id="firstname"/>
+                    </div>
+                    <div class="flex-column">
+                        <label for="surname">Surname</label>
+                        <input class="input" name="surname" type="text" id="surname"/>
+                    </div>
+                </div>
+                <div class="flex-column">
+                    <label for="email">E-mail</label>
+                    <input class="input" name="email" type="text" id="email"/>
+                </div>
+                <div class="flex-row">
+                    <input class="btn-submit" type="submit" value="Update">
+                    <input id="cancel" class="btn-submit-outlined" type="button" value="Cancel">
+                </div>
+            </form>
         </div>
-    </body>
+    </main>
+</div>
+</body>
 </html>

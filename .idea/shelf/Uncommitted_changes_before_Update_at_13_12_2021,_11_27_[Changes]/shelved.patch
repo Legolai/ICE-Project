@@ -1,0 +1,70 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"eb19d21f-f5a3-431b-b496-431c63fb8ce8\" name=\"Changes\" comment=\"\" />\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"ComposerSettings\">\n    <execution />\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"ProjectId\" id=\"22BfR0tqSZKrHaUlcHQhxutSm3P\" />\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\">\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\n  </component>\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\">\n    <property name=\"ASKED_ADD_EXTERNAL_FILES\" value=\"true\" />\n    <property name=\"RunOnceActivity.OpenProjectViewOnStart\" value=\"true\" />\n    <property name=\"RunOnceActivity.ShowReadmeOnStart\" value=\"true\" />\n    <property name=\"WebServerToolWindowFactoryState\" value=\"false\" />\n    <property name=\"last_opened_file_path\" value=\"$PROJECT_DIR$\" />\n    <property name=\"node.js.detected.package.eslint\" value=\"true\" />\n    <property name=\"node.js.detected.package.tslint\" value=\"true\" />\n    <property name=\"node.js.selected.package.eslint\" value=\"(autodetect)\" />\n    <property name=\"node.js.selected.package.tslint\" value=\"(autodetect)\" />\n    <property name=\"nodejs_package_manager_path\" value=\"npm\" />\n  </component>\n  <component name=\"RunManager\">\n    <configuration name=\"ICE\" type=\"docker-deploy\" factoryName=\"docker-compose.yml\" server-name=\"Docker\">\n      <deployment type=\"docker-compose.yml\">\n        <settings>\n          <option name=\"envFilePath\" value=\"\" />\n          <option name=\"sourceFilePath\" value=\"Docker-compose.yml\" />\n        </settings>\n      </deployment>\n      <method v=\"2\" />\n    </configuration>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"eb19d21f-f5a3-431b-b496-431c63fb8ce8\" name=\"Changes\" comment=\"\" />\n      <created>1639315889055</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1639315889055</updated>\n      <workItem from=\"1639315891694\" duration=\"1757000\" />\n    </task>\n    <servers />\n  </component>\n  <component name=\"TypeScriptGeneratedFilesManager\">\n    <option name=\"version\" value=\"3\" />\n  </component>\n  <component name=\"Vcs.Log.Tabs.Properties\">\n    <option name=\"TAB_STATES\">\n      <map>\n        <entry key=\"MAIN\">\n          <value>\n            <State />\n          </value>\n        </entry>\n      </map>\n    </option>\n    <option name=\"oldMeFiltersMigrated\" value=\"true\" />\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <option name=\"ADD_EXTERNAL_FILES_SILENTLY\" value=\"true\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 75809a84e753bd9304ae29c6b9051609aa0c2583)
++++ b/.idea/workspace.xml	(date 1639391249560)
+@@ -4,7 +4,9 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="eb19d21f-f5a3-431b-b496-431c63fb8ce8" name="Changes" comment="" />
++    <list default="true" id="eb19d21f-f5a3-431b-b496-431c63fb8ce8" name="Changes" comment="profile page">
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++    </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -12,6 +14,9 @@
+   </component>
+   <component name="ComposerSettings">
+     <execution />
++  </component>
++  <component name="Git.Merge.Settings">
++    <option name="BRANCH" value="origin/michael_to_be_safe" />
+   </component>
+   <component name="Git.Settings">
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+@@ -47,6 +52,7 @@
+       <method v="2" />
+     </configuration>
+   </component>
++  <component name="ShelveChangesManager" show_recycled="true" />
+   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+   <component name="TaskManager">
+     <task active="true" id="Default" summary="Default task">
+@@ -57,6 +63,21 @@
+       <updated>1639315889055</updated>
+       <workItem from="1639315891694" duration="1757000" />
+     </task>
++    <task id="LOCAL-00001" summary="profile page">
++      <created>1639389360429</created>
++      <option name="number" value="00001" />
++      <option name="presentableId" value="LOCAL-00001" />
++      <option name="project" value="LOCAL" />
++      <updated>1639389360429</updated>
++    </task>
++    <task id="LOCAL-00002" summary="profile page">
++      <created>1639389404730</created>
++      <option name="number" value="00002" />
++      <option name="presentableId" value="LOCAL-00002" />
++      <option name="project" value="LOCAL" />
++      <updated>1639389404730</updated>
++    </task>
++    <option name="localTasksCounter" value="3" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -76,5 +97,7 @@
+   </component>
+   <component name="VcsManagerConfiguration">
+     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
++    <MESSAGE value="profile page" />
++    <option name="LAST_COMMIT_MESSAGE" value="profile page" />
+   </component>
+ </project>
+\ No newline at end of file

@@ -94,6 +94,7 @@ nav ul li:not(:last-child) .active {
 
 main {
 	width: clamp(100px, 100%, 800px);
+	margin: 10px;
 }
 
 .btn, .btn-outlined {
@@ -329,7 +330,6 @@ main {
 	display: grid;
 	grid-template-columns: minmax(50px, 1fr) 3fr;
 	gap: 10px;
-	margin: 10px;
 }
 
 .modal {
@@ -360,4 +360,33 @@ main {
 	border: none;
 }
 
+.profile-edit{
+	display: flex;
+	width: clamp(200px, 100%, 600px);
+	flex-direction: column;
+	gap: 10px;
+}
 
+.profile-edit > * > *{
+	flex-grow: 1;
+}
+
+.profile-edit > * .input::placeholder{
+	color: black;
+	opacity: 1;
+}
+
+.profile-edit > * {
+	flex-grow: 1;
+	row-gap: 10px;
+	column-gap: 20px;
+}
+
+h2 {
+	margin: 20px 0;
+	font-family: var(--header-font);
+}
+
+.profile-edit div.flex-row:last-child{
+	margin-top: 10px;
+}
