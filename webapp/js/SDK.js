@@ -3,7 +3,8 @@ const endpoints = {
     login: "/login",
     signup: "/signUp",
     getall: "/getAll",
-    session: "/session"
+    session: "/session",
+    profile: "/profile"
 }
 
 const SDK = {
@@ -26,8 +27,7 @@ const SDK = {
                                 .on('animationend webkitAnimationEnd', () => {
                                     window.location.replace("login.html")
                                 })
-                        } else
-                            SDK.get(endpoints.getall);
+                        }
                         break;
                     default:
                         switch (xhr.status) {
@@ -35,7 +35,7 @@ const SDK = {
                                 $(".form #username, .form #email").addClass('warning-input')
                                 $(".form label[for=username],.form label[for=email]").addClass('warning-label animate__shakeX')
                                     .one('animationend webkitAnimationEnd', () => {
-                                        $(".form label[for=username],.form label[for=email").removeClass('warning-label animate__shakeX')
+                                        $(".form label[for=username],.form label[for=email]").removeClass('warning-label animate__shakeX')
                                         $(".form #username, .form #email").removeClass('warning-input')
                                     })
 
@@ -77,31 +77,10 @@ const SDK = {
         })
         .done((result) => {
             if (endpoint === endpoints.getall) {
-                result.forEach((item, i) => {
-                    $("#fav-items").append("<div id='"+ ("fav-item-" + i) +"' class='fav-item'>" +
-                        "<h2 class='sub-header'>"+item.name+"</h2>" +
-                        "<p>"+item.rating+"</p>" +
-                        "<div class='flex-row'>"+(item.genres.map((g) => ("<div class='genre'>" + g + "</div>") ))+"</div>" +
-                        "<div class='flex-row'>"+(item.tags.map((t) => ("<div class='tag'>" + t + "</div>")))+"</div>" +
-                        "<p>"+item.description+"</p>" +
-                        "<a href=''>"+item.url+"</a>" +
-                        "<p>"+item.media+"</p>" +
-                        "<p class='status'>"+item.status+"</p>" +
-                        "</div>")
-                })
-
-                $(".fav-item").click(function () {
-                    const clone = $(this).clone();
-                    const modal = $(".modal");
-                    modal.append(clone);
-                    modal.css("display", "block");
-                    if(modal.hasClass("animate__fadeOut animate__fast"))
-                        modal.removeClass("animate__fadeOut animate__fast")
-                    modal.off("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd")
-                    modal.addClass("animate__fadeIn animate__fast");
-                    clone.addClass('modal-content animate__animated animate__bounceInDown animate__fast');
-                })
-
+                return result;
+            }
+            else if (endpoint === endpoints.profile) {
+                return result;
             }
         })
         .fail(() => {
