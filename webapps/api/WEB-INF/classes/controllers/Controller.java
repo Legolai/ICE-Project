@@ -26,15 +26,6 @@ public class Controller implements UserController, BookmarkController{
     public Bookmark addBookmark(JSONObject jsonObject) {
         System.out.println("Json from request: " +jsonObject);
 
-        return saveBookmark(jsonObject, 0);
-    }
-    @Override
-    public Bookmark updateBookmark(JSONObject jsonObject) {
-        System.out.println("Json from request: " +jsonObject);
-
-        return saveBookmark(jsonObject, jsonObject.getInt("bookmark_id"));
-    }
-    private Bookmark saveBookmark(JSONObject jsonObject, int bookmarkID) {
         int user_id = jsonObject.getInt("user_id");
         String bookmark_name = jsonObject.getString("bookmark_name");
         String description = jsonObject.getString("description");
@@ -44,8 +35,6 @@ public class Controller implements UserController, BookmarkController{
         int rating = jsonObject.getInt("rating");
 
         Bookmark bookmark = new Bookmark(user_id,bookmark_name,description,url,media_name,status,rating);
-        // the below will be overwritten with the correct despite it being 0 when adding new
-        bookmark.setBookmark_id(bookmarkID);
 
         JSONArray genre = jsonObject.getJSONArray("genre");
         JSONArray tag = jsonObject.getJSONArray("tag");
@@ -62,16 +51,16 @@ public class Controller implements UserController, BookmarkController{
 
         return dbConnecter.saveBookmark(bookmark);
     }
+
     @Override
-    public void removeBookmark(JSONObject jsonObject) {
-        System.out.println("Json from request: " +jsonObject);
+    public void removeBookmark(String accessToken, String... info) {
 
-        int bookmark_id = jsonObject.getInt("bookmark_id");
-        String bookmark_name = jsonObject.getString("bookmark_name");
-
-        dbConnecter.deleteUserORBookmark(bookmark_id, bookmark_name, "bookmark");
     }
 
+    @Override
+    public void updateBookmark(String accessToken, String... info) {
+
+    }
 
     @Override
     public User login(String username, String password) {
@@ -87,6 +76,7 @@ public class Controller implements UserController, BookmarkController{
     public Boolean updateUser(User user, String key, String value) {
         return dbConnecter.updateUser(user, key, value);
     }
+
     @Override
     public User newUser(String username, String password, String email, String firstname, String surname) {
         User user = new User();
@@ -96,14 +86,5 @@ public class Controller implements UserController, BookmarkController{
         user.setFirstname(firstname);
         user.setSurname(surname);
         return dbConnecter.newUser(user);
-    }
-    @Override
-    public void deleteUser(JSONObject jsonObject) {
-        System.out.println("Json from request: " +jsonObject);
-
-        int user_id = jsonObject.getInt("user_id");
-        String username = jsonObject.getString("username");
-
-        dbConnecter.deleteUserORBookmark(user_id, username, "user");
     }
 }
