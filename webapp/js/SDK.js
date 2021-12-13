@@ -15,15 +15,15 @@ const SDK = {
             xhrFields: { withCredentials: true },
             crossDomain: true},
         )
-            .done((result,statusText, xhr) => {
+            .then((result,statusText, xhr) => {
                 console.log(".done")
                 switch (endpoint) {
                     case endpoints.session:
                         console.log("session is valid")
                         if (result.Session === "deleted" ) {
-                            $("body nav").toggleClass('animate__bounceOutUp animate__bounceInDown')
                             $("#selector-panel").toggleClass('animate__bounceInRight animate__bounceOutLeft')
                             $("#favourites").toggleClass('animate__bounceInRight animate__bounceOutRight')
+                            $("body nav").toggleClass('animate__bounceOutUp animate__bounceInDown')
                                 .on('animationend webkitAnimationEnd', () => {
                                     window.location.replace("login.html")
                                 })
@@ -75,12 +75,17 @@ const SDK = {
             xhrFields: {withCredentials: true},
             crossDomain: true
         })
-        .done((result) => {
+        .then((result) => {
             if (endpoint === endpoints.getall) {
-                return result;
+                return new Promise((resolve) => {
+                    console.log(resolve)
+                    return result
+                })
             }
             else if (endpoint === endpoints.profile) {
-                return result;
+                return new Promise((resolve) => {
+                    return result
+                })
             }
         })
         .fail(() => {
@@ -89,3 +94,9 @@ const SDK = {
         })
     }
 }
+
+$('#logout').click((event) => {
+    event.preventDefault();
+    const data = {Session: "delete"}
+    SDK.post(endpoints.session, data);
+})

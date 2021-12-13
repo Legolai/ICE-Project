@@ -3,7 +3,7 @@ $(document).ready(() => {
     let entrance = 'animate__zoomIn'
     let exit = 'animate__zoomOut'
     const bookmarks = SDK.get(endpoints.getall);
-
+    console.log(bookmarks);
     bookmarks.forEach((item, i) => {
         $("#fav-items").append("<div id='"+ ("fav-item-" + i) +"' class='fav-item'>" +
             "<h2 class='sub-header'>"+item.name+"</h2>" +
@@ -27,12 +27,6 @@ $(document).ready(() => {
         modal.off("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd")
         modal.addClass("animate__fadeIn animate__fast");
         clone.addClass('modal-content animate__animated animate__bounceInDown animate__fast');
-    })
-
-    $('#logout').click((event) => {
-        event.preventDefault();
-        const data = {Session: "delete"}
-        SDK.post(endpoints.session, data);
     })
 
     const showItem = (element) => {

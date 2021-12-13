@@ -80,7 +80,6 @@ public class DBConnecter {
                     tmpUser.setFirstname(resultSet.getString("firstname"));
                     tmpUser.setSurname(resultSet.getString("surname"));
                     tmpUser.setUsername(resultSet.getString("username"));
-                    tmpUser.setPassword(resultSet.getString("password"));
                     tmpUser.setEmail(resultSet.getString("email"));
                 }
                 close();

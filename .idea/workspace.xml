@@ -5,13 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eb19d21f-f5a3-431b-b496-431c63fb8ce8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/DeleteBookmarkServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/UpdateBookmarkServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/js/SDK.js" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/js/SDK.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/js/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/js/profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/js/tabs.js" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/js/tabs.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/AddBookmarkServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/AddBookmarkServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/BookmarkController.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/BookmarkController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/database/DBConnecter.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/database/DBConnecter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
