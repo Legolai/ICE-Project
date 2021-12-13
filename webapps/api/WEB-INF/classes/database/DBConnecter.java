@@ -385,7 +385,7 @@ public class DBConnecter {
     }
 
 
-    public void deleteUserORBookmark(int id, String name, String userOrBookmark) {
+    public boolean deleteUserORBookmark(int id, String name, String userOrBookmark) {
         String sql = "";        //id is user or bookmark id, and name is username or bookmark_name
         if (userOrBookmark.toLowerCase(Locale.ROOT).equals("user")) {
             sql = "DELETE * FROM Favorite_Website_DB.User WHERE user_id = ? AND username = ?";
@@ -404,8 +404,10 @@ public class DBConnecter {
             pstmt.executeBatch();
             pstmt.close();
             close();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 }
