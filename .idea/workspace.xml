@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eb19d21f-f5a3-431b-b496-431c63fb8ce8" name="Changes" comment="profile page add animations">
+      <change afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/GetUserGenresAndTags.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_10_12_2021__17_28__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_10_12_2021__17_28__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_13_12_2021__10_50__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_13_12_2021__10_50__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_13_12_2021__10_50__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_13_12_2021__10_50__Changes_1.xml" afterDir="false" />
@@ -16,13 +17,10 @@
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_13_12_2021__11_50__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_13_12_2021__11_50__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_13_12_2021__12_41__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_13_12_2021__12_41__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/LoginServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/LoginServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/SignUpServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/SignUpServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/UpdateUserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/UpdateUserServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/DBCreation.sql" beforeDir="false" afterPath="$PROJECT_DIR$/database/DBCreation.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/BookmarkController.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/BookmarkController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/database/DBConnecter.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/database/DBConnecter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/entities/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

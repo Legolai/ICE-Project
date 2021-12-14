@@ -71,6 +71,10 @@ public class Controller implements UserController, BookmarkController{
 
         return dbConnecter.deleteUserORBookmark(bookmark_id, bookmark_name, "bookmark");
     }
+    @Override
+    public ArrayList<String> getUsersGenresOrTags(User user, String genreTagSelector) {
+        return dbConnecter.getGenresOrTags(user, genreTagSelector);
+    }
 
 
 

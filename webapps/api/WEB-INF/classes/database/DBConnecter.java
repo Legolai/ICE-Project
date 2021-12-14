@@ -309,11 +309,11 @@ public class DBConnecter {
         return null;
     }
     private void checkAndInsertGenreTag(Bookmark bm) {
-        String genreQuery = "SELECT * FROM Favorite_Website_DB.Genre WHERE genre_name = ?";
-        String genreSQL = "INSERT INTO Genre (genre_name) VALUES (?)";
+        String genreQuery = "SELECT * FROM Favorite_Website_DB.Genre WHERE user_id = ? AND genre_name = ?";
+        String genreSQL = "INSERT INTO Genre (user_id, genre_name) VALUES (?,?)";
         ArrayList<Integer> genreIDs =  checkAndInsertGenreTag(bm, genreQuery, genreSQL, "genre_id");
-        String tagQuery = "SELECT * FROM Favorite_Website_DB.Tag WHERE tag_name = ?";
-        String tagSQL = "INSERT INTO Tag (tag_name) VALUES (?)";
+        String tagQuery = "SELECT * FROM Favorite_Website_DB.Tag WHERE user_id = ? AND tag_name = ?";
+        String tagSQL = "INSERT INTO Tag (user_id, tag_name) VALUES (?,?)";
         ArrayList<Integer> tagIDs = checkAndInsertGenreTag(bm, tagQuery, tagSQL, "tag_id");
 
         // this is for the 3rd table for relations between bookmark and genre/tag
@@ -338,12 +338,14 @@ public class DBConnecter {
             for (String searchInsert : genreOrTag) {
                 // Checks if the genre or tag exists in database
                 PreparedStatement pstmt = conn.prepareStatement(query);
+                pstmt.setInt(1, bm.getUser_id());
                 pstmt.setString(1, searchInsert);
                 ResultSet rs = pstmt.executeQuery();
                 // if it doesn't exist in the DB, insert it
                 if (!rs.isBeforeFirst()) {
                     pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                    pstmt.setString(1,searchInsert);
+                    pstmt.setInt(1,bm.getUser_id());
+                    pstmt.setString(2,searchInsert);
 
                     int rowsAffected = pstmt.executeUpdate();
 
@@ -384,7 +386,38 @@ public class DBConnecter {
             e.printStackTrace();
         }
     }
+    public ArrayList<String> getGenresOrTags(User user, String genreTagSelector) {
+        PreparedStatement preparedStatement = null;
+        ArrayList<String> genresOrTags = new ArrayList<>();
+        String query = "";        //id is user or bookmark id, and name is username or bookmark_name
+        if (genreTagSelector.equals("genre")) {
+            query = "SELECT * FROM Favorite_Website_DB.Genre WHERE user_id = ?";
+        } else {    // else must be "tag"
+            query = "SELECT * FROM Favorite_Website_DB.Tag WHERE user_id = ?";
+        }
+        try {
+            connect();
 
+            preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setInt(1, user.getUser_id());
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.isBeforeFirst()) {
+                while (resultSet.next()) {
+                    if (genreTagSelector.equals("genre")) {
+                        genresOrTags.add(resultSet.getString("genre_name"));
+                    } else {
+                        genresOrTags.add(resultSet.getString("tag_name"));
+                    }
+                }
+            }
+            close();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return genresOrTags;
+    }
 
     public boolean deleteUserORBookmark(int id, String name, String userOrBookmark) {
         String sql = "";        //id is user or bookmark id, and name is username or bookmark_name

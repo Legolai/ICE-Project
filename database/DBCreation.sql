@@ -48,12 +48,16 @@ CREATE TABLE Bookmark
 CREATE TABLE Genre
 (
     genre_id TINYINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    user_id TINYINT NOT NULL,
     genre_name varchar(255) not null
+    FOREIGN KEY (user_id) REFERENCES User (user_id)
 );
 CREATE TABLE Tag
 (
     tag_id TINYINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    user_id TINYINT NOT NULL,
     tag_name varchar(255) not null
+    FOREIGN KEY (user_id) REFERENCES User (user_id)
 );
 
 CREATE TABLE Bookmark_Genre
@@ -80,8 +84,8 @@ INSERT INTO User (email,firstname, surname, username, password) VALUES ("test","
 
 INSERT INTO Media (media_name) VALUES ("Movie");
 INSERT INTO Media (media_name) VALUES ("Anime");
-INSERT INTO Genre (genre_name) VALUES ("Sci-Fi");
-INSERT INTO Tag (tag_name) VALUES ("Sick CGI");
+INSERT INTO Genre (user_id, genre_name) VALUES (2, "Sci-Fi");
+INSERT INTO Tag (user_id, tag_name) VALUES (2, "Sick CGI");
 
 INSERT INTO Bookmark (user_id, bookmark_name, description, url, media_name, status, rating) VALUES (2, "Avatar", "about blue people on another planet", "", "Movie", "Completed", 12);
 INSERT INTO Bookmark (user_id, bookmark_name, description, url, media_name, status, rating) VALUES (2, "Fairy tail", "so much to complain about", "", "Anime", "Completed", 12);
