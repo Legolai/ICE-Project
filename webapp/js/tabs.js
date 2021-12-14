@@ -39,7 +39,7 @@ $(document).ready(() => {
             const modal = $(".modal");
             modal.append(clone);
             modal.css("display", "block");
-            if(modal.hasClass("animate__fadeOut animate__fast"))
+            if (modal.hasClass("animate__fadeOut animate__fast"))
                 modal.removeClass("animate__fadeOut animate__fast")
             modal.off("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd")
             modal.addClass("animate__fadeIn animate__fast");
@@ -110,10 +110,10 @@ $(document).ready(() => {
         $(element).hide(0);
     }
 
-    $("#search").on("keyup", function() {
+    $("#search").on("keyup", function () {
         const value = $(this).val().toLowerCase();
-        $(".fav-item").filter(function() {
-            if($(this).find(".status").text().toLowerCase() == $(".tab-active").text().toLowerCase() || $(".tab-active").text().toLowerCase() == "all")
+        $(".fav-item").filter(function () {
+            if ($(this).find(".status").text().toLowerCase() == $(".tab-active").text().toLowerCase() || $(".tab-active").text().toLowerCase() == "all")
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });
@@ -121,23 +121,22 @@ $(document).ready(() => {
     const tabNames = ["All", "Watching", "Completed", "On Hold", "Dropped", "Plan to Watch"]
     tabNames.forEach((tabName) => {
         const tabId = tabName.replaceAll(" ", "");
-        $("#tabs").append("<button id='"+tabId+"' class='tab sub-header"+ (tabName === tabNames[0] ? " tab-active" : "") +"'>" + tabName + "</button>")
+        $("#tabs").append("<button id='" + tabId + "' class='tab sub-header" + (tabName === tabNames[0] ? " tab-active" : "") + "'>" + tabName + "</button>")
         const tab = $("#" + tabId);
         tab.click(() => {
             $(".tab-active").removeClass("tab-active");
             tab.addClass("tab-active");
-            if(tabName.toLowerCase() != "all"){
-                $(".fav-item").filter(function() {
+            if (tabName.toLowerCase() != "all") {
+                $(".fav-item").filter(function () {
                     const show = $(this).find(".status").text().toLowerCase() == tabName.toLowerCase();
                     const search = $(this).text().toLowerCase().indexOf($("#search").val().toLowerCase()) > -1;
-                    if(show && search) {
+                    if (show && search) {
                         showItem($(this));
                     } else {
                         hideItem($(this))
                     }
                 })
-            }
-            else {
+            } else {
                 $("#fav-items *").each((i, item) => {
                     showItem(item)
                 })
@@ -147,17 +146,32 @@ $(document).ready(() => {
 })
 
 $(this).click(function (event) {
-    const modal = $(".modal");
-    if(event.target == modal[0]) {
-        modal.removeClass("animate__fadeIn animate__fast");
-        modal.children().removeClass("animate__bounceInDown animate__faster");
-        modal.children().toggleClass("animate__bounceOutUp animate__faster");
-        modal.addClass("animate__fadeOut animate__fast")
-            .on('animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd', () => {
-                modal.css("display","none");
-                modal.empty();
-            })
+    const modals = $(".modal");
+    for (const modal of modals) {
+        if (modal === event.target) {
+            const selected = $(modal);
+            console.log(selected);
+            selected.removeClass("animate__fadeIn animate__fast");
+            selected.children().removeClass("animate__bounceInDown animate__faster");
+            selected.children().toggleClass("animate__bounceOutUp animate__faster");
+            selected.addClass("animate__fadeOut animate__fast")
+                .on('animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd', () => {
+                    selected.css("display", "none");
+                })
+            break;
+        }
     }
+})
+
+$("#addBookmark").click(() => {
+    const modal = $("#addBookmarkModal");
+    modal.css("display", "block");
+    if (modal.hasClass("animate__fadeOut animate__fast"))
+        modal.removeClass("animate__fadeOut animate__fast")
+    modal.off("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd")
+    modal.addClass("animate__fadeIn animate__fast");
+    modal.children().removeClass("animate__bounceOutUp animate__faster");
+    modal.children().toggleClass("animate__bounceInDown animate__faster");
 })
 
 
