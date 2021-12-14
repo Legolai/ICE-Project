@@ -1,6 +1,10 @@
 
 
 
+                TOMCAT/DOCKER
+ - https://medium.com/@calvinqc/build-a-simple-rest-apis-with-java-8-tomcat-jsp-mysql-intellij-on-mac-3308f4e59a03
+ - https://devops4solutions.com/deploy-a-tomcat-application-using-docker-compose/
+
                 DATABASE
     MYSQL: Normalization (many to many relationships)
  - https://stackoverflow.com/questions/1258743/normalization-in-mysql
