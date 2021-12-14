@@ -17,10 +17,13 @@
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_13_12_2021__11_50__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_13_12_2021__11_50__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_13_12_2021__12_41__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_13_12_2021__12_41__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/DBCreation.sql" beforeDir="false" afterPath="$PROJECT_DIR$/database/DBCreation.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/js/SDK.js" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/js/SDK.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/js/tabs.js" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/js/tabs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/AddBookmarkServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/AddBookmarkServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/UpdateBookmarkServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/UpdateBookmarkServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/BookmarkController.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/BookmarkController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/controllers/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/database/DBConnecter.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapps/api/WEB-INF/classes/database/DBConnecter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,6 +42,14 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="ProjectId" id="22BfR0tqSZKrHaUlcHQhxutSm3P" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">

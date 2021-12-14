@@ -5,12 +5,13 @@ const endpoints = {
     getall: "/getAll",
     session: "/session",
     profile: "/profile",
-    updateProfile: "/updateUser"
+    updateProfile: "/updateUser",
+    updateBookmark: "/updateBookmark"
 }
 
 const SDK = {
     post: (endpoint, data) => {
-        $.ajax( baseURL+endpoint, {
+        return $.ajax( baseURL+endpoint, {
             method: "POST",
             data: JSON.stringify(data),
             xhrFields: { withCredentials: true },

@@ -1,5 +1,6 @@
 package controllers;
 
+import com.mysql.cj.protocol.x.Notice;
 import database.DBConnecter;
 import entities.Bookmark;
 import entities.User;
@@ -23,19 +24,19 @@ public class Controller implements UserController, BookmarkController{
         return dbConnecter.getBookmarks(user);
     }
     @Override
-    public Bookmark addBookmark(JSONObject jsonObject) {
+    public Bookmark addBookmark(JSONObject jsonObject,int user_id) {
         System.out.println("Json from request: " +jsonObject);
 
-        return saveBookmark(jsonObject, 0);
+        return saveBookmark(jsonObject, 0, user_id);
     }
     @Override
-    public Bookmark updateBookmark(JSONObject jsonObject) {
-        System.out.println("Json from request: " +jsonObject);
+    public Bookmark updateBookmark(JSONObject jsonObject, int user_id) {
+        System.out.println("UpdateBookmark:\nJson from request: " +jsonObject);
 
-        return saveBookmark(jsonObject, jsonObject.getInt("bookmark_id"));
+        return saveBookmark(jsonObject, jsonObject.getInt("bookmark_id"), user_id);
     }
-    private Bookmark saveBookmark(JSONObject jsonObject, int bookmarkID) {
-        int user_id = jsonObject.getInt("user_id");
+
+    private Bookmark saveBookmark(JSONObject jsonObject, int bookmarkID, int user_id) {
         String bookmark_name = jsonObject.getString("bookmark_name");
         String description = jsonObject.getString("description");
         String url = jsonObject.getString("url");
