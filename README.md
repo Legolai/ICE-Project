@@ -22,14 +22,20 @@ side og muligvis linenummer der brugs til at angive hvor langt man er kommet i d
 
 # Use-Case
 
+![UseCase v1](docs/UseCaseV1.png)
+
 # Klassediagram
 
+### Version 1
+![ClassDiagram v1](docs/ClassDiagramV1.png)
+
+### Version 2
+![ClassDiagram v2](docs/ClassDiagramV2.png)
 
 # Setup docker tomcat api
 
 ``` bash
-$ docker build -t apiserver .
-$ docker run --rm -it -p 8888:8080 apiserver
+$ docker-compose up -d
 ```
 
 
