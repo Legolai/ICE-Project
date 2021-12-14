@@ -3,20 +3,38 @@ $(document).ready(() => {
     let entrance = 'animate__zoomIn'
     let exit = 'animate__zoomOut'
     console.log("logging bookmarks")
-    SDK.get(endpoints.getall).then((bookmarks) => {
 
+    let tags = new Set();
+    let genres = new Set();
+
+    SDK.get(endpoints.getall).then((bookmarks) => {
         bookmarks.forEach((item, i) => {
+            let htmlTags = "";
+            let htmlGenres = "";
+            for (const genre of item.genres) {
+                genres.add(genre)
+                htmlGenres += "<div class='genre'>" + genre + "</div>";
+            }
+            for (const tag of item.tags) {
+                tags.add(tag)
+                htmlTags += "<div class='tag'>" + tag + "</div>";
+            }
+
             $("#fav-items").append("<div id='"+ ("fav-item-" + i) +"' class='fav-item'>" +
                 "<h2 class='sub-header'>"+item.name+"</h2>" +
                 "<p class='rating'>"+item.rating+"</p>" +
-                "<div class='flex-row genres'>"+(item.genres.map((g) => ("<div class='genre'>" + g + "</div>") ))+"</div>" +
-                "<div class='flex-row tags'>"+(item.tags.map((t) => ("<div class='tag'>" + t + "</div>")))+"</div>" +
+                "<div class='flex-row genres'>"+htmlGenres+"</div>" +
+                "<div class='flex-row tags'>"+htmlTags+"</div>" +
                 "<p>"+item.description+"</p>" +
-                "<a href=''>"+item.url+"</a>" +
-                "<p>"+item.media+"</p>" +
+                "<a class='link' href=''>"+item.url+"</a>" +
+                "<p class='media'>"+item.media+"</p>" +
                 "<p class='status'>"+item.status+"</p>" +
                 "</div>")
+            console.log(tags)
+            console.log(genres)
         })
+
+
 
         $(".fav-item").click(function () {
             const clone = $(this).clone();

@@ -24,7 +24,7 @@ const SDK = {
                         if (result.Session === "deleted" ) {
                             $("#selector-panel").toggleClass('animate__bounceInRight animate__bounceOutLeft')
                             $("#favourites").toggleClass('animate__bounceInRight animate__bounceOutRight')
-                            $("body main div").toggleClass('animate__bounceInUp animate__bounceOutDown')
+                            $("body main").toggleClass('animate__bounceInUp animate__bounceOutDown')
                             $("body nav").toggleClass('animate__bounceOutUp animate__bounceInDown')
                                 .on('animationend webkitAnimationEnd', () => {
                                     window.location.replace("login.html")

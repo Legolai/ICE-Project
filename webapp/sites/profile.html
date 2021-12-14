@@ -21,34 +21,34 @@
             <li><a class="btn" id="logout">Logout</a></li>
         </ul>
     </nav>
-    <main class="container flex-justify-center">
-        <div class="flex-column animate__animated animate__bounceInUp">
+    <main class="container flex-column flex-align-center animate__animated animate__bounceInUp">
+
+        <form id="profile-edit" class="form profile-edit">
             <h2>Edit Profile</h2>
-            <form id="profile-edit" class="form profile-edit">
+            <div class="flex-column">
+                <label for="username">Username</label>
+                <input class="input" name="username" type="text" id="username"/>
+            </div>
+            <div class="flex-row">
                 <div class="flex-column">
-                    <label for="username">Username</label>
-                    <input class="input" name="username" type="text" id="username"/>
-                </div>
-                <div class="flex-row">
-                    <div class="flex-column">
-                        <label for="firstname">Firstname</label>
-                        <input class="input" name="firstname" type="text" id="firstname"/>
-                    </div>
-                    <div class="flex-column">
-                        <label for="surname">Surname</label>
-                        <input class="input" name="surname" type="text" id="surname"/>
-                    </div>
+                    <label for="firstname">Firstname</label>
+                    <input class="input" name="firstname" type="text" id="firstname"/>
                 </div>
                 <div class="flex-column">
-                    <label for="email">E-mail</label>
-                    <input class="input" name="email" type="text" id="email"/>
+                    <label for="surname">Surname</label>
+                    <input class="input" name="surname" type="text" id="surname"/>
                 </div>
-                <div class="flex-row">
-                    <input class="btn-submit" type="submit" value="Update">
-                    <input id="cancel" class="btn-submit-outlined" type="button" value="Cancel">
-                </div>
-            </form>
-        </div>
+            </div>
+            <div class="flex-column">
+                <label for="email">E-mail</label>
+                <input class="input" name="email" type="text" id="email"/>
+            </div>
+            <div class="flex-row">
+                <input class="btn-submit" type="submit" value="Update">
+                <input id="cancel" class="btn-submit-outlined" type="button" value="Cancel">
+            </div>
+        </form>
+
     </main>
 </div>
 </body>
