@@ -48,20 +48,25 @@ public class Controller implements UserController, BookmarkController{
         // the below will be overwritten with the correct despite it being 0 when adding new
         bookmark.setBookmark_id(bookmarkID);
 
-        System.out.println("getting tags/genres");
+        System.out.println("getting genres");
         JSONArray genre = jsonObject.getJSONArray("genre");
+        if (!genre.isEmpty()) {
+            List<String> genreList = new ArrayList<>();
+            for(int i=0; i < genre.length(); i++) {
+                genreList.add(genre.getString(i));
+            }
+            bookmark.setGenres(genreList);
+        }
+        System.out.println("getting tags");
         JSONArray tag = jsonObject.getJSONArray("tag");
-        List<String> genreList = new ArrayList<>();
-        List<String> tagList = new ArrayList<>();
-        for(int i=0; i < genre.length(); i++) {
-            genreList.add(genre.getString(i));
+        if (!tag.isEmpty()) {
+            List<String> tagList = new ArrayList<>();
+            for(int i=0; i < tag.length(); i++) {
+                tagList.add(tag.getString(i));
+            }
+            bookmark.setTags(tagList);
         }
-        for(int i=0; i < tag.length(); i++) {
-            tagList.add(tag.getString(i));
-        }
-        bookmark.setGenres(genreList);
-        bookmark.setTags(tagList);
-
+        
         System.out.println("going to db");
         return dbConnecter.saveBookmark(bookmark);
     }
