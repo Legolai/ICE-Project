@@ -30,8 +30,6 @@ $(document).ready(() => {
                 "<p class='media'>"+item.media+"</p>" +
                 "<p class='status'>"+item.status+"</p>" +
                 "</div>")
-            console.log(tags)
-            console.log(genres)
         })
 
 
@@ -57,19 +55,21 @@ $(document).ready(() => {
             }
 
             $("#editbookmark").click(() => {
+                let modalcontent = $(".modal-content");
                 if ($("#editbookmark").hasClass('btn-outlined')) {
                     var parent = $('.modal-content').width();
-                    $(".modal-content").attr('contenteditable', 'true');
-                    $(".modal-content").children().each((index, item) => {
+                    modalcontent.attr('contenteditable', 'true');
+                    modalcontent.children().each((index, item) => {
                         if (!($(item).hasClass('edit-button')))
                             $(item).addClass("edible")
                     })
                     $("#editbookmark").toggleClass('btn btn-outlined').val('Stop editing')
                 } else {
-                    $(".modal-content").attr('contenteditable', 'false');
+                    modalcontent.attr('contenteditable', 'false');
                     $("#editbookmark").toggleClass('btn btn-outlined').val('Edit')
                     $('.edible').removeClass("edible")
                     let data = {
+                        bookmark_id: modalcontent.data("id"),
                         bookmark_name:  $(".modal-content .sub-header").html(),
                         description:  $(".modal-content .description").html(),
                         url:  $(".modal-content .link").html(),
@@ -79,7 +79,7 @@ $(document).ready(() => {
                         }
                     SDK.post(endpoints.updateBookmark, data)
                         .then( () => {
-
+                            console.log("updated")
                         })
                         .fail(() => {
                         $(".modal-content .sub-header").html(data_before_edit.bookmark_name);

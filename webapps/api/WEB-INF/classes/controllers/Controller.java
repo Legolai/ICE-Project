@@ -32,11 +32,11 @@ public class Controller implements UserController, BookmarkController{
     @Override
     public Bookmark updateBookmark(JSONObject jsonObject, int user_id) {
         System.out.println("UpdateBookmark:\nJson from request: " +jsonObject);
-
         return saveBookmark(jsonObject, jsonObject.getInt("bookmark_id"), user_id);
     }
 
     private Bookmark saveBookmark(JSONObject jsonObject, int bookmarkID, int user_id) {
+        System.out.println("getting data");
         String bookmark_name = jsonObject.getString("bookmark_name");
         String description = jsonObject.getString("description");
         String url = jsonObject.getString("url");
@@ -48,6 +48,7 @@ public class Controller implements UserController, BookmarkController{
         // the below will be overwritten with the correct despite it being 0 when adding new
         bookmark.setBookmark_id(bookmarkID);
 
+        System.out.println("getting tags/genres");
         JSONArray genre = jsonObject.getJSONArray("genre");
         JSONArray tag = jsonObject.getJSONArray("tag");
         List<String> genreList = new ArrayList<>();
@@ -61,6 +62,7 @@ public class Controller implements UserController, BookmarkController{
         bookmark.setGenres(genreList);
         bookmark.setTags(tagList);
 
+        System.out.println("going to db");
         return dbConnecter.saveBookmark(bookmark);
     }
     @Override
