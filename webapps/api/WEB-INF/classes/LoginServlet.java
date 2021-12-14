@@ -32,8 +32,6 @@ public class LoginServlet extends HttpServlet {
         } catch (Exception e) { /*report an error*/ }
 
         JSONObject jsonObject = new JSONObject(jb.toString());
-        String username = jsonObject.getString("username");
-        String password = jsonObject.getString("password");
 
         response.addHeader("Access-Control-Allow-Origin", "http://localhost:63342");
         response.addHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -43,7 +41,7 @@ public class LoginServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         UserController userController = new Controller();
-        User user = userController.login(username, password);
+        User user = userController.login(jsonObject);
 
         if (user != null ) {
             session.setAttribute("user", user);

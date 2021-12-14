@@ -11,4 +11,5 @@ public interface BookmarkController {
     Bookmark addBookmark(JSONObject jsonObject, int user_id);
     Bookmark updateBookmark(JSONObject jsonObject, int user_id);
     boolean removeBookmark(JSONObject jsonObject);
+    ArrayList<String> getUsersGenresOrTags(User user, String genreTagSelector);
 }

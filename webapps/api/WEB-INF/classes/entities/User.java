@@ -16,6 +16,14 @@ public class User {
         password =  "";
     }
 
+    public void copyUserNoPass(User user, String username, String firstname, String surname, String email) {
+        user_id = user.getUser_id();
+        this.username = username;
+        this.firstname = firstname;
+        this.surname = surname;
+        this.email = email;
+    }
+
     public int getUser_id() {
         return user_id;
     }

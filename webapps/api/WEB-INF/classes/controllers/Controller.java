@@ -72,11 +72,17 @@ public class Controller implements UserController, BookmarkController{
 
         return dbConnecter.deleteUserORBookmark(bookmark_id, bookmark_name, "bookmark");
     }
+    @Override
+    public ArrayList<String> getUsersGenresOrTags(User user, String genreTagSelector) {
+        return dbConnecter.getGenresOrTags(user, genreTagSelector);
+    }
 
 
 
     @Override
-    public User login(String username, String password) {
+    public User login(JSONObject jsonObject) {
+        String username = jsonObject.getString("username");
+        String password = jsonObject.getString("password");
         return dbConnecter.authenticate(username, password);
     }
     @Override
@@ -84,17 +90,29 @@ public class Controller implements UserController, BookmarkController{
         return dbConnecter.getUser(user);
     }
     @Override
-    public Boolean updateUser(User user, String key, String value) {
-        return dbConnecter.updateUser(user, key, value);
+    public Boolean updateUser(User user, JSONObject jsonObject) {
+        String username = jsonObject.getString("username");
+        String firstname = jsonObject.getString("firstname");
+        String surname = jsonObject.getString("surname");
+        String email = jsonObject.getString("email");
+        if (username.equals(user.getUsername()) && firstname.equals(user.getFirstname())
+                && surname.equals(user.getSurname()) && email.equals(user.getEmail())) {
+            return false; //no changes made when pushing update button
+        }
+
+        User userdb = new User();
+        user.copyUserNoPass(user, username, firstname, surname, email);
+
+        return dbConnecter.updateUser(user);
     }
     @Override
-    public User newUser(String username, String password, String email, String firstname, String surname) {
+    public User newUser(JSONObject jsonObject) {
         User user = new User();
-        user.setUsername(username);
-        user.setPassword(password);
-        user.setEmail(email);
-        user.setFirstname(firstname);
-        user.setSurname(surname);
+        user.setUsername(jsonObject.getString("username"));
+        user.setPassword(jsonObject.getString("password"));
+        user.setEmail(jsonObject.getString("email"));
+        user.setFirstname(jsonObject.getString("firstname"));
+        user.setSurname(jsonObject.getString("surname"));
         return dbConnecter.newUser(user);
     }
     @Override
