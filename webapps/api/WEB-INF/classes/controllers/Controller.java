@@ -10,18 +10,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Controller implements UserController, BookmarkController{
-
     private final DBConnecter dbConnecter;
+
 
     public Controller(){
         this.dbConnecter = new DBConnecter();
     }
 
+
     @Override
     public ArrayList<Bookmark> getAll(User user) {
         return dbConnecter.getBookmarks(user);
     }
-
     @Override
     public Bookmark addBookmark(JSONObject jsonObject) {
         System.out.println("Json from request: " +jsonObject);
@@ -73,12 +73,11 @@ public class Controller implements UserController, BookmarkController{
     }
 
 
+
     @Override
     public User login(String username, String password) {
         return dbConnecter.authenticate(username, password);
     }
-
-
     @Override
     public User getUser(User user) {
         return dbConnecter.getUser(user);

@@ -16,17 +16,19 @@ public class DBConnecter {
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "root";
 
+
     public DBConnecter() {
         conn = null;
     }
 
+
     private void connect() throws SQLException {
         this.conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
     }
-
     private void close() throws SQLException {
         this.conn.close();
     }
+
 
     public User authenticate(String username, String password) {
         PreparedStatement preparedStatement = null;
@@ -60,7 +62,6 @@ public class DBConnecter {
         }
         return null;
     }
-
     public User getUser(User user) {
         PreparedStatement preparedStatement = null;
 
@@ -91,7 +92,6 @@ public class DBConnecter {
         }
         return null;
     }
-
     public User newUser(User user) {
         try {
             connect();
@@ -199,7 +199,6 @@ public class DBConnecter {
         }
         return bookmarks;
     }
-
     private Bookmark getBookmarksGenreOrTag(Bookmark bm, String bookmarkToBeJoined, String bookmark_join_id, String genre_tag_id, String name) {    //genre_tag_id is genre or tag_id
         PreparedStatement ps2 = null;
         PreparedStatement ps3 = null;
@@ -236,7 +235,6 @@ public class DBConnecter {
         }
         return null;
     }
-
     public Bookmark saveBookmark(Bookmark bm) {
         String sql = "";
         if (bm.getBookmark_id() > 0) {

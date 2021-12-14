@@ -1,0 +1,157 @@
+@startuml
+
+class GetAllBookmarkServlet {
+    + void doPost(HttpServletRequest request, HttpServletResponse response)
+}
+class AddBookmarkServlet {
+     + void doPost(HttpServletRequest request, HttpServletResponse response)
+}
+class UpdateBookmarkServlet {
+     + void doPost(HttpServletRequest request, HttpServletResponse response)
+}
+class DeleteBookmarkServlet {
+     + void doPost(HttpServletRequest request, HttpServletResponse response)
+}
+
+class LoginServlet {
+     + void doPost(HttpServletRequest request, HttpServletResponse response)
+}
+class SignupServlet {
+     + void doPost(HttpServletRequest request, HttpServletResponse response)
+}
+class UserInfoServlet {
+     + void doPost(HttpServletRequest request, HttpServletResponse response)
+}
+class SessionServlet {
+     + void doPost(HttpServletRequest request, HttpServletResponse response)
+}
+class UpdateUserServlet {
+     + void doPost(HttpServletRequest request, HttpServletResponse response)
+}
+class DeleteUserServlet {
+     + void doPost(HttpServletRequest request, HttpServletResponse response)
+}
+
+Interface BookmarkController {
+    + ArrayList<Bookmark> getAll(User user);
+    + Bookmark addBookmark(JSONObject jsonObject);
+    + Bookmark updateBookmark(JSONObject jsonObject);
+    + boolean removeBookmark(JSONObject jsonObject);
+}
+Interface UserController {
+    + User login(String username, String password);
+    + User getUser(User user);
+    + Boolean updateUser(User user, String key, String value);
+    + User newUser(String username, String password, String email, String firstname, String surname);
+    + boolean deleteUser(JSONObject jsonObject);
+}
+
+class Controller {
+    - DBConnector connector
+    + ArrayList<Bookmark> getAll(User user);
+    + Bookmark addBookmark(JSONObject jsonObject);
+    + Bookmark updateBookmark(JSONObject jsonObject);
+    - Bookmark saveBookmark(JSONObject jsonObject, int bookmarkID)
+    + boolean removeBookmark(JSONObject jsonObject);
+
+    + User login(String username, String password);
+    + User getUser(User user);
+    + Boolean updateUser(User user, String key, String value);
+    + User newUser(String username, String password, String email, String firstname, String surname);
+    + boolean deleteUser(JSONObject jsonObject);
+}
+
+class User {
+    - int user_id
+    - String firstname
+    - String surname
+    - String username
+    - String email
+    - String password
+    + Getters and Setters for all variables()
+}
+class Bookmark {
+    - int bookmark_id
+    - int user_id
+    - String name
+    - String description
+    - String url;
+    - String media;
+    - String status;
+    - List<String> genres;
+    - List<String> tags;
+    - int rating
+    + String listToString(List<String> list)
+    + Getters and Setters for all variables()
+}
+
+class DBConnector {
+    - Connection conn;
+    - static final String DB_URL;
+    - static final String DB_USER;
+    - static final String DB_PASSWORD;
+
+    - void connect()
+    - void close()
+
+    + User authenticate(String username, String password)
+    + User getUser(User user)
+    + User newUser(User user)
+    + Boolean updateUser(User user, String key, String value)
+
+    + ArrayList<Bookmark> getBookmarks(User user)
+    - Bookmark getBookmarksGenreOrTag(Bookmark bm, String bookmarkToBeJoined, String bookmark_join_id, String genre_tag_id, String name)
+    + Bookmark saveBookmark(Bookmark bm)
+    - void checkAndInsertGenreTag(Bookmark bm)
+    - ArrayList<Integer> checkAndInsertGenreTag(Bookmark bm, String query, String sql, String IDtype)
+    - void checkJoinTable(int bookmarkID, ArrayList<Integer> genreTagIDs, String query, String sql, String IDtype)
+
+    + boolean deleteUserORBookmark(int id, String name, String userOrBookmark)
+}
+
+note "All the above are endpoints" as N1
+note "Frontend" as N2
+
+
+namespace endpoints {
+    GetAllBookmarkServlet -- .N1
+    AddBookmarkServlet -- .N1
+    UpdateBookmarkServlet -- .N1
+    DeleteBookmarkServlet -- .N1
+    LoginServlet -- .N1
+    SignupServlet -- .N1
+    UserInfoServlet -- .N1
+    SessionServlet -- .N1
+    UpdateUserServlet -- .N1
+    DeleteUserServlet -- .N1
+    .N2 -- GetAllBookmarkServlet
+    .N2 -- AddBookmarkServlet
+    .N2 -- UpdateBookmarkServlet
+    .N2 -- DeleteBookmarkServlet
+    .N2 -- LoginServlet
+    .N2 -- SignupServlet
+    .N2 -- UserInfoServlet
+    .N2 -- SessionServlet
+    .N2 -- UpdateUserServlet
+    .N2 -- DeleteUserServlet
+}
+
+
+N1 o-- UserController
+N1 o-- BookmarkController
+
+
+UserController <|.. Controller
+BookmarkController <|.. Controller
+
+
+Controller -- DBConnector
+
+Controller -- User
+Controller -- Bookmark
+
+
+User o-- Bookmark
+
+
+@enduml
