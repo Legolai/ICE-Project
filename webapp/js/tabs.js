@@ -36,7 +36,8 @@ $(document).ready(() => {
 
         $(".fav-item").click( function () {
             const clone = $(this).clone();
-            const modal = $(".modal");
+            const modal = $($(".modal")[0]);
+            modal.empty();
             modal.append(clone);
             modal.css("display", "block");
             if (modal.hasClass("animate__fadeOut animate__fast"))
@@ -110,6 +111,20 @@ $(document).ready(() => {
         $(element).hide(0);
     }
 
+    $("#addBookmarkCancelBtn").click((event) => {
+        closeModal({target: $("#addBookmarkModal").get(0)})
+        $("#addBookmark > input").val('');
+        $("#addBookmark > div select").prop('selectedIndex',0);
+    })
+
+    $("#addBookmark").submit((event) => {
+        event.preventDefault();
+        const data = $("#addBookmark").serializeArray().reduce((acc, {name, value}) => ({...acc, [name]: value}),{})
+        closeModal({target: $("#addBookmarkModal").get(0)})
+
+        SDK.post(endpoints.addBookmark, data);
+    })
+
     $("#search").on("keyup", function () {
         const value = $(this).val().toLowerCase();
         $(".fav-item").filter(function () {
@@ -145,33 +160,34 @@ $(document).ready(() => {
     })
 })
 
-$(this).click(function (event) {
+$(window).click(closeModal)
+
+function closeModal (event) {
     const modals = $(".modal");
     for (const modal of modals) {
         if (modal === event.target) {
             const selected = $(modal);
-            console.log(selected);
             selected.removeClass("animate__fadeIn animate__fast");
             selected.children().removeClass("animate__bounceInDown animate__faster");
             selected.children().toggleClass("animate__bounceOutUp animate__faster");
             selected.addClass("animate__fadeOut animate__fast")
                 .on('animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd', () => {
-                    selected.css("display", "none");
+                    selected.hide();
                 })
             break;
         }
     }
-})
+}
 
-$("#addBookmark").click(() => {
+$("#addBookmarkBtn").click(() => {
     const modal = $("#addBookmarkModal");
-    modal.css("display", "block");
+    modal.show();
     if (modal.hasClass("animate__fadeOut animate__fast"))
         modal.removeClass("animate__fadeOut animate__fast")
     modal.off("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd")
     modal.addClass("animate__fadeIn animate__fast");
     modal.children().removeClass("animate__bounceOutUp animate__faster");
-    modal.children().toggleClass("animate__bounceInDown animate__faster");
+    modal.children().addClass("animate__bounceInDown animate__faster");
 })
 
 

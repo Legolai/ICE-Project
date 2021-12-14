@@ -23,8 +23,8 @@
     </nav>
     <main class="container grid-row-1-coloum-2-1-3">
         <div id="selector-panel" class="flex-column panel animate__animated animate__bounceInLeft">
-            <button class="btn-outlined" name="addBookmark" id="addBookmark">Add Bookmark</button>
-            <h2 class="sub-header-white">Filters</h2>
+            <button class="btn-outlined" name="addBookmark" id="addBookmarkBtn">Add Bookmark</button>
+            <h2 class="sub-header-white"><label for="search">Filters</label></h2>
             <input type="search" id="search" class="search" placeholder="Search...">
             <h3 class="sub-header-white">Genre</h3>
             <div id="genres" class="auto-row-wrap-attributes">
@@ -47,26 +47,27 @@
 
     </div>
     <div id="addBookmarkModal" class="modal animate__animated">
-        <div class="modal-content animate__animated animate__bounceInDown animate__fast">
-            <form class="form flex-column">
+        <div class="modal-content flex-column flex-align-center animate__animated animate__bounceInDown animate__fast">
+            <form id="addBookmark" class="form flex-column">
                 <label for="bookmarkName">Bookmark Name</label>
                 <input id="bookmarkName" name="bookmark_name" type="text" required>
                 <label for="description">Description</label>
                 <textarea id="description" name="description" rows="4" cols="50"></textarea>
                 <label for="url">Website</label>
-                <input id="url" name="url" type="text">
+                <input id="url" name="url" type="text" >
                 <div class="flex-row">
                     <div class="flex-column">
                         <label for="media">Media Type</label>
                         <div class="select">
-                            <select id="media" name="media" required>
+                            <select id="media" name="media_name" required>
                                 <option value="" selected disabled hidden>Choose here</option>
                                 <option value="Book">Book</option>
                                 <option value="Movie">Movie</option>
                                 <option value="Song">Song</option>
+                                <option value="Series">Series</option>
+                                <option value="Anime">Anime</option>
                             </select>
                         </div>
-
                     </div>
                     <div class="flex-column">
                         <label for="bookmarkStatus">Status</label>
@@ -82,16 +83,15 @@
                         </div>
                     </div>
                 </div>
-                <label>Rating</label>
-                <input class="rating" oninput="this.style.setProperty('--value', `${this.valueAsNumber}`)" type="range"
-                       min="0" max="14" step="1" required>
+                <label for="ratingSlider">Rating</label>
+                <input id="ratingSlider" name="rating" class="rating" oninput="this.style.setProperty('--value', `${this.valueAsNumber}`)" type="range"
+                       min="0" max="14" step="1" value="0" required>
                 <label>Genres</label>
                 <label>Tags</label>
 
-
                 <div class="flex-row ">
-                    <input type="submit" value="Create Bookmark">
-                    <input type="button" value="Cancel">
+                    <input class="btn-submit" type="submit" value="Create Bookmark">
+                    <input id="addBookmarkCancelBtn" class="btn-submit-outlined" type="button" value="Cancel">
                 </div>
             </form>
         </div>

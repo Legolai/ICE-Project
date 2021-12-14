@@ -494,12 +494,20 @@ h3 {
     column-gap: 20px;
 }
 
+#addBookmarkModal .modal-content div input.btn-submit, #addBookmarkModal .modal-content div input.btn-submit-outlined {
+    flex: 1;
+}
+
 #addBookmarkModal div {
     flex-grow: 1;
+    column-gap: 20px;
 }
 
 #addBookmarkModal .form textarea {
     resize: none;
+    border: none;
+    border-bottom: 2px solid var(--primary-color);
+    padding: 10px 10px;
 }
 
 form select {
@@ -516,7 +524,7 @@ form select {
 }
 
 .select {
-    width: clamp(15ch, 100%, 30ch);
+    flex-grow: 1;
     border-bottom: 2px solid var(--primary-color);
     cursor: pointer;
     line-height: 1.1;

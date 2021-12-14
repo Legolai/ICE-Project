@@ -5,6 +5,7 @@ import database.DBConnecter;
 import entities.Bookmark;
 import entities.User;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -49,22 +50,33 @@ public class Controller implements UserController, BookmarkController{
         bookmark.setBookmark_id(bookmarkID);
 
         System.out.println("getting genres");
-        JSONArray genre = jsonObject.getJSONArray("genre");
-        if (!genre.isEmpty()) {
-            List<String> genreList = new ArrayList<>();
-            for(int i=0; i < genre.length(); i++) {
-                genreList.add(genre.getString(i));
+
+        try {
+            JSONArray genre = jsonObject.getJSONArray("genre");
+            if (!genre.isEmpty()) {
+                List<String> genreList = new ArrayList<>();
+                for(int i=0; i < genre.length(); i++) {
+                    genreList.add(genre.getString(i));
+                }
+                bookmark.setGenres(genreList);
             }
-            bookmark.setGenres(genreList);
         }
+        catch (JSONException e){
+            bookmark.setGenres(new ArrayList<>());
+        }
+
         System.out.println("getting tags");
-        JSONArray tag = jsonObject.getJSONArray("tag");
-        if (!tag.isEmpty()) {
-            List<String> tagList = new ArrayList<>();
-            for(int i=0; i < tag.length(); i++) {
-                tagList.add(tag.getString(i));
+        try {
+            JSONArray tag = jsonObject.getJSONArray("tag");
+            if (!tag.isEmpty()) {
+                List<String> tagList = new ArrayList<>();
+                for(int i=0; i < tag.length(); i++) {
+                    tagList.add(tag.getString(i));
+                }
+                bookmark.setTags(tagList);
             }
-            bookmark.setTags(tagList);
+        } catch (JSONException e) {
+            bookmark.setTags(new ArrayList<>());
         }
         
         System.out.println("going to db");

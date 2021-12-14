@@ -1,10 +1,8 @@
 CREATE
 DATABASE IF NOT EXISTS Favorite_Website_DB DEFAULT CHARSET = utf8mb4;
-USE
-Favorite_Website_DB;
+USE Favorite_Website_DB;
 
-SET
-FOREIGN_KEY_CHECKS=0;
+SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS User;
 DROP TABLE IF EXISTS Bookmark;
 DROP TABLE IF EXISTS Media;
@@ -13,8 +11,8 @@ DROP TABLE IF EXISTS Tag;
 DROP TABLE IF EXISTS Bookmark_Media;
 DROP TABLE IF EXISTS Bookmark_Genre;
 DROP TABLE IF EXISTS Bookmark_Tag;
-SET
-FOREIGN_KEY_CHECKS = 1;
+SET FOREIGN_KEY_CHECKS = 1;
+
 CREATE TABLE User
 (
     user_id TINYINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -49,14 +47,14 @@ CREATE TABLE Genre
 (
     genre_id TINYINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     user_id TINYINT NOT NULL,
-    genre_name varchar(255) not null
+    genre_name varchar(255) not null,
     FOREIGN KEY (user_id) REFERENCES User (user_id)
 );
 CREATE TABLE Tag
 (
     tag_id TINYINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     user_id TINYINT NOT NULL,
-    tag_name varchar(255) not null
+    tag_name varchar(255) not null,
     FOREIGN KEY (user_id) REFERENCES User (user_id)
 );
 
@@ -84,6 +82,7 @@ INSERT INTO User (email,firstname, surname, username, password) VALUES ("test","
 
 INSERT INTO Media (media_name) VALUES ("Movie");
 INSERT INTO Media (media_name) VALUES ("Anime");
+INSERT INTO Media (media_name) VALUES ("Song");
 INSERT INTO Genre (user_id, genre_name) VALUES (2, "Sci-Fi");
 INSERT INTO Tag (user_id, tag_name) VALUES (2, "Sick CGI");
 

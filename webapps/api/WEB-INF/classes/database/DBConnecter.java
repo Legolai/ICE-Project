@@ -239,6 +239,8 @@ public class DBConnecter {
         }
         return null;
     }
+
+
     public Bookmark saveBookmark(Bookmark bm) {
         String sql = "";
         if (bm.getBookmark_id() > 0) {
@@ -251,7 +253,22 @@ public class DBConnecter {
 
         try {
             connect();
-            System.out.println("Creating statement...");
+            System.out.println("Creating statement... ");
+
+            // Checks if the media exists in database, if not insert it
+            String query = "SELECT * FROM Favorite_Website_DB.Media WHERE media_name = ?;";
+            PreparedStatement pstmtMedia = conn.prepareStatement(query);
+            pstmtMedia.setString(1, bm.getMedia());
+            ResultSet rs = pstmtMedia.executeQuery();
+            if (!rs.isBeforeFirst()) {
+                String sqlmedia = "INSERT INTO Media (media_name) VALUES (?) ON DUPLICATE KEY UPDATE media_name = media_name;";
+                PreparedStatement pstmtMedia2 = conn.prepareStatement(sqlmedia, Statement.RETURN_GENERATED_KEYS);
+                pstmtMedia2.setString(1,bm.getMedia());
+                pstmtMedia2.execute();
+                pstmtMedia2.close();
+            }
+            pstmtMedia.close();
+
             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             if (bm.getBookmark_id() > 0) {
@@ -263,6 +280,13 @@ public class DBConnecter {
                 pstmt.setString(6,bm.getMedia());
                 pstmt.setString(7,bm.getStatus());
                 pstmt.setInt(8, bm.getRating());
+
+                pstmt.setString(9,bm.getName());
+                pstmt.setString(10,bm.getDescription());
+                pstmt.setString(11,bm.getUrl());
+                pstmt.setString(12,bm.getMedia());
+                pstmt.setString(13,bm.getStatus());
+                pstmt.setInt(14, bm.getRating());
             } else {
                 pstmt.setInt(1, bm.getUser_id());
                 pstmt.setString(2,bm.getName());
@@ -271,20 +295,14 @@ public class DBConnecter {
                 pstmt.setString(5,bm.getMedia());
                 pstmt.setString(6,bm.getStatus());
                 pstmt.setInt(7, bm.getRating());
-            }
 
-            // Checks if the media exists in database, if not insert it
-            String query = "SELECT * FROM Favorite_Website_DB.Media WHERE media_name = ?";
-            PreparedStatement pstmtMedia = conn.prepareStatement(query);
-            pstmtMedia.setString(1, bm.getMedia());
-            ResultSet rs = pstmtMedia.executeQuery();
-            if (!rs.isBeforeFirst()) {
-                String sqlmedia = "INSERT INTO Media (media_name) VALUES (?) ON DUPLICATE KEY media_name = media_name";
-                pstmtMedia = conn.prepareStatement(sqlmedia, Statement.RETURN_GENERATED_KEYS);
-                pstmtMedia.setString(1,bm.getMedia());
-                pstmtMedia.executeBatch();
+                pstmt.setString(8,bm.getName());
+                pstmt.setString(9,bm.getDescription());
+                pstmt.setString(10,bm.getUrl());
+                pstmt.setString(11,bm.getMedia());
+                pstmt.setString(12,bm.getStatus());
+                pstmt.setInt(13, bm.getRating());
             }
-            pstmtMedia.close();
 
             int rowsAffected = pstmt.executeUpdate();
 
@@ -294,13 +312,17 @@ public class DBConnecter {
                     bm.setBookmark_id(generatedKeys.getInt(1));
                 }
                 // this part checks in Genre and Tag db, if not found, insert
+                System.out.println("Rows effected");
                 checkAndInsertGenreTag(bm);
+                System.out.println("Rows effected done");
                 pstmt.close();
                 close();
                 return bm;
             }
             // this part checks in Genre and Tag db, if not found, insert
+            System.out.println("Zero rows effected");
             checkAndInsertGenreTag(bm);
+            System.out.println("Zero rows effected done");
             pstmt.close();
             close();
         } catch (SQLException e) {

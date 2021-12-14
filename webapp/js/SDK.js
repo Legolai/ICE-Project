@@ -6,7 +6,8 @@ const endpoints = {
     session: "/session",
     profile: "/profile",
     updateProfile: "/updateUser",
-    updateBookmark: "/updateBookmark"
+    updateBookmark: "/updateBookmark",
+    addBookmark: "/addBookmark"
 }
 
 const SDK = {
