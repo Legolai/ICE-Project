@@ -20,12 +20,12 @@ $(document).ready(() => {
                 htmlTags += "<div class='tag'>" + tag + "</div>";
             }
 
-            $("#fav-items").append("<div id='"+ ("fav-item-" + i) +"' class='fav-item'>" +
+            $("#fav-items").append("<div data-id='"+item.bookmark_id+"' class='fav-item'>" +
                 "<h2 class='sub-header'>"+item.name+"</h2>" +
                 "<p class='rating'>"+item.rating+"</p>" +
                 "<div class='flex-row genres'>"+htmlGenres+"</div>" +
                 "<div class='flex-row tags'>"+htmlTags+"</div>" +
-                "<p>"+item.description+"</p>" +
+                "<p class='description'>"+item.description+"</p>" +
                 "<a class='link' href=''>"+item.url+"</a>" +
                 "<p class='media'>"+item.media+"</p>" +
                 "<p class='status'>"+item.status+"</p>" +
@@ -36,7 +36,7 @@ $(document).ready(() => {
 
 
 
-        $(".fav-item").click(function () {
+        $(".fav-item").click( function () {
             const clone = $(this).clone();
             const modal = $(".modal");
             modal.append(clone);
@@ -45,7 +45,52 @@ $(document).ready(() => {
                 modal.removeClass("animate__fadeOut animate__fast")
             modal.off("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd")
             modal.addClass("animate__fadeIn animate__fast");
-            clone.addClass('modal-content animate__animated animate__bounceInDown animate__fast');
+            clone.addClass('modal-content flex-column animate__animated animate__bounceInDown animate__fast');
+            clone.append('<input type="button" class="btn-outlined edit-button" id="editbookmark" value="Edit"> ')
+            let data_before_edit = {
+                bookmark_name:  $(".modal-content .sub-header").html(),
+                description:  $(".modal-content .description").html(),
+                url:  $(".modal-content .link").html(),
+                media_name:  $(".modal-content .media").html(),
+                rating:  $(".modal-content .rating").html(),
+                status: $(".modal-content .status").html()
+            }
+
+            $("#editbookmark").click(() => {
+                if ($("#editbookmark").hasClass('btn-outlined')) {
+                    var parent = $('.modal-content').width();
+                    $(".modal-content").attr('contenteditable', 'true');
+                    $(".modal-content").children().each((index, item) => {
+                        if (!($(item).hasClass('edit-button')))
+                            $(item).addClass("edible")
+                    })
+                    $("#editbookmark").toggleClass('btn btn-outlined').val('Stop editing')
+                } else {
+                    $(".modal-content").attr('contenteditable', 'false');
+                    $("#editbookmark").toggleClass('btn btn-outlined').val('Edit')
+                    $('.edible').removeClass("edible")
+                    let data = {
+                        bookmark_name:  $(".modal-content .sub-header").html(),
+                        description:  $(".modal-content .description").html(),
+                        url:  $(".modal-content .link").html(),
+                        media_name:  $(".modal-content .media").html(),
+                        rating:  $(".modal-content .rating").html(),
+                        status: $(".modal-content .status").html()
+                        }
+                    SDK.post(endpoints.updateBookmark, data)
+                        .then( () => {
+
+                        })
+                        .fail(() => {
+                        $(".modal-content .sub-header").html(data_before_edit.bookmark_name);
+                        $(".modal-content .description").html(data_before_edit.description);
+                        $(".modal-content .link").html(data_before_edit.url);
+                        $(".modal-content .media").html(data_before_edit.media_name);
+                        $(".modal-content .rating").html(data_before_edit.rating);
+                        $(".modal-content .status").html(data_before_edit.status);
+                    })
+                }
+            })
         })
     });
 

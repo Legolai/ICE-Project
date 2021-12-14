@@ -1,6 +1,7 @@
 import controllers.BookmarkController;
 import controllers.Controller;
 import entities.Bookmark;
+import entities.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -39,11 +40,11 @@ public class UpdateBookmarkServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         BookmarkController bookmarkController = new Controller();
-        Bookmark bookmark = bookmarkController.updateBookmark(jsonObject);
+        User user = (User) session.getAttribute("user");
+        Bookmark bookmark = bookmarkController.updateBookmark(jsonObject, user.getUser_id());
 
         if ( bookmark != null ) {
             System.out.println("status 201");
-            session.setAttribute("user", bookmark);
 
             response.setStatus(201);
 

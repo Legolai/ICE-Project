@@ -401,6 +401,25 @@ nav #logout:hover {
 .modal-content .sub-header {
     font-size: 1.5em;
 }
+.modal-content :not(input) {
+    position: relative;
+    -webkit-transition: all .2s;
+    -moz-transition: all .2s;
+    -ms-transition: all .2s;
+    -o-transition: all .2s;
+    transition: all .2s;
+}
+
+.edible::after{
+
+    color: rgba(0, 0, 0, 0.62);
+    position: absolute;
+}
+
+.edible {
+    padding: 5px 0;
+    background-color: white;
+}
 
 
 .search {
@@ -457,4 +476,9 @@ h3 {
     grid-template-columns: repeat(auto-fill, minmax(20px, 1fr));
     grid-gap: 10px;
     margin: 10px 0;
+}
+
+.edit-button {
+    align-self: flex-start;
+    margin-top: auto;
 }
