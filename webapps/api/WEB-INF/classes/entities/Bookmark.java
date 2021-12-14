@@ -51,7 +51,6 @@ public class Bookmark {
         tags = Arrays.asList(splitted[6].split(","));
         rating = Integer.parseInt(splitted[7]);
     }
-
     public String bookmarkToString() {
         String res = "";
 
@@ -80,74 +79,11 @@ public class Bookmark {
         return res;
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getMedia() {
-        return media;
-    }
-
-    public void setMedia(String media) {
-        this.media = media;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public List<String> getGenres() {
-        return genres;
-    }
-
-    public void setGenres(List<String> genres) {
-        this.genres = genres;
-    }
-
-    public List<String> getTags() {
-        return tags;
-    }
-
-    public void setTags(List<String> tags) {
-        this.tags = tags;
-    }
-
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
 
     public int getBookmark_id() {
         return bookmark_id;
     }
-
     public void setBookmark_id(int bookmark_id) {
         this.bookmark_id = bookmark_id;
     }
@@ -155,8 +91,63 @@ public class Bookmark {
     public int getUser_id() {
         return user_id;
     }
-
     public void setUser_id(int user_id) {
         this.user_id = user_id;
+    }
+
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getMedia() {
+        return media;
+    }
+    public void setMedia(String media) {
+        this.media = media;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public List<String> getGenres() {
+        return genres;
+    }
+    public void setGenres(List<String> genres) {
+        this.genres = genres;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 }
