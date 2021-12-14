@@ -127,20 +127,25 @@ public class DBConnecter {
         }
         return null;
     }
-    public Boolean updateUser(User user, String key, String value) {
+    public Boolean updateUser(User user) {
         try {
             connect();
 
-            String sql = "INSERT INTO User ? " +
-                    "VALUES ? WHERE user_id = ? ON DUPLICATE KEY UPDATE ?=?";
+            String sql = "INSERT INTO User (user_id, username, email, firstname, surname) " +
+                    "VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE username=?, email=?, firstname=?, surname=?";
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
-            pstmt.setString(1, key);
-            pstmt.setString(2, value);
-            pstmt.setInt(3, user.getUser_id());
-            pstmt.setString(4, key);
-            pstmt.setString(5, value);
+            pstmt.setInt(1, user.getUser_id());
+            pstmt.setString(2, user.getUsername());
+            pstmt.setString(3, user.getEmail());
+            pstmt.setString(4, user.getFirstname());
+            pstmt.setString(5, user.getSurname());
+
+            pstmt.setString(6, user.getUsername());
+            pstmt.setString(7, user.getEmail());
+            pstmt.setString(8, user.getFirstname());
+            pstmt.setString(9, user.getSurname());
 
             int rowsAffected = pstmt.executeUpdate();
 
@@ -149,7 +154,6 @@ public class DBConnecter {
                 close();
                 return true;
             }
-
             pstmt.close();
             close();
         } catch (SQLException e) {

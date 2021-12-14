@@ -29,11 +29,6 @@ public class SignUpServlet extends HttpServlet {
         } catch (Exception e) { /*report an error*/ }
 
         JSONObject jsonObject = new JSONObject(jb.toString());
-        String surname = jsonObject.getString("firstname");
-        String firstname = jsonObject.getString("surname");
-        String username = jsonObject.getString("username");
-        String password = jsonObject.getString("password");
-        String email = jsonObject.getString("email");
 
         response.addHeader("Access-Control-Allow-Origin", "http://localhost:63342");
         response.addHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -43,7 +38,7 @@ public class SignUpServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         UserController userController = new Controller();
-        User user = userController.newUser(username, password, email, firstname, surname);
+        User user = userController.newUser(jsonObject);
 
         if ( user != null ) {
             System.out.println("status 201");

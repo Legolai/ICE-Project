@@ -4,9 +4,9 @@ import entities.User;
 import org.json.JSONObject;
 
 public interface UserController {
-    User login(String username, String password);
+    User login(JSONObject jsonObject);
     User getUser(User user);
-    Boolean updateUser(User user, String key, String value);
-    User newUser(String username, String password, String email, String firstname, String surname);
+    Boolean updateUser(User user, JSONObject jsonObject);
+    User newUser(JSONObject jsonObject);
     boolean deleteUser(JSONObject jsonObject);
 }

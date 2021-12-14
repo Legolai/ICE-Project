@@ -35,9 +35,6 @@ public class UpdateUserServlet extends HttpServlet {
 
         JSONObject jsonObject = new JSONObject(jb.toString());
 
-        String key = jsonObject.getString("key");
-        String value = jsonObject.getString("value");
-
         response.addHeader("Access-Control-Allow-Origin", "http://localhost:63342");
         response.addHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         response.addHeader("Access-Control-Allow-Credentials", "true");
@@ -46,8 +43,9 @@ public class UpdateUserServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         UserController userController = new Controller();
-        Boolean userUpdated = userController.updateUser(user, key, value);
+        Boolean userUpdated = userController.updateUser(user, jsonObject);
         user = userController.getUser(user);
+
         if ( userUpdated && user != null) {
             System.out.println("status 201");
 
